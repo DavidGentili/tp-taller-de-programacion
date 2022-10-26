@@ -1,4 +1,4 @@
-package modelo;
+package modelo.configEmpresa;
 
 public class Sueldo {
     private double basico;

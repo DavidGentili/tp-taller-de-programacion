@@ -1,4 +1,4 @@
-package modelo;
+package modelo.configEmpresa;
 
 import java.util.Date;
 

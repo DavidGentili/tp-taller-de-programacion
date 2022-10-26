@@ -1,4 +1,7 @@
-package modelo;
+package modelo.empresa;
+
+import modelo.configEmpresa.Mesa;
+import modelo.configEmpresa.Mozo;
 
 import java.util.Date;
 

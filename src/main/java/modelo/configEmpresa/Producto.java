@@ -1,4 +1,4 @@
-package modelo;
+package modelo.configEmpresa;
 
 public class Producto {
     private int idProducto;
