@@ -1,6 +1,8 @@
-package modelo.configEmpresa;
+package modelo.empresa;
 
 import modelo.archivo.Archivo;
+import modelo.configEmpresa.ConfiguracionEmpresa;
+import modelo.configEmpresa.Operario;
 import modelo.empresa.Comanda;
 import modelo.empresa.MozoMesa;
 
