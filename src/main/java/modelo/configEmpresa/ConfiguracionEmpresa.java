@@ -7,12 +7,17 @@ import exceptions.DatosLoginIncorrectosException;
 import java.util.Collection;
 
 public class ConfiguracionEmpresa {
+    private static ConfiguracionEmpresa instance = null;
     private String nombreLocal;
     private Collection<Mozo> mozos;
     private Collection<Mesa> mesas;
     private Collection<Producto> productos;
     private Collection<Operario> operarios;
     private Sueldo sueldo;
+
+    private ConfiguracionEmpresa(){}
+
+    public static ConfiguracionEmpresa getInstance(){return null;}
 
     /**
      * Se encarga de cambiar el nombre del local, para esto el usuario debe ser admin,
