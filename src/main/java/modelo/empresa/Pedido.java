@@ -1,4 +1,6 @@
-package modelo.configEmpresa;
+package modelo.empresa;
+
+import modelo.configEmpresa.Producto;
 
 import java.util.Date;
 

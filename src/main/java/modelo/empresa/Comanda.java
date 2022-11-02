@@ -1,7 +1,6 @@
 package modelo.empresa;
 
 import modelo.configEmpresa.Mesa;
-import modelo.configEmpresa.Pedido;
 
 import java.util.Collection;
 import java.util.Date;

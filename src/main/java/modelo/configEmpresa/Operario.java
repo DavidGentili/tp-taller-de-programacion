@@ -4,7 +4,7 @@ import exceptions.ContraseñaIncorrectaException;
 
 public class Operario {
     private static int nroOperario = 0;
-    private int id_operario;
+    private int id;
     private String nombreApellido;
     private String nombreUsuario;
     private String password;
@@ -21,6 +21,38 @@ public class Operario {
      * post: se retorna un operario nuevo activo
      */
     public Operario(String nombreApellido, String nombreUsuario, String password) throws ContraseñaIncorrectaException {}
+
+    /**
+     * Retorna el Id del operario
+     * @return id Operario
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Retorna el nombre completo del operario
+     * @return nombre completo
+     */
+    public String getNombreApellido() {
+        return nombreApellido;
+    }
+
+    /**
+     * Retorna el nombre de usuario del operario
+     * @return nombre de usuario
+     */
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    /**
+     * Retorna si el operario esta activo
+     * @return si esta activo el operario
+     */
+    public Boolean isActivo() {
+        return activo;
+    }
 
     /**
      * Define un numero de operarios

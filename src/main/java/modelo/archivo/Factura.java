@@ -2,7 +2,7 @@ package modelo.archivo;
 
 import modelo.configEmpresa.Promocion;
 import modelo.configEmpresa.Mesa;
-import modelo.configEmpresa.Pedido;
+import modelo.empresa.Pedido;
 
 import java.util.Collection;
 import java.util.Date;
