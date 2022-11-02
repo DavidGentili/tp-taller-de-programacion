@@ -5,7 +5,7 @@ import exceptions.EstadoDelMozoIncorrectoException;
 import java.util.Date;
 
 public class Mozo {
-    private static enum estados {ACTIVO, FRANCO, AUSENTE}
+    public static enum estados {ACTIVO, FRANCO, AUSENTE}
     private static int nroMozos = 0;
     private int id;
     private String nombreApellido;
