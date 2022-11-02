@@ -247,4 +247,14 @@ public class ConfiguracionEmpresa {
      */
     public Sueldo getSueldo() { return null;};
 
+    /**
+     * Determina el elemento sueldo de la empresa
+     * @param nuevoSueldo : El nuevo elemento sueldo
+     * @throws UsuarioNoAutorizadoException : Si el usuario no se encuentra autorizado
+     *
+     * pre: nuevoSueldo != null;
+     * post : this.sueldo == nuevoSueldo;
+     */
+    public void setSueldo(Sueldo nuevoSueldo) throws UsuarioNoAutorizadoException {};
+
 }
