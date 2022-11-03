@@ -1,4 +1,4 @@
-package modelo.configEmpresa;
+package modelo.empresa;
 
 public class Promocion {
 

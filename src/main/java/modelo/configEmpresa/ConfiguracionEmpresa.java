@@ -83,7 +83,7 @@ public class ConfiguracionEmpresa {
     /**
      * Se actualiza la mesa en el sistema
      * @param mesaActualizada : La mesa con los valores actualizados
-     * @param mesaId : el Id de la mesa
+     * @param nroMesa : el numero de la mesa
      * @param user : El usuario que intenta realizar la accion;
      * @throws UsuarioNoAutorizadoException : Se emite si el usuario no esta autorizado
      * @throws IdIncorrectoException : Si no existe el Id ingresado
@@ -91,18 +91,18 @@ public class ConfiguracionEmpresa {
      *      user != null
      * post: Se actualiza la mesa en la coleccion.
      */
-    public void actulizarMesa(Mesa mesaActualizada, int mesaId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException{};
+    public void actulizarMesa(Mesa mesaActualizada, int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException{};
 
     /**
      * Se elimina de la colecicon la mesa indicada
-     * @param idMesa : el id de la mesa a eliminar
+     * @param nroMesa : el numero de la mesa a eliminar
      * @param user : El usuario que intenta realizar la accion
      * @throws UsuarioNoAutorizadoException : Se emite si el usuario no esta autorizado
      * @throws IdIncorrectoException : Si no existe el Id ingresado
      * pre: user != null
      * post: Se elimina la mesa de la coleccion
      */
-    public void eliminarMesa(int idMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {};
+    public void eliminarMesa(int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {};
 
     /**
      * Se agrega un producto al registro de la empresa, si el usuario no es admin se emite una exception
@@ -227,11 +227,11 @@ public class ConfiguracionEmpresa {
 
     /**
      * Retorna la mesa correspondiente al id ingresado, en caso de que no exista dicho id arroja una excepcion
-     * @param mesaId : Id de la mesa deseado
+     * @param nroMesa : numero de la mesa deseado
      * @return la mesa correspondiente al id ingresado
      * @throws IdIncorrectoException Si el Id no corresponde
      */
-    public Mesa getMesaById(int mesaId) throws IdIncorrectoException {return null;};
+    public Mesa getMesaNroMesa(int nroMesa) throws IdIncorrectoException {return null;};
 
     /**
      * Retorna los productos del sistema
@@ -263,4 +263,15 @@ public class ConfiguracionEmpresa {
      */
     public void setSueldo(Sueldo nuevoSueldo) throws UsuarioNoAutorizadoException {};
 
+    /**
+     * Se encarga de guardar la configuracion de la empresa
+     * (faltan agregar las excepciones correspondientes)
+     */
+    public void guardarConfiguracion(){}
+
+    /**
+     * Se encarga de recuperar la configuracion de la empresa
+     * (faltan agregar las excepciones correspondientes)
+     */
+    public void recuperarConfiguracion(){}
 }

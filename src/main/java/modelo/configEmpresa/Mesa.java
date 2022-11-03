@@ -5,7 +5,7 @@ import exceptions.MesaYaOcupadaException;
 
 public class Mesa {
     public static enum Estados {LIBRE, OCUPADA}
-
+    private int nroMesa;
     private int cantSillas;
     private Estados estado;
 

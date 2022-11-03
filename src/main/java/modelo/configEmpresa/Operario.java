@@ -15,12 +15,14 @@ public class Operario {
      * @param nombreApellido : nombre y apellido
      * @param nombreUsuario : nombre de usuario
      * @param password : contraseña
-     * @throws ContraseñaIncorrectaException : Si la contraseña no cumple con los requisitos de la documentacion
      * pre: nombreApellido != null && nombreApellido != ""
-     *      nombreUsuario != null && nombreUsuruaio != ""
+     *      nombreUsuario != null && nombreUsuruaio != "" && nombreUsuario.length <= 10
+     *      password != null && password.length <= 12 && password.length > 6
+     *      password debe contener al menos una letra mayuscula
+     *      password debe contener al menos un numero
      * post: se retorna un operario nuevo activo
      */
-    public Operario(String nombreApellido, String nombreUsuario, String password) throws ContraseñaIncorrectaException {}
+    public Operario(String nombreApellido, String nombreUsuario, String password) {}
 
     /**
      * Retorna el Id del operario

@@ -1,5 +1,7 @@
 package modelo.configEmpresa;
 
+import exceptions.StockInsuficienteException;
+
 public class Producto {
     private static int nroProducto = 0;
     private int id;
@@ -106,4 +108,22 @@ public class Producto {
      * @param stock : stock del producto
      */
     protected void setStock(int stock){}
+
+    /**
+     * Reduce el stock del producto en 1
+     * pre:
+     * post: this.cantidad = oldCantidad - 1
+     * @throws StockInsuficienteException si el stock no es suficiente para realizar la accion indicada
+     */
+    public void reducirStock() throws StockInsuficienteException {}
+
+    /**
+     * Reduce el stock del producto en la cantidad indicada si la
+     * cantidad supera el stock establecido, retorna excepcion
+     * pre: cantidad > 0;
+     * post this.cantidad = oldCantidad - cantidad
+     * @param cantidad : cantidad de stock que se desea restar
+     * @throws StockInsuficienteException si el stock no es suficiente para realizar la accion indicada
+     */
+    public void reducirStock(int cantidad) throws StockInsuficienteException {}
 }
