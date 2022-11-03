@@ -4,10 +4,10 @@ import exceptions.MesaYaLiberadaException;
 import exceptions.MesaYaOcupadaException;
 
 public class Mesa {
-    public static enum estados {LIBRE, OCUPADA}
+    public static enum Estados {LIBRE, OCUPADA}
 
     private int cantSillas;
-    private String estado;
+    private Estados estado;
 
     /**
      * Crea una nueva mesa en estado LIBRE
@@ -36,9 +36,10 @@ public class Mesa {
 
     /**
      * Retorna el estado de la mesa
+     *
      * @return estado de la mesa
      */
-    public String getEstado() {
+    public Estados getEstado() {
         return estado;
     }
 

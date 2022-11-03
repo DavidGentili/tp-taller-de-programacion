@@ -5,13 +5,13 @@ import exceptions.EstadoDelMozoIncorrectoException;
 import java.util.Date;
 
 public class Mozo {
-    public static enum estados {ACTIVO, FRANCO, AUSENTE}
+    public static enum Estados {ACTIVO, FRANCO, AUSENTE}
     private static int nroMozos = 0;
     private int id;
     private String nombreApellido;
     private Date fechaNacimiento;
     private int cantHijos;
-    private String estado;
+    private Estados estado;
 
     /**
      * Se encarga de crear un nuevo mozo en estado activo,

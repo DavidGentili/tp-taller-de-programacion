@@ -4,16 +4,17 @@ import exceptions.IdIncorrectoException;
 import exceptions.UsuarioNoAutorizadoException;
 import exceptions.DatosLoginIncorrectosException;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 public class ConfiguracionEmpresa {
     private static ConfiguracionEmpresa instance = null;
     private String nombreLocal;
-    private Collection<Mozo> mozos;
-    private Collection<Mesa> mesas;
-    private Collection<Producto> productos;
-    private Collection<Operario> operarios;
+    private ArrayList<Mozo> mozos;
+    private ArrayList<Mesa> mesas;
+    private ArrayList<Producto> productos;
+    private ArrayList<Operario> operarios;
     private Sueldo sueldo;
+    private PersistenciaConfiguracion persistencia;
 
     private ConfiguracionEmpresa(){}
 
@@ -202,13 +203,13 @@ public class ConfiguracionEmpresa {
      * pre: user != null
      * post: retorna this.operarios
      */
-    public Collection<Operario> getOperarios(Operario user) throws UsuarioNoAutorizadoException { return null;};
+    public ArrayList<Operario> getOperarios(Operario user) throws UsuarioNoAutorizadoException { return null;};
 
     /**
      * Retorna los mozos del sistema
      * @return Los mozos del sistema
      */
-    public Collection<Mozo> getMozos() {return null;};
+    public ArrayList<Mozo> getMozos() {return null;};
 
     /**
      * Retorna el mozo correspondiente al id ingresado, en caso de que no exista dicho id arroja una excepcion
@@ -222,7 +223,7 @@ public class ConfiguracionEmpresa {
      * Retorna las mesas del sistema
      * @return Las mesas del sistema
      */
-    public Collection<Mesa> getMesas() {return null;};
+    public ArrayList<Mesa> getMesas() {return null;};
 
     /**
      * Retorna la mesa correspondiente al id ingresado, en caso de que no exista dicho id arroja una excepcion
@@ -236,7 +237,7 @@ public class ConfiguracionEmpresa {
      * Retorna los productos del sistema
      * @return Los productos del sistema
      */
-    public Collection<Producto> getProductos() {return null;};
+    public ArrayList<Producto> getProductos() {return null;};
 
     /**
      * Retorna el producto correspondiente al id ingresado, en caso de que no exista dicho id arroja una excepcion
