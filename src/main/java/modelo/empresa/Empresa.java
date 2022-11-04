@@ -13,6 +13,7 @@ public class Empresa {
     private Archivo archivo;
     private Collection<Comanda> comandas;
     private Collection<MozoMesa> asignacionMozosMesas;
+    private Collection<Promocion> promociones;
     private Operario usuario;
 
 }
