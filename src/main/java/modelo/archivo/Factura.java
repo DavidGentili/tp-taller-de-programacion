@@ -1,6 +1,6 @@
 package modelo.archivo;
 
-import modelo.configEmpresa.Promocion;
+import modelo.empresa.Promocion;
 import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Pedido;
 
