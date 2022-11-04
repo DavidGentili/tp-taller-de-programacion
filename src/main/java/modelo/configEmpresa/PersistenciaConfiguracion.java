@@ -1,10 +1,9 @@
 package modelo.configEmpresa;
 
-import persist.OperarioDTO;
+import modelo.persist.OperarioDTO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class PersistenciaConfiguracion implements Serializable {
 

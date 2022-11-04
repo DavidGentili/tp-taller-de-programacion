@@ -1,7 +1,6 @@
 package modelo.configEmpresa;
 
-import exceptions.ContraseñaIncorrectaException;
-import persist.OperarioDTO;
+import modelo.persist.OperarioDTO;
 
 public class Operario {
     private static int nroOperario = 0;

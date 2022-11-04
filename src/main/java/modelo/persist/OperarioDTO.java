@@ -1,4 +1,4 @@
-package persist;
+package modelo.persist;
 
 import modelo.configEmpresa.Operario;
 

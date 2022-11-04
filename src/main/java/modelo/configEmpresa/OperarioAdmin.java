@@ -1,7 +1,7 @@
 package modelo.configEmpresa;
 
 import exceptions.ContraseñaIncorrectaException;
-import persist.OperarioDTO;
+import modelo.persist.OperarioDTO;
 
 public class OperarioAdmin extends Operario{
 
