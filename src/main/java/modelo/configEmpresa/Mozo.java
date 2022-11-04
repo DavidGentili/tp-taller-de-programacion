@@ -2,9 +2,10 @@ package modelo.configEmpresa;
 
 import exceptions.EstadoDelMozoIncorrectoException;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Mozo {
+public class Mozo implements Serializable {
     public static enum Estados {ACTIVO, FRANCO, AUSENTE}
     private static int nroMozos = 0;
     private int id;

@@ -1,14 +1,24 @@
 package persist;
 
-public class OperarioDTO {
+import modelo.configEmpresa.Operario;
+
+import java.io.Serializable;
+
+public class OperarioDTO implements Serializable {
     private static enum Tipos {ADMIN, COMUN}
-    private static int nroOperario = 0;
     private int id;
     private String nombreApellido;
     private String nombreUsuario;
     private String password;
     private Boolean activo;
     private Tipos tipo;
+
+    /**
+     * Se engarga de crear un nuevo operarioDTO apartir de un tipo de operario y un operario
+     * @param tipo
+     * @param operario
+     */
+    public OperarioDTO(Tipos tipo, Operario operario){}
 
     /**
      * Retorna el id del operarioDTO
@@ -105,4 +115,5 @@ public class OperarioDTO {
     public void setTipo(Tipos tipo) {
         this.tipo = tipo;
     }
+
 }

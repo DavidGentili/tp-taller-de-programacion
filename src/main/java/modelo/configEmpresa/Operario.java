@@ -1,6 +1,7 @@
 package modelo.configEmpresa;
 
 import exceptions.ContraseñaIncorrectaException;
+import persist.OperarioDTO;
 
 public class Operario {
     private static int nroOperario = 0;
@@ -97,4 +98,10 @@ public class Operario {
      * @return posibilidad de gestionar operarios
      */
     public boolean puedeGestionarOperarios(){return false;}
+
+    /**
+     * Retorna un operarioDTO, para su transferencia de informacion
+     * @return OperarioDTO correspondiente
+     */
+    protected OperarioDTO getOperarioDTO(){return null;}
 }

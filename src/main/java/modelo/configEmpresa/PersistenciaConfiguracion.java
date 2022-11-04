@@ -2,10 +2,11 @@ package modelo.configEmpresa;
 
 import persist.OperarioDTO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class PersistenciaConfiguracion {
+public class PersistenciaConfiguracion implements Serializable {
 
     private String nombreLocal;
     private ArrayList<Mozo> mozos;

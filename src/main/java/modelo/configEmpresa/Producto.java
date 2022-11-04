@@ -2,7 +2,9 @@ package modelo.configEmpresa;
 
 import exceptions.StockInsuficienteException;
 
-public class Producto {
+import java.io.Serializable;
+
+public class Producto implements Serializable {
     private static int nroProducto = 0;
     private int id;
     private String nombre;

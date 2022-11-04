@@ -3,7 +3,9 @@ package modelo.configEmpresa;
 import exceptions.MesaYaLiberadaException;
 import exceptions.MesaYaOcupadaException;
 
-public class Mesa {
+import java.io.Serializable;
+
+public class Mesa implements Serializable {
     public static enum Estados {LIBRE, OCUPADA}
     private int nroMesa;
     private int cantSillas;
