@@ -17,5 +17,21 @@ public class Pedido {
 		//fecha actual
 	}
 
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	
     
 }

@@ -15,6 +15,16 @@ public class Comanda {
     
     
     
+    
+    /**
+     * Se encarga de agregar un pedido a la comanda
+     * @param prod : producto a agregar
+     * @param cant : la cantidad que se desea pedir
+     * pre : prod != null
+     * pre: cant>0
+     * post : se agrega un nuevo pedido a la coleccion
+     */
+    
 	public void AgregarPedido(Producto prod,int cant) {
 		
 	}
