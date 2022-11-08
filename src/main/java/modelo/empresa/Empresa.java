@@ -51,7 +51,7 @@ public class Empresa {
     /**
      * Se encarga de crear una nueva promocion de prodcuto
      * @param dias : los dias que se activara esta nueva promocion
-     * @param posporuno : si esta promocion hace 2x1 en los productos
+     * @param dosporuno : si esta promocion hace 2x1 en los productos
      * @param dtoporcant : si esta promocion agrega descuento por comprar determinada cantidad
      * @param cantmin : la cantidad minima que se tiene que comprar para poder aplicar el descuento
      * @param preciounitario : el precio por cada unidad aplicando el descuento
@@ -98,8 +98,8 @@ public class Empresa {
     
     /**
      * Se encarga de desactivar una promocion activa
-     * @param inpromo : id de la promocion que se desea desactivar
-     * @throws IdIncorrectoExceptionn : Si no existe el id ingresado
+     * @param idpromo : id de la promocion que se desea desactivar
+     * @throws IdIncorrectoException : Si no existe el id ingresado
      * pre : idpromo != null
      * post : el estado de la promocion asociada al idpromo pasa a desactivada (activa=false)
      */
@@ -110,8 +110,8 @@ public class Empresa {
     
     /**
      * Se encarga de activar una promocion desactivada
-     * @param inpromo : id de la promocion que se desea activar
-     * @throws IdIncorrectoExceptionn : Si no existe el id ingresado
+     * @param idpromo : id de la promocion que se desea activar
+     * @throws IdIncorrectoException : Si no existe el id ingresado
      * pre : idpromo != null
      * post : el estado de la promocion asociada al idpromo pasa a activa (activa=true)
      */
