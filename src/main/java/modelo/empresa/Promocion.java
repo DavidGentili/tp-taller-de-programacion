@@ -1,3 +1,4 @@
+
 package modelo.empresa;
 
 public abstract class Promocion {

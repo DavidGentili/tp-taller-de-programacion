@@ -1,3 +1,4 @@
+
 package modelo.empresa;
 
 import java.util.Collection;
