@@ -16,7 +16,7 @@ public class OperarioAdmin extends Operario{
      *      nombreUsuario != null && nombreUsuruaio != ""
      * post: se retorna un operario nuevo activo
      */
-    public OperarioAdmin(String nombreApellido, String nombreUsuario, String password) throws ContraseñaIncorrectaException {
+    public OperarioAdmin(String nombreApellido, String nombreUsuario, String password){
         super(nombreApellido, nombreUsuario, password);
     }
 
