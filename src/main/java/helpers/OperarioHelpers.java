@@ -7,15 +7,17 @@ public class OperarioHelpers {
             return false;
 
         char[] characters = password.toCharArray();
-        boolean getNumber = false, getUpperCase = false;
+        boolean getNumber = false;
+        boolean getUpperCase = false;
         int i = 0;
-        while(i < characters.length && !getNumber && !getUpperCase){
+
+        while(i < characters.length && (!getNumber || !getUpperCase)){
             if(!getNumber && characters[i] >= '0' && characters[i] <= '9')
                 getNumber = true;
             if(!getUpperCase && characters[i] >= 'A' && characters[i]<='Z')
                 getUpperCase = true;
             i++;
         }
-        return getNumber | getUpperCase;
+        return getNumber && getUpperCase;
     }
 }

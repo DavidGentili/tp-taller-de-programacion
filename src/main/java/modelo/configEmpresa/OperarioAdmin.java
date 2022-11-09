@@ -59,6 +59,6 @@ public class OperarioAdmin extends Operario{
      * Retorna un operarioDTO, para su transferencia de informacion
      * @return OperarioDTO correspondiente
      */
-    @Override
-    protected OperarioDTO getOperarioDTO(){return null;}
+//    @Override
+//    protected OperarioDTO getOperarioDTO(){return null;}
 }
