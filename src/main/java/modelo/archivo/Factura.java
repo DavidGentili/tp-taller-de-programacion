@@ -29,8 +29,8 @@ public class Factura {
      * la fecha de factura es la fecha de realización de la misma
      * la clase tiene acceso al listado de promociones para poder calcular los descuentos asociados.
      * @param mesa para la cual se desea realizar la factura
-     * @param listado de pedidos realizados por esa mesa 
-     * @param forma de pago en el que desea pagar el cliente
+     * @param pedidos de pedidos realizados por esa mesa
+     * @param formaDePago de pago en el que desea pagar el cliente
      * pre: pedidos no puede estar vació, mesa debe ser distinto de null, la forma de pago se debe encontrar dentro los tipos enunciados en los enums
      * post: Instancia la factura con los datos relacionados a la misma
      */

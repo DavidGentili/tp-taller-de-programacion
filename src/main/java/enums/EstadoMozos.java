@@ -1,6 +1,6 @@
 package enums;
 
-public enum Estado {
+public enum EstadoMozos {
 	
 	ACTIVO,
 	DE_FRANCO,

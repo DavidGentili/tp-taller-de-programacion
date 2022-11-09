@@ -31,7 +31,7 @@ public class Empresa {
      * pre: mozo debe ser distinto de null
      * post: se añadira una nueva asignacion a la coleccion 
      */
-    public void AsignarMozo(Mozo mozo,Mesa mesa,Date dia) {
+    public void asignarMozo(Mozo mozo,Mesa mesa,Date dia) {
     	
     }
     
@@ -44,7 +44,7 @@ public class Empresa {
      * post : la mesa pasa a estado ocupado
      */
     
-    public void NuevaComanda(Mesa mesa) throws MesaYaOcupadaException{
+    public void nuevaComanda(Mesa mesa) throws MesaYaOcupadaException{
     	
     }
     
@@ -61,7 +61,7 @@ public class Empresa {
      * post: se añadira una nueva promocion a la coleccion 
      */
     
-    public void NuevaPromocion(String dias,boolean dosporuno, boolean dtoporcant,int cantmin,double preciounitario){
+    public void nuevaPromocion(String dias,boolean dosporuno, boolean dtoporcant,int cantmin,double preciounitario){
     	
     }
     
@@ -78,7 +78,7 @@ public class Empresa {
      * post: se añadira una nueva promocion a la coleccion 
      */
     
-    public void NuevaPromocionTemp(String dias,String nombre,String formapago,int porcentajedto,boolean acumulable){
+    public void nuevaPromocionTemp(String dias,String nombre,String formapago,int porcentajedto,boolean acumulable){
     	
     }
     
@@ -92,7 +92,7 @@ public class Empresa {
      * post : facturacion de la comanda , verifica si cumple con alguna promocion activa
      */
     
-    public void CerrarComanda(Comanda comanda) throws MesaYaLiberadaException{
+    public void cerrarComanda(Comanda comanda) throws MesaYaLiberadaException{
     	
     }
     
@@ -104,7 +104,7 @@ public class Empresa {
      * post : el estado de la promocion asociada al idpromo pasa a desactivada (activa=false)
      */
     
-    public void Desactivarpromocion(int idpromo) throws IdIncorrectoException {
+    public void desactivarpromocion(int idpromo) throws IdIncorrectoException {
     	
     }
     
@@ -116,8 +116,10 @@ public class Empresa {
      * post : el estado de la promocion asociada al idpromo pasa a activa (activa=true)
      */
     
-    public void ActivarPromocion(int idpromo) throws IdIncorrectoException {
+    public void activarPromocion(int idpromo) throws IdIncorrectoException {
    	 
     }
+
+
 
 }
