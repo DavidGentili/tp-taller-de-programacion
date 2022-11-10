@@ -136,6 +136,7 @@ public class Producto implements Serializable {
 
         this.id = id;
 
+        invariante();
         assert this.id == id : "No se asigno correctamente el id";
     }
 
@@ -149,6 +150,7 @@ public class Producto implements Serializable {
 
         this.nombre = nombre;
 
+        invariante();
         assert this.nombre == nombre : "No se asigno correctamente el nombre";
     }
 
@@ -162,6 +164,7 @@ public class Producto implements Serializable {
 
         this.precioCosto = precioCosto;
 
+        invariante();
         assert this.precioCosto == precioCosto : "No se asigno correctamente el precio de costo";
     }
 
@@ -175,8 +178,8 @@ public class Producto implements Serializable {
 
         this.precioVenta = precioVenta;
 
+        invariante();
         assert  this.precioVenta == precioVenta : "No se asigno correctamente el precio de venta";
-
     }
 
     /**
@@ -189,6 +192,7 @@ public class Producto implements Serializable {
 
         this.stock = stock;
 
+        invariante();
         assert this.stock == stock : "No se asigno corretamente el stock";
     }
 
@@ -205,6 +209,7 @@ public class Producto implements Serializable {
             throw new StockInsuficienteException();
         stock--;
 
+        invariante();
         assert stock == oldStock - 1 : "No se resto correcctamente el stock";
     }
 
@@ -222,6 +227,19 @@ public class Producto implements Serializable {
             throw new StockInsuficienteException();
         stock -= cantidad;
 
+        invariante();
         assert stock == oldStock - cantidad : "No se resto correctamente el stock";
+    }
+
+    protected void updateProducto(Producto other){
+        this.nombre = other.nombre;
+        this.precioCosto = other.precioCosto;
+        this.precioVenta = other.precioVenta;
+        this.stock = other.stock;
+    }
+
+    private void invariante(){
+        assert precioCosto < precioVenta : "El precio de costo debe ser menor al precio de venta";
+        assert stock >= 0 : "El stock no puede ser negativo";
     }
 }

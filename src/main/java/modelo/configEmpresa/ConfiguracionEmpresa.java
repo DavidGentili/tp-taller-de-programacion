@@ -191,7 +191,8 @@ public class ConfiguracionEmpresa {
      * @param nroMesa : el numero de la mesa a eliminar
      * @param user : El usuario que intenta realizar la accion
      * @throws UsuarioNoAutorizadoException : Se emite si el usuario no esta autorizado
-     * @throws IdIncorrectoException : Si no existe el Id ingresado
+     * @throws IdIncorrectoException : Si el id no es correcto
+     * @throws MesaNoEncontradaException : Si la mesa a eliminar no existe en la coleccion
      * pre: user != null
      * post: Se elimina la mesa de la coleccion
      */
@@ -215,11 +216,23 @@ public class ConfiguracionEmpresa {
      * @param nuevoProducto : El producto que se quiere agregar
      * @param user : El usuario que intenta realizar dicha accion
      * @throws UsuarioNoAutorizadoException : Se emite si el usuario no esta autorizado
+     * @throws ProductoYaExistenteException : El producto ya se encuentra en la coleccion
      * pre: nuevoProducto != null
      *      user != null
      * post: Se agrega el producto a la coleccion de mesas
      */
-    public void agregarProducto(Producto nuevoProducto, Operario user) throws  UsuarioNoAutorizadoException {};
+    public void agregarProducto(Producto nuevoProducto, Operario user) throws UsuarioNoAutorizadoException, ProductoYaExistenteException {
+        assert productos != null : "El producto no puede ser nulo";
+        assert user != null : "El usuario no puede ser nulo";
+
+        if(!user.puedeGestionarProductos())
+            throw new UsuarioNoAutorizadoException();
+        if(getProductoById(nuevoProducto.getId()) != null)
+            throw new ProductoYaExistenteException();
+        productos.add(nuevoProducto);
+
+        assert getProductoById(nuevoProducto.getId()) != null : "No se agrego correctamente el producto";
+    };
 
     /**
      * Se actualiza un producto en el sistema
@@ -227,12 +240,26 @@ public class ConfiguracionEmpresa {
      * @param productoId : el Id del producto
      * @param user : El usuario que intenta realizar la accion;
      * @throws UsuarioNoAutorizadoException : Se emite si el usuario no esta autorizado
-     * @throws IdIncorrectoException : Si no existe el Id ingresado
+     * @throws IdIncorrectoException : Si el id es incorrecto
+     * @throws ProductoNoEncontradoException : Si no se encuentra el producto buscado
      * pre: productoActualizado != null
      *      user != null
      * post: Se actualiza el producto en la coleccion.
      */
-    public void actulizarProducto(Producto productoActualizado, int productoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException{};
+    public void actulizarProducto(Producto productoActualizado, int productoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, ProductoNoEncontradoException{
+        assert productoActualizado != null : "el producto actualizado debe ser distinto de nulo";
+        assert user != null : "El usuario debe ser distinto de nulo";
+
+        if(!user.puedeGestionarProductos())
+            throw new UsuarioNoAutorizadoException();
+        if(productoId < 0)
+            throw new IdIncorrectoException();
+        Producto producto = getProductoById(productoId);
+        if(producto == null)
+            throw new ProductoNoEncontradoException();
+
+        producto.updateProducto(productoActualizado);
+    };
 
     /**
      * Se elimina de la colecicon el producto indicada
@@ -240,10 +267,25 @@ public class ConfiguracionEmpresa {
      * @param user : El usuario que intenta realizar la accion
      * @throws UsuarioNoAutorizadoException : Se emite si el usuario no esta autorizado
      * @throws IdIncorrectoException : Si no existe el Id ingresado
+     * @throws ProductoNoEncontradoException : Si no se encuentra el producto buscado
      * pre: user != null
      * post: Se elimina el producto de la coleccion
      */
-    public void eliminarProducto(int idProducto, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {};
+    public void eliminarProducto(int idProducto, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, ProductoNoEncontradoException {
+        assert user != null : "El usuario no puede ser nulo";
+
+        if(!user.puedeGestionarProductos())
+            throw new UsuarioNoAutorizadoException();
+        if(idProducto < 0)
+            throw new IdIncorrectoException();
+        Producto producto = getProductoById(idProducto);
+        if(producto == null)
+            throw new ProductoNoEncontradoException();
+        productos.remove(producto);
+
+        assert getProductoById(idProducto) == null : "No se elimino correctamente el producto";
+
+    };
 
     /**
      * Se agrega un operario al registro de la empresa, si el usuario no es admin se emite una exception
@@ -267,7 +309,17 @@ public class ConfiguracionEmpresa {
      *      user != null
      * post: Se actualiza el operario en la coleccion.
      */
-    public void actualizarOperario(Operario operarioActualizado, int idOperario, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException{};
+    public void actualizarOperario(Operario operarioActualizado, int idOperario, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException{
+        assert operarioActualizado != null : "El operario actualizado debe ser distinto de null";
+        assert user != null : "El usuario debe ser distinto de null";
+
+        if(!user.puedeGestionarProductos())
+            throw new UsuarioNoAutorizadoException();
+        if(idOperario < 0)
+            throw new IdIncorrectoException();
+        //Terminar
+
+    };
 
     /**
      * Se elimina de la colecicon el producto indicada
@@ -279,15 +331,6 @@ public class ConfiguracionEmpresa {
      * post: Se elimina el opeario de la coleccion
      */
     public void eliminarOperario(int idOperario, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {};
-
-    /**
-     * Se encarga de actualizar el elemento sueldo de la empresa
-     * @param nuevoSueldo : el nuevo sueldo
-     * @throws UsuarioNoAutorizadoException : Si el usuario no se encuentra autorizado
-     * pre: sueldo != null
-     * post: this.sueldo = nuevoSueldo;
-     */
-    public void actualizarSueldo(Sueldo nuevoSueldo) throws UsuarioNoAutorizadoException {};
 
     /**
      * Si el nombre de usuario y contraseña son correctas, retorna el operario correspondiente
