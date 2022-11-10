@@ -1,10 +1,8 @@
 package modelo.configEmpresa;
 
 import enums.EstadoMozos;
-import exceptions.EstadoDelMozoIncorrectoException;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import static helpers.FechasHelpers.isOver18;

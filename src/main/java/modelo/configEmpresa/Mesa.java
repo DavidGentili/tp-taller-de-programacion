@@ -35,6 +35,14 @@ public class Mesa implements Serializable {
     }
 
     /**
+     * Retorna el numero de la mesa
+     * @return Numero de la mesa
+     */
+    public int getNroMesa() {
+        return nroMesa;
+    }
+
+    /**
      *Retorna la cantidad de sillas de la mesa
      * @return Cantidad de sillas de la mesa
      */

@@ -1,8 +1,6 @@
 package modelo.configEmpresa;
 
-import exceptions.IdIncorrectoException;
-import exceptions.UsuarioNoAutorizadoException;
-import exceptions.DatosLoginIncorrectosException;
+import exceptions.*;
 
 import java.util.ArrayList;
 
@@ -18,7 +16,15 @@ public class ConfiguracionEmpresa {
 
     private ConfiguracionEmpresa(){}
 
-    public static ConfiguracionEmpresa getInstance(){return null;}
+    /**
+     * Retorna la instancia unica de configuracion empresa
+     * @return instancia de configuracion empresa
+     */
+    public static ConfiguracionEmpresa getInstance(){
+        if(instance == null)
+            instance = new ConfiguracionEmpresa();
+        return instance;
+    }
 
     /**
      * Se encarga de cambiar el nombre del local, para esto el usuario debe ser admin,
@@ -31,8 +37,22 @@ public class ConfiguracionEmpresa {
      * post: nombreLocal = name || new UsuarioNoAutorizadoException
      *
      */
-    public void cambiaNombreLocal(String name, Operario user) throws UsuarioNoAutorizadoException {} ;
+    public void cambiaNombreLocal(String name, Operario user) throws UsuarioNoAutorizadoException {
+        assert name != null && !name.isBlank() && !name.isEmpty() : "El nombre debe ser distinto de nulo, blanco y vacio";
+        assert user != null : "El usuario no puede ser nulo";
 
+        if(!user.puedeModificarNombreLocal())
+            throw new UsuarioNoAutorizadoException();
+        this.nombreLocal = nombreLocal;
+
+        assert this.nombreLocal == nombreLocal : "No se asigno correctamente el nombre del local";
+
+    }
+
+    /**
+     * Retorna el nombre del local
+     * @return Nombre del local
+     */
     public String getNombreLocal(){
         return this.nombreLocal;
     }
@@ -43,11 +63,24 @@ public class ConfiguracionEmpresa {
      * @param nuevoMozo : El nuevo mozo que se desea agregar
      * @param user : El usuario que intenta realizar la accion
      * @throws UsuarioNoAutorizadoException : Si el usuario no esta autorizado
+     * @throws MozoYaAgregadoException : Si el mozo ya se encuentra agregado en la coleccion
      * pre: el nuevo mozo debe ser distinto de null
      *      user != null
      * post: se añadira un nuevo mozo a la coleccion
      */
-    public void AgregaMozo(Mozo nuevoMozo, Operario user) throws UsuarioNoAutorizadoException {};
+    public void AgregaMozo(Mozo nuevoMozo, Operario user) throws UsuarioNoAutorizadoException, MozoYaAgregadoException {
+        assert mozos != null : "El mozo no puede ser nulo";
+        assert user != null : "El ususarion o puede ser nulo";
+
+        if(!user.puedeGestionarMozos())
+            throw new UsuarioNoAutorizadoException();
+        if(this.getMozoById(nuevoMozo.getId()) != null)
+
+            throw new MozoYaAgregadoException();
+        mozos.add(nuevoMozo);
+
+        assert nuevoMozo == getMozoById(nuevoMozo.getId()) : "El mozo no fue añadido correctamente a la coleccion";
+    }
 
     /**
      * Se encarga de actualizar un mozo, si el usuario no es admin se emite una excepcion
@@ -55,23 +88,52 @@ public class ConfiguracionEmpresa {
      * @param mozoId : El usuario que intenta realizar la accion
      * @param user : El usuario que intenta realizar la accion
      * @throws UsuarioNoAutorizadoException : Si el usuario no esta autorizado
-     * @throws IdIncorrectoException : Si no existe el Id ingresado
+     * @throws IdIncorrectoException : Si el id es incorrecto
      * pre: mozoActualizado no debe ser nulo
      *      user != null
      * post: el mozo del sistema tomara los valores de mozoActulizado,
      */
-    public void actualizarMozo(Mozo mozoActualizado, int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {};
+    public void actualizarMozo(Mozo mozoActualizado, int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MozoNoEncontradoException {
+        assert mozoActualizado != null : "El mozo con los datos a actualizar no debe ser nulo";
+        assert user != null : "El usuario no debe ser nulo";
+
+        if(!user.puedeGestionarMozos())
+            throw new UsuarioNoAutorizadoException();
+        if(mozoId < 0)
+            throw new IdIncorrectoException();
+        Mozo mozo = this.getMozoById(mozoId);
+        if(mozo == null)
+            throw new MozoNoEncontradoException();
+        mozo.setCantHijos(mozoActualizado.getCantHijos());
+        mozo.setEstado(mozoActualizado.getEstado());
+        mozo.setNombreApellido(mozoActualizado.getNombreApellido());
+
+    };
 
     /**
      * Se encarga de eliminar un mozo segun su Id
      * @param mozoId : El id del mozo a eleminar
      * @param user : El usuario que intenta realizar la accion
      * @throws UsuarioNoAutorizadoException : Si el usuario no esta autorizado
-     * @throws IdIncorrectoException : Si no existe el Id ingresado
+     * @throws IdIncorrectoException : Si el id es incorrecto
+     * @throws MozoNoEncontradoException : Si el mozo no existe en la coleccion indicada
      * pre: user != null
      * post: Se eliminara el mozo con el id ingresado de la coleccion
      */
-    public void eliminaMozo(int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {};
+    public void eliminaMozo(int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MozoNoEncontradoException {
+        assert user != null : "El usuario no puede ser nulo";
+
+        if(!user.puedeGestionarMozos())
+            throw new UsuarioNoAutorizadoException();
+        if(mozoId < 0)
+            throw new IdIncorrectoException();
+        Mozo mozo = this.getMozoById(mozoId);
+        if(mozo == null)
+            throw new MozoNoEncontradoException();
+        mozos.remove(mozo);
+
+        assert getMozoById(mozoId) == null : "No se elimino el mozo correctamente";
+    };
 
     /**
      * Se agrega una mesa al registro de la empresa, si el usuario no es admin se emite una exception
@@ -82,7 +144,9 @@ public class ConfiguracionEmpresa {
      *      user != null
      * post: Se agrega la meza a la coleccion de mesas
      */
-    public void agregarMesa(Mesa nuevaMesa, Operario user) throws  UsuarioNoAutorizadoException {};
+    public void agregarMesa(Mesa nuevaMesa, Operario user) throws  UsuarioNoAutorizadoException {
+
+    };
 
     /**
      * Se actualiza la mesa en el sistema
@@ -207,64 +271,95 @@ public class ConfiguracionEmpresa {
      * pre: user != null
      * post: retorna this.operarios
      */
-    public ArrayList<Operario> getOperarios(Operario user) throws UsuarioNoAutorizadoException { return null;};
+    public ArrayList<Operario> getOperarios(Operario user) throws UsuarioNoAutorizadoException {
+        assert user != null : "El usuario no puede ser nulo";
+
+        if(!user.puedeGestionarOperarios())
+            throw new UsuarioNoAutorizadoException();
+        return operarios;
+    };
 
     /**
      * Retorna los operarios del sistema
      * @return La coleccion de operarios
-
-     * pre: user != null
      * post: retorna this.operarios
      */
-    protected ArrayList<Operario> getOperarios() { return null;};
+    protected ArrayList<Operario> getOperarios() {
+        return operarios;
+    }
 
     /**
      * Retorna los mozos del sistema
      * @return Los mozos del sistema
      */
-    public ArrayList<Mozo> getMozos() {return null;};
+    public ArrayList<Mozo> getMozos() {
+        return mozos;
+    };
 
     /**
      * Retorna el mozo correspondiente al id ingresado, en caso de que no exista dicho id arroja una excepcion
+     * pre : id >= 0
      * @param mozoId : Id del mozo deseado
      * @return el mozo correspondiente al id ingresado
-     * @throws IdIncorrectoException Si el Id no corresponde
      */
-    public Mozo getMozoById(int mozoId) throws IdIncorrectoException {return null;};
+    public Mozo getMozoById(int mozoId){
+        assert mozoId >= 0 : "El id no puede ser negativo";
+        Mozo mozo = null;
+        int i = 0;
+        while(mozo == null && i < mozos.size())
+            mozo = mozos.get(i).getId() == mozoId ? mozos.get(i) : null;
+        return mozo;
+    }
 
     /**
      * Retorna las mesas del sistema
      * @return Las mesas del sistema
      */
-    public ArrayList<Mesa> getMesas() {return null;};
+    public ArrayList<Mesa> getMesas() {
+        return mesas;
+    };
 
     /**
-     * Retorna la mesa correspondiente al id ingresado, en caso de que no exista dicho id arroja una excepcion
+     * Retorna la mesa correspondiente al id ingresado, en caso de que no exista una meza con dicho id retorna null
+     * pre: nroMesa >= 0;
      * @param nroMesa : numero de la mesa deseado
      * @return la mesa correspondiente al id ingresado
-     * @throws IdIncorrectoException Si el Id no corresponde
      */
-    public Mesa getMesaNroMesa(int nroMesa) throws IdIncorrectoException {return null;};
+    public Mesa getMesaNroMesa(int nroMesa) {
+        assert nroMesa >= 0 : "El nro de mesa no puede ser negativo";
+        Mesa mesa = null;
+        int i = 0;
+        while(mesa == null && i < mesas.size())
+            mesa = mesas.get(i).getNroMesa() == nroMesa ? mesas.get(i) : null;
+        return mesa;
+    };
 
     /**
      * Retorna los productos del sistema
      * @return Los productos del sistema
      */
-    public ArrayList<Producto> getProductos() {return null;};
+    public ArrayList<Producto> getProductos() {return productos;};
 
     /**
-     * Retorna el producto correspondiente al id ingresado, en caso de que no exista dicho id arroja una excepcion
+     * Retorna el producto correspondiente al id ingresado, en caso de que no exista un producto con dicho id retorna null
+     * pre: productoId >= 0;
      * @param productoId : Id del producto deseado
      * @return el producto correspondiente al id ingresado
-     * @throws IdIncorrectoException Si el Id no corresponde
      */
-    public Producto getProductoById(int productoId) throws IdIncorrectoException {return null;};
+    public Producto getProductoById(int productoId){
+        assert productoId >= 0 : "El id no puede ser negativo";
+        Producto producto = null;
+        int i = 0;
+        while(producto == null && i < mozos.size())
+            producto = productos.get(i).getId() == productoId ? productos.get(i) : null;
+        return producto;
+    };
 
     /**
      * Retorna el elemento sueldo de la empresa
      * @return El elemento sueldo de la empresa
      */
-    public Sueldo getSueldo() { return null;};
+    public Sueldo getSueldo() { return sueldo;};
 
     /**
      * Determina el elemento sueldo de la empresa
@@ -274,7 +369,15 @@ public class ConfiguracionEmpresa {
      * pre: nuevoSueldo != null;
      * post : this.sueldo == nuevoSueldo;
      */
-    public void setSueldo(Sueldo nuevoSueldo) throws UsuarioNoAutorizadoException {};
+    public void setSueldo(Sueldo nuevoSueldo, Operario user) throws UsuarioNoAutorizadoException {
+        assert nuevoSueldo != null : "El sueldo no puede ser nulo";
+
+        if(!user.puedeGestionarSueldo())
+            throw new UsuarioNoAutorizadoException();
+        this.sueldo = nuevoSueldo;
+
+        assert sueldo == nuevoSueldo : "No se asigno correctamente el nuevo sueldo";
+    }
 
     /**
      * Se encarga de guardar la configuracion de la empresa
