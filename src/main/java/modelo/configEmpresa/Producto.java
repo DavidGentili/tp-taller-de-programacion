@@ -236,6 +236,7 @@ public class Producto implements Serializable {
         this.precioCosto = other.precioCosto;
         this.precioVenta = other.precioVenta;
         this.stock = other.stock;
+        invariante();
     }
 
     private void invariante(){

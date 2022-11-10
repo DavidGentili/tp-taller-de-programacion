@@ -98,5 +98,9 @@ public class Mesa implements Serializable {
         assert this.estado == EstadoMesas.LIBRE : "La mesa no se libero correctamente";
     }
 
+    protected void updateMesa(Mesa other){
+        this.cantSillas = other.cantSillas;
+    }
+
 }
 

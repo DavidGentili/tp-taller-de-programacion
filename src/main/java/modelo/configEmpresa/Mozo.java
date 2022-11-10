@@ -156,5 +156,14 @@ public class Mozo implements Serializable {
         this.estado = estado;
     };
 
+    protected void updateMozo(Mozo other){
+        this.estado = other.estado;
+        this.cantHijos = other.cantHijos;
+        this.nombreApellido = other.nombreApellido;
+        this.fechaNacimiento = other.fechaNacimiento;
+    }
+
+
+
 
 }

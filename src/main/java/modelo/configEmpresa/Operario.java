@@ -131,4 +131,11 @@ public class Operario {
      */
     public boolean puedeModificarNombreLocal(){return false;}
 
+    protected void updateOperario(Operario other){
+        this.nombreApellido = other.nombreApellido;
+        this.nombreUsuario = other.nombreUsuario;
+        this.password = other.password;
+        this.activo = other.activo;
+    }
+
 }
