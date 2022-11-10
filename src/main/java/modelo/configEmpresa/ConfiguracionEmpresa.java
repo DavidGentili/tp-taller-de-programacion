@@ -140,12 +140,22 @@ public class ConfiguracionEmpresa {
      * @param nuevaMesa : La mesa que se quiere agregar
      * @param user : El usuario que intenta realizar dicha accion
      * @throws UsuarioNoAutorizadoException : Se emite si el usuario no esta autorizado
+     * @throws MesaYaExistenteException : Si el numero de mesa ya existe
      * pre: nuevaMesa != null
      *      user != null
      * post: Se agrega la meza a la coleccion de mesas
      */
-    public void agregarMesa(Mesa nuevaMesa, Operario user) throws  UsuarioNoAutorizadoException {
+    public void agregarMesa(Mesa nuevaMesa, Operario user) throws UsuarioNoAutorizadoException, MesaYaExistenteException {
+        assert nuevaMesa != null : "La nueva mesa no puede ser nula";
+        assert user != null : "El usuario tiene que ser no nulo";
 
+        if(!user.puedeGestionarMesas())
+            throw new UsuarioNoAutorizadoException();
+        if(getMesaNroMesa(nuevaMesa.getNroMesa()) != null)
+            throw new MesaYaExistenteException();
+        mesas.add(nuevaMesa);
+
+        assert getMesaNroMesa(nuevaMesa.getNroMesa()) == nuevaMesa : "No se agrego correctamente la nueva mesa";
     };
 
     /**
@@ -154,12 +164,27 @@ public class ConfiguracionEmpresa {
      * @param nroMesa : el numero de la mesa
      * @param user : El usuario que intenta realizar la accion;
      * @throws UsuarioNoAutorizadoException : Se emite si el usuario no esta autorizado
-     * @throws IdIncorrectoException : Si no existe el Id ingresado
+     * @throws IdIncorrectoException : Si el id es incorrecto
+     * @throws MesaNoEncontradaException : si no se encuentra la mesa en la coleccion
      * pre: mesaAcutalizada != null
      *      user != null
      * post: Se actualiza la mesa en la coleccion.
      */
-    public void actulizarMesa(Mesa mesaActualizada, int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException{};
+    public void actulizarMesa(Mesa mesaActualizada, int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MesaNoEncontradaException{
+        assert mesaActualizada != null : "La mesa actualizada no puede ser nula";
+        assert user != null : "El usuario no puede ser nulo";
+
+        if(!user.puedeGestionarMesas())
+            throw new UsuarioNoAutorizadoException();
+        if(nroMesa < 0)
+            throw new IdIncorrectoException();
+        Mesa mesa = getMesaNroMesa(nroMesa);
+        if(mesa == null)
+            throw new MesaNoEncontradaException();
+        mesa.setCantSillas(mesaActualizada.getCantSillas());
+
+        assert mesa.getCantSillas() == mesaActualizada.getCantSillas() : "No se actualizo correctamente la mesa";
+    };
 
     /**
      * Se elimina de la colecicon la mesa indicada
@@ -170,7 +195,20 @@ public class ConfiguracionEmpresa {
      * pre: user != null
      * post: Se elimina la mesa de la coleccion
      */
-    public void eliminarMesa(int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {};
+    public void eliminarMesa(int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MesaNoEncontradaException {
+        assert user != null : "El usuario debe ser no nulo";
+
+        if(!user.puedeGestionarMesas())
+            throw new UsuarioNoAutorizadoException();
+        if(nroMesa < 0)
+            throw new IdIncorrectoException();
+        Mesa mesa = getMesaNroMesa(nroMesa);
+        if(mesa == null)
+            throw new MesaNoEncontradaException();
+        mesas.remove(mesa);
+
+        assert getMesaNroMesa(nroMesa) == null : "No se elimino correctamente la mesa";
+    };
 
     /**
      * Se agrega un producto al registro de la empresa, si el usuario no es admin se emite una exception
