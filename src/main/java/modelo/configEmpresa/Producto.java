@@ -70,6 +70,23 @@ public class Producto implements Serializable {
     }
 
     /**
+     * Retorna en numero de mozos que se han almacenado
+     * @return Nro de mozos
+     */
+    public static int getNroProducto(){
+        return nroProducto;
+    }
+
+
+    protected static void setNroProducto(int nroProducto){
+        assert nroProducto >= 0 : "El numero de producto no puede ser negativo";
+
+        Producto.nroProducto = nroProducto;
+
+        assert Producto.nroProducto == nroProducto : "No se asigno correctamente el numero del producto";
+    }
+
+    /**
      * Retorna el id de un producto
      * @return id del producto
      */

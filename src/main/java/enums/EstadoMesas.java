@@ -1,6 +1,8 @@
 package enums;
 
-public enum EstadoMesas {
+import java.io.Serializable;
+
+public enum EstadoMesas implements Serializable {
     LIBRE,
     OCUPADA
 }

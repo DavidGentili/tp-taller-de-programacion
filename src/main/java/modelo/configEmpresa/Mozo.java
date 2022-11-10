@@ -49,7 +49,7 @@ public class Mozo implements Serializable {
      * pre: nroMozos >= 0
      * @param nroMozos : Nro de mozos
      */
-    public static void setNroMozos(int nroMozos){
+    protected static void setNroMozos(int nroMozos){
         assert nroMozos >= 0 : "No se puede asignar un numero de mozos negativo";
         Mozo.nroMozos = nroMozos;
         assert Mozo.nroMozos == nroMozos : "No se asigno correctamente el numero de mozos";

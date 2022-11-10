@@ -23,7 +23,7 @@ public interface IPersistencia<E> {
      * @throws FileNotFoundException : Si no se encuentra el archivo indicado
      * (FileNotFoundException es parte de IOException, importante a tener en cuenta al momento de capturar la excepcion)
      */
-    void openOutput(String name) throws IOException, FileNotFoundException;
+    void openOutput(String name) throws IOException;
 
     /**
      * Se encarga de cerrar el arhcivo de entrada

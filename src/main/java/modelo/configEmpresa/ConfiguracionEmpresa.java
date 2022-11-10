@@ -14,7 +14,7 @@ public class ConfiguracionEmpresa {
     private ArrayList<Producto> productos;
     private ArrayList<Operario> operarios;
     private Sueldo sueldo;
-    private PersistenciaConfiguracion persistencia;
+    private ConfiguracionEmpresaDTO persistencia;
 
     private ConfiguracionEmpresa(){}
 
@@ -32,6 +32,10 @@ public class ConfiguracionEmpresa {
      *
      */
     public void cambiaNombreLocal(String name, Operario user) throws UsuarioNoAutorizadoException {} ;
+
+    public String getNombreLocal(){
+        return this.nombreLocal;
+    }
 
     /**
      * Se encarga de agregar un nuevo mozo a los registros de la empresa, si el usuario no es admin
@@ -204,6 +208,15 @@ public class ConfiguracionEmpresa {
      * post: retorna this.operarios
      */
     public ArrayList<Operario> getOperarios(Operario user) throws UsuarioNoAutorizadoException { return null;};
+
+    /**
+     * Retorna los operarios del sistema
+     * @return La coleccion de operarios
+
+     * pre: user != null
+     * post: retorna this.operarios
+     */
+    protected ArrayList<Operario> getOperarios() { return null;};
 
     /**
      * Retorna los mozos del sistema
