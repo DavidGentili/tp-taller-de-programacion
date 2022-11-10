@@ -77,24 +77,48 @@ public class ConfiguracionEmpresaDTO implements Serializable {
 
     }
 
+    /**
+     * Retorna el nombre del local
+     * @return nombre del local
+     */
     public String getNombreLocal() {return nombreLocal;}
 
+    /**
+     * Retorna los mozos almacenados
+     * @return mozos almacenados
+     */
     public ArrayList<Mozo> getMozos() {
         return mozos;
     }
 
+    /**
+     * Retorna las mesas almacenadas
+     * @return Mesas almacenadas
+     */
     public ArrayList<Mesa> getMesas() {
         return mesas;
     }
 
+    /**
+     * Retorna los productos almacenados
+     * @return productos almacenados
+     */
     public ArrayList<Producto> getProductos() {
         return productos;
     }
 
+    /**
+     * Retorna el sueldo almacenado
+     * @return sueldo almacenado
+     */
     public Sueldo getSueldo() {
         return sueldo;
     }
 
+    /**
+     * Retorna los operarios almacenado
+     * @return Operararios almacenados
+     */
     public ArrayList<Operario> getOperarios() {
         return null;
     }

@@ -125,9 +125,10 @@ public class Operario {
      */
     public boolean puedeGestionarOperarios(){return false;}
 
-//    /**
-//     * Retorna un operarioDTO, para su transferencia de informacion
-//     * @return OperarioDTO correspondiente
-//     */
-//    protected OperarioDTO getOperarioDTO(){return null;}
+    /**
+     * Informa si el operario esta calificado para gestionar el nombre del local
+     * @return posibilidad de gestionar el nombre del local
+     */
+    public boolean puedeModificarNombreLocal(){return false;}
+
 }
