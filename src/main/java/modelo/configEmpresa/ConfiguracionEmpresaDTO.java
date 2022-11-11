@@ -22,6 +22,8 @@ public class ConfiguracionEmpresaDTO implements Serializable {
     private int nroOperarios;
     private int nroProductos;
 
+    private Operario USUARIO_BASE = new OperarioAdmin("ADMIN", "ADMIN","ADMIN1234");
+
 
     /**
      * Instancia una nueva configuracion de la empresa DTO, para almacenarla apartir de una configuracion empresa
@@ -55,7 +57,7 @@ public class ConfiguracionEmpresaDTO implements Serializable {
         PersistencaiBin file = new PersistencaiBin();
         file.openOutput(Config.ARCHIVO_CONFIGURACION);
         file.writeFile(this);
-        file.closeInput();
+        file.closeOutput();
     }
 
     /**
@@ -65,6 +67,9 @@ public class ConfiguracionEmpresaDTO implements Serializable {
         PersistencaiBin file = new PersistencaiBin();
         file.openInput(Config.ARCHIVO_CONFIGURACION);
         ConfiguracionEmpresaDTO aux = (ConfiguracionEmpresaDTO) file.readFile();
+        file.closeInput();
+        if(aux.getOperarios().size() == 0)
+            aux.getOperarios().add(USUARIO_BASE);
         this.nombreLocal = aux.getNombreLocal();
         this.mesas = aux.getMesas();
         this.mozos = aux.getMozos();
@@ -74,7 +79,6 @@ public class ConfiguracionEmpresaDTO implements Serializable {
         this.sueldo = aux.getSueldo();
         this.nroOperarios = aux.getNroOperarios();
         this.nroProductos = aux.getNroProductos();
-
     }
 
     /**

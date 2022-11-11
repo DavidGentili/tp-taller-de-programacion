@@ -41,8 +41,11 @@ public class GestorDeProductos {
         assert productoId >= 0 : "El id no puede ser negativo";
         Producto producto = null;
         int i = 0;
-        while(producto == null && i < productos.size())
-            producto = productos.get(i).getId() == productoId ? productos.get(i) : null;
+        while(producto == null && i < productos.size()){
+            if(productos.get(i).getId() == productoId)
+                producto = productos.get(i);
+            i++;
+        }
         return producto;
     };
 

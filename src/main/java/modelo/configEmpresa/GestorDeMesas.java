@@ -43,8 +43,11 @@ public class GestorDeMesas {
         assert nroMesa >= 0 : "El nro de mesa no puede ser negativo";
         Mesa mesa = null;
         int i = 0;
-        while(mesa == null && i < mesas.size())
-            mesa = mesas.get(i).getNroMesa() == nroMesa ? mesas.get(i) : null;
+        while(mesa == null && i < mesas.size()){
+            if(mesas.get(i).getNroMesa() == nroMesa)
+                mesa = mesas.get(i);
+            i++;
+        }
         return mesa;
     };
 

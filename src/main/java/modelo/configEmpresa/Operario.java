@@ -5,12 +5,12 @@ import modelo.persist.OperarioDTO;
 import static helpers.OperarioHelpers.correctPassword;
 
 public class Operario {
-    private static int nroOperario = 0;
-    private int id;
-    private String nombreApellido;
-    private String nombreUsuario;
-    private String password;
-    private Boolean activo;
+    protected static int nroOperario = 0;
+    protected int id;
+    protected String nombreApellido;
+    protected String nombreUsuario;
+    protected String password;
+    protected Boolean activo;
 
     /**
      * Se encarga de crear un opeario nuevo si la contraseña es valida, este operario es activo
@@ -136,6 +136,15 @@ public class Operario {
         this.nombreUsuario = other.nombreUsuario;
         this.password = other.password;
         this.activo = other.activo;
+    }
+
+    /**
+     * Retorna si la contraseña coincide con la contraseña ingresada
+     * @param password contraseña ingresada
+     * @return si son iguales o no las contraseñas
+     */
+    protected boolean matchPassword(String password){
+        return password == this.password;
     }
 
 }

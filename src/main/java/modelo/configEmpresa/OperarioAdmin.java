@@ -3,7 +3,9 @@ package modelo.configEmpresa;
 import exceptions.ContraseñaIncorrectaException;
 import modelo.persist.OperarioDTO;
 
-public class OperarioAdmin extends Operario {
+import java.io.Serializable;
+
+public class OperarioAdmin extends Operario implements Serializable {
 
     /**
      * Se encarga de crear un opeario nuevo si la contraseña es valida, este operario es activo

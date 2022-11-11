@@ -14,7 +14,13 @@ public class ConfiguracionEmpresa {
     private GestorDeOperarios operarios;
     private Sueldo sueldo;
 
-    private ConfiguracionEmpresa(){}
+    private ConfiguracionEmpresa(){
+        this.productos = new GestorDeProductos();
+        this.mozos = new GestorDeMozos();
+        this.mesas = new GestorDeMesas();
+        this.operarios = new GestorDeOperarios();
+        this.sueldo = null;
+    }
 
     /**
      * Retorna la instancia unica de configuracion empresa

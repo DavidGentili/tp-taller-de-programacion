@@ -50,7 +50,7 @@ public class GestorDeOperarios {
 
         if(!user.puedeGestionarOperarios())
             throw new UsuarioNoAutorizadoException();
-        Operario operario = getOperarioById(nuevoOperario.getId());
+        Operario operario = getOperarioByUserName(nuevoOperario.getNombreUsuario());
         if(operario != null)
             throw new OperarioYaExistenteException();
         operarios.add(operario);
@@ -66,8 +66,29 @@ public class GestorDeOperarios {
     private Operario getOperarioById(int idOperario) {
         int i = 0;
         Operario operario = null;
-        while(i < operarios.size() && operario != null)
-            operario = operarios.get(i).getId() == idOperario ? operarios.get(i) : null;
+        while(i < operarios.size() && operario != null){
+            if(operarios.get(i).getId() == idOperario)
+                operario = operarios.get(i);
+            i++;
+        }
+        return operario;
+    }
+
+    /**
+     * Retorna un operario por nombre de usuario
+     * pre: userName != null && !userName.isEmpty() && !userName.isBlank()
+     * @param userName : Nombre de usuario
+     * @return : Operario con el nombre de usuario solicitado
+     */
+    private Operario getOperarioByUserName(String userName){
+        assert userName != null && !userName.isEmpty() && !userName.isBlank() : "El operario no puede ser nulo, ni blanco ni vacio";
+        Operario operario = null;
+        int i = 0;
+        while(i < operarios.size() && operario == null){
+            if(operarios.get(i).getNombreUsuario() == userName)
+                operario = operarios.get(i);
+            i++;
+        }
         return operario;
     }
 
@@ -133,5 +154,16 @@ public class GestorDeOperarios {
      *      password != null && password != ""
      * post: retorna el operario deseado.
      */
-    public Operario login(String nombreDeUsuario, String password) throws DatosLoginIncorrectosException { return null;};
+    public Operario login(String nombreDeUsuario, String password) throws DatosLoginIncorrectosException {
+        assert nombreDeUsuario != null && !nombreDeUsuario.isEmpty() && !nombreDeUsuario.isBlank() : "El nombre de usuario debe ser distinto de nulo";
+        assert password != null && !password.isEmpty() && !password.isBlank() : "La contraseña debe ser distinto de nulo";
+
+        Operario operario = getOperarioByUserName(nombreDeUsuario);
+        if(operario == null)
+            throw new DatosLoginIncorrectosException();
+        if(!operario.matchPassword(password))
+            throw new DatosLoginIncorrectosException();
+        return operario;
+
+    };
 }

@@ -26,6 +26,32 @@ public class GestorDeMozos {
     }
 
     /**
+     * Retorna los mozos del sistema
+     * @return Los mozos del sistema
+     */
+    public ArrayList<Mozo> getMozos() {
+        return mozos;
+    };
+
+    /**
+     * Retorna el mozo correspondiente al id ingresado, en caso de que no exista dicho id arroja una excepcion
+     * pre : id >= 0
+     * @param mozoId : Id del mozo deseado
+     * @return el mozo correspondiente al id ingresado
+     */
+    public Mozo getMozoById(int mozoId){
+        assert mozoId >= 0 : "El id no puede ser negativo";
+        Mozo mozo = null;
+        int i = 0;
+        while(mozo == null && i < mozos.size()){
+            if(mozos.get(i).getId() == mozoId )
+                mozo = mozos.get(i);
+            i++;
+        }
+        return mozo;
+    }
+
+    /**
      * Se encarga de agregar un nuevo mozo a los registros de la empresa, si el usuario no es admin
      * se emite una excepcion
      * @param nuevoMozo : El nuevo mozo que se desea agregar
@@ -102,26 +128,5 @@ public class GestorDeMozos {
     };
 
 
-    /**
-     * Retorna los mozos del sistema
-     * @return Los mozos del sistema
-     */
-    public ArrayList<Mozo> getMozos() {
-        return mozos;
-    };
 
-    /**
-     * Retorna el mozo correspondiente al id ingresado, en caso de que no exista dicho id arroja una excepcion
-     * pre : id >= 0
-     * @param mozoId : Id del mozo deseado
-     * @return el mozo correspondiente al id ingresado
-     */
-    public Mozo getMozoById(int mozoId){
-        assert mozoId >= 0 : "El id no puede ser negativo";
-        Mozo mozo = null;
-        int i = 0;
-        while(mozo == null && i < mozos.size())
-            mozo = mozos.get(i).getId() == mozoId ? mozos.get(i) : null;
-        return mozo;
-    }
 }
