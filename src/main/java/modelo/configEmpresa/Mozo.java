@@ -3,6 +3,7 @@ package modelo.configEmpresa;
 import enums.EstadoMozos;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 import static helpers.FechasHelpers.isOver18;
@@ -163,7 +164,10 @@ public class Mozo implements Serializable {
         this.fechaNacimiento = other.fechaNacimiento;
     }
 
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YY");
+        return String.format("%4d %12s %10s %2d %10s", id, nombreApellido, sdf.format(fechaNacimiento), cantHijos, estado);
 
-
-
+    }
 }

@@ -124,7 +124,7 @@ public class ConfiguracionEmpresaDTO implements Serializable {
      * @return Operararios almacenados
      */
     public ArrayList<Operario> getOperarios() {
-        return null;
+        return operarios;
     }
 
     /**

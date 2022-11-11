@@ -243,4 +243,9 @@ public class Producto implements Serializable {
         assert precioCosto < precioVenta : "El precio de costo debe ser menor al precio de venta";
         assert stock >= 0 : "El stock no puede ser negativo";
     }
+
+    @Override
+    public String toString() {
+        return String.format("%4d %12s %4.1f %4.1f %d", id, nombre, precioCosto, precioVenta, stock);
+    }
 }

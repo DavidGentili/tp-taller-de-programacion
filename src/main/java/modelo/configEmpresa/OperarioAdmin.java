@@ -82,4 +82,8 @@ public class OperarioAdmin extends Operario implements Serializable {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

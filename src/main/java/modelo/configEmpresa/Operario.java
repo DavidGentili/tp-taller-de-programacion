@@ -2,9 +2,11 @@ package modelo.configEmpresa;
 
 import modelo.persist.OperarioDTO;
 
+import java.io.Serializable;
+
 import static helpers.OperarioHelpers.correctPassword;
 
-public class Operario {
+public class Operario implements Serializable {
     protected static int nroOperario = 0;
     protected int id;
     protected String nombreApellido;
@@ -147,4 +149,8 @@ public class Operario {
         return password == this.password;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%4d %12s %12s", id, nombreApellido, nombreUsuario);
+    }
 }
