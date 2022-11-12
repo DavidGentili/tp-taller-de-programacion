@@ -3,18 +3,26 @@ package modelo.empresa;
 import modelo.configEmpresa.Producto;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Pedido {
     private Producto producto;
     private int cantidad;
-    private Date fecha;
-    
-    
+    private GregorianCalendar fecha;
+
+	/**
+	 * Crea una instancia de pedido
+	 * pre: producto != null
+	 * 		cantidad > 0
+	 * @param producto : Producto del pedido
+	 * @param cantidad : cantidad solicitada
+	 */
 	public Pedido(Producto producto, int cantidad) {
-		super();
+		assert producto != null : "El producto no puede ser nulo";
+		assert cantidad > 0 : "La catidad debe ser positiva";
 		this.producto = producto;
 		this.cantidad = cantidad;
-		//fecha actual
+		this.fecha = (GregorianCalendar) GregorianCalendar.getInstance();
 	}
 
 
@@ -22,13 +30,12 @@ public class Pedido {
 		return producto;
 	}
 
-
 	public int getCantidad() {
 		return cantidad;
 	}
 
 
-	public Date getFecha() {
+	public GregorianCalendar getFecha() {
 		return fecha;
 	}
 

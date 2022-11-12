@@ -1,56 +1,71 @@
 package modelo.empresa;
 
-import java.util.Collection;
-
 import modelo.configEmpresa.Producto;
 
 public class PromocionProducto extends Promocion {
-
+	private Producto producto;
+	private boolean dosPorUno;
+	private boolean dtoPorCant;
+	private int cantMinima;
+	private double precioUnitario;
 	
+	public PromocionProducto(String dias, Producto producto, boolean dosPorUno, boolean dtoPorCant, int cantMin, double precioUnitario) {
+		super(dias);
+		assert (dosPorUno | dtoPorCant) : "No pueden ser ambos nulos";
+		assert producto != null : "El producto no puede ser nulo";
+		assert cantMin > 0 : "La cantidad minima debe ser mayor a 0";
+		assert precioUnitario > 0 : "El precio unitario debe ser mayor a 0";
+		this.producto = producto;
+		this.dosPorUno = dosPorUno;
+		this.dtoPorCant = dtoPorCant;
+		this.cantMinima = cantMin;
+		this.precioUnitario = precioUnitario;
+	}
 
-	private Collection<Producto> productos;
-	private boolean dosporuno;
-	private boolean dtoporcant;
-	private int cantminima;
-	private double preciounitario;
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+		invariante();
+	}
+
+	public void setDosPorUno(boolean dosPorUno) {
+		this.dosPorUno = dosPorUno;
+		invariante();
+	}
+
+	public void setDtoPorCant(boolean dtoPorCant) {
+		this.dtoPorCant = dtoPorCant;
+		invariante();
+	}
+
+	public void setCantMinima(int cantMinima) {
+		this.cantMinima = cantMinima;
+		invariante();
+	}
+
+	public void setPrecioUnitario(double precioUnitario) {
+		this.precioUnitario = precioUnitario;
+		invariante();
+	}
+
+	public boolean isDosPorUno() {
+		return dosPorUno;
+	}
+
+	public boolean isDtoPorCant() {
+		return dtoPorCant;
+	}
+
+	public int getCantMinima() {
+		return cantMinima;
+	}
+
+	public double getPrecioUnitario() {
+		return precioUnitario;
+	}
 	
-	public PromocionProducto(int idprom, String dias) {
-		super(idprom, dias);
-		// TODO Auto-generated constructor stub
-	
+	private void invariante(){
+		assert this.dosPorUno | this.dtoPorCant : "Dos por uno y dto por cantidad no pueden ser nulos en simultaneo";
 	}
-	/**
-     * Se encarga de agregar un producto a la promocion
-     * @param producto : producto a agregar
-     * pre : producto != null
-     * post : se agrega un nuevo producto a la coleccion
-     */
-	
-	public void AgregaPorducto(Producto producto) {
-		
-	}
-
-	public Collection<Producto> getProductos() {
-		return productos;
-	}
-
-	public boolean isDosporuno() {
-		return dosporuno;
-	}
-
-	public boolean isDtoporcant() {
-		return dtoporcant;
-	}
-
-	public int getCantminima() {
-		return cantminima;
-	}
-
-	public double getPreciounitario() {
-		return preciounitario;
-	}
-	
-	
 	
 	
 	

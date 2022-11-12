@@ -2,36 +2,48 @@
 package modelo.empresa;
 
 public abstract class Promocion {
- private int idprom;
- private String dias;
- private boolean activa;
-
- 
-
- public Promocion(int idprom, String dias) {
-	super();
-	this.idprom = idprom;
-	this.dias = dias;
-	this.activa = true;
-}
-public void DesactivarPromocion() {
-	 
- }
-public void ActivarPromocion() {
-	 
- }
+	protected static int nroPromociones = 0;
+	protected int id;
+	protected String dias;
+	protected boolean activa;
 
 
+	public Promocion(String dias) {
+		assert dias != null && !dias.isEmpty() && !dias.isBlank() : "Los dias no pueden ser nulos";
+		this.id = nroPromociones;
+		nroPromociones++;
+		this.dias = dias;
+		this.activa = true;
+	}
 
-public int getIdprom() {
-	return idprom;
-}
-public String getDias() {
-	return dias;
-}
-public boolean isActiva() {
-	return activa;
-}
- 
- 
+	public void desactivarPromocion() {
+		this.activa = false;
+	 }
+
+	public void activarPromocion() {
+		this.activa = true;
+	 }
+
+	/**
+	 * Define los dias de promocion
+	 * pre: dias no puede ser nulo, vacio o blanco
+	 * @param dias : Los dias de promocion
+	 */
+	public void setDias(String dias) {
+		assert dias != null && !dias.isBlank() && !dias.isEmpty() : "Los dias no pueden ser nulos";
+		this.dias = dias;
+		assert this.dias == dias;
+	}
+
+	public int getId() {
+		return id;
+	}
+	public String getDias() {
+		return dias;
+	}
+	public boolean isActiva() {
+		return activa;
+	}
+
+
 }

@@ -4,14 +4,15 @@ import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MozoMesa {
-    private Date fecha;
+    private GregorianCalendar fecha;
     private Mozo mozo;
     private Mesa mesa;
     
     
-	public MozoMesa(Date fecha, Mozo mozo, Mesa mesa) {
+	public MozoMesa(GregorianCalendar fecha, Mozo mozo, Mesa mesa) {
 		super();
 		this.fecha = fecha;
 		this.mozo = mozo;
@@ -19,7 +20,7 @@ public class MozoMesa {
 	}
 
 
-	public Date getFecha() {
+	public GregorianCalendar getFecha() {
 		return fecha;
 	}
 

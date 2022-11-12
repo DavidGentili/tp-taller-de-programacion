@@ -1,23 +1,39 @@
 package modelo.empresa;
 
 public class PromocionTemp extends Promocion {
-	private String formapago;
-	private int porcentajedto;
+	private String formaPago;
+	private int porcentajeDto;
 	private boolean acumulable;
 	private String nombre;
 	
 	
 	
-	public PromocionTemp(int idprom, String dias, String formapago, int porcentajedto, boolean acumulable,
-			String nombre) {
-		super(idprom, dias);
-		this.formapago = formapago;
-		this.porcentajedto = porcentajedto;
+	public PromocionTemp( String dias, String formaPago, int porcentajeDto, boolean acumulable, String nombre) {
+		super(dias);
+		this.formaPago = formaPago;
+		this.porcentajeDto = porcentajeDto;
 		this.acumulable = acumulable;
 		this.nombre = nombre;
 	}
-	public int getPorcentajedto() {
-		return porcentajedto;
+
+	public void setFormaPago(String formaPago) {
+		this.formaPago = formaPago;
+	}
+
+	public void setPorcentajeDto(int porcentajeDto) {
+		this.porcentajeDto = porcentajeDto;
+	}
+
+	public void setAcumulable(boolean acumulable) {
+		this.acumulable = acumulable;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public int getPorcentajeDto() {
+		return porcentajeDto;
 	}
 	public boolean isAcumulable() {
 		return acumulable;
@@ -25,8 +41,8 @@ public class PromocionTemp extends Promocion {
 	public String getNombre() {
 		return nombre;
 	}
-	public String getFormapago() {
-		return formapago;
+	public String getFormaPago() {
+		return formaPago;
 	}
 	
 	
