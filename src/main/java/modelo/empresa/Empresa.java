@@ -4,6 +4,7 @@ package modelo.empresa;
 import java.util.Collection;
 import java.util.Date;
 
+import enums.EstadoMozos;
 import exceptions.IdIncorrectoException;
 import exceptions.MesaYaLiberadaException;
 import exceptions.MesaYaOcupadaException;
@@ -13,15 +14,31 @@ import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;
 import modelo.configEmpresa.Operario;
 
-public class Empresa {
+public class
+Empresa {
     private ConfiguracionEmpresa configuracion;
     private Archivo archivo;
     private Collection<Comanda> comandas;
     private Collection<MozoMesa> asignacionMozosMesas;
     private Collection<Promocion> promociones;
-    private Operario usuario; 
-    
-    
+    private Operario usuario;
+    private StateEmpresa state;
+
+    /*
+    * ESTADOS EMPRESA:
+    * Login
+    * Abierta
+    * Cerrada
+    */
+
+    /**
+     * Define el estado de un mozo
+     * pre: estado != null
+     * @param mozoId Id del mozo
+     * @param estado Estado del mozo;
+     */
+    public void definirEstadoMozo(int mozoId, EstadoMozos estado){
+    }
     
     /**
      * Se encarga de asignarle un Mozo a una mesa un determinado dia, y guarda esta asignacion en la coleccion asignacionMozosMesas
