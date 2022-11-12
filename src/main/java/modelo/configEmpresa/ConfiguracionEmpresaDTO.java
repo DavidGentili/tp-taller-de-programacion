@@ -22,8 +22,6 @@ public class ConfiguracionEmpresaDTO implements Serializable {
     private int nroOperarios;
     private int nroProductos;
 
-    private Operario USUARIO_BASE = new OperarioAdmin("ADMIN", "ADMIN","ADMIN1234");
-
 
     /**
      * Instancia una nueva configuracion de la empresa DTO, para almacenarla apartir de una configuracion empresa
@@ -63,23 +61,42 @@ public class ConfiguracionEmpresaDTO implements Serializable {
     /**
      * Se encarga de recuperar la configuracion de la empresa
      */
-    public void recuperarConfiguracion() throws IOException, ArchivoNoInciliazadoException, ClassNotFoundException {
-        PersistencaiBin file = new PersistencaiBin();
-        file.openInput(Config.ARCHIVO_CONFIGURACION);
-        ConfiguracionEmpresaDTO aux = (ConfiguracionEmpresaDTO) file.readFile();
-        file.closeInput();
-        if(aux.getOperarios().size() == 0)
-            aux.getOperarios().add(USUARIO_BASE);
-        this.nombreLocal = aux.getNombreLocal();
-        this.mesas = aux.getMesas();
-        this.mozos = aux.getMozos();
-        this.operarios = aux.getOperarios();
-        this.productos = aux.getProductos();
-        this.nroMozos = aux.getNroMozos();
-        this.sueldo = aux.getSueldo();
-        this.nroOperarios = aux.getNroOperarios();
-        this.nroProductos = aux.getNroProductos();
+    public void recuperarConfiguracion(){
+        try{
+            PersistencaiBin file = new PersistencaiBin();
+            file.openInput(Config.ARCHIVO_CONFIGURACION);
+            ConfiguracionEmpresaDTO aux = (ConfiguracionEmpresaDTO) file.readFile();
+            file.closeInput();
+            this.nombreLocal = aux.getNombreLocal();
+            this.mesas = aux.getMesas();
+            this.mozos = aux.getMozos();
+            this.operarios = aux.getOperarios();
+            this.productos = aux.getProductos();
+            this.nroMozos = aux.getNroMozos();
+            this.sueldo = aux.getSueldo();
+            this.nroOperarios = aux.getNroOperarios();
+            this.nroProductos = aux.getNroProductos();
+        }catch(IOException | ArchivoNoInciliazadoException | ClassNotFoundException e){
+            getInitialState();
+        }
+
     }
+
+    private void getInitialState(){
+        this.nombreLocal = "Nombre_Local";
+        this.productos = new ArrayList<Producto>();
+        this.mesas = new ArrayList<Mesa>();
+        this.mozos = new ArrayList<Mozo>();
+        this.operarios = new ArrayList<Operario>();
+        Operario operarioInicial = new OperarioAdmin("ADMIN", "ADMIN", "ADMIN1234");
+        this.operarios.add(operarioInicial);
+        this.nroMozos = 0;
+        this.nroOperarios = 1;
+        this.nroProductos = 0;
+
+    }
+
+
 
     /**
      * Retorna el nombre del local
