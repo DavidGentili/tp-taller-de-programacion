@@ -1,10 +1,14 @@
 package main;
 
 
+import exceptions.*;
+import modelo.configEmpresa.*;
+
+import java.io.IOException;
+import java.util.GregorianCalendar;
+
 public class Main {
 
-    public static void main(String[] args){
-        enum estado {ACTIVO, FRANCO, AUSENTE}
-
+    public static void main(String[] args) throws ArchivoNoInciliazadoException, IOException, ClassNotFoundException, DatosLoginIncorrectosException, MesaYaExistenteException, UsuarioNoAutorizadoException, ProductoYaExistenteException, MozoYaAgregadoException {
     }
 }
