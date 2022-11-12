@@ -163,6 +163,7 @@ public class Mozo implements Serializable {
         this.nombreApellido = other.nombreApellido;
         this.fechaNacimiento = other.fechaNacimiento;
     }
+    
 
     @Override
     public String toString() {

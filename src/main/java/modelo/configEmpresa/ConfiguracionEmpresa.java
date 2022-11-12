@@ -1,5 +1,6 @@
 package modelo.configEmpresa;
 
+import enums.EstadoMozos;
 import exceptions.*;
 
 import java.io.IOException;
@@ -185,6 +186,18 @@ public class ConfiguracionEmpresa {
     public void eliminaMozo(int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MozoNoEncontradoException {
         mozos.eliminaMozo(mozoId, user);
     };
+
+    /**
+     * Cambia el estado de un mozo
+     * pre: estado != null
+     * @param mozoId Id del mozo
+     * @param estado Estado del mozo
+     * @throws IdIncorrectoException : Si el id es incorrecto
+     * @throws MozoNoEncontradoException : Si el mozo no es encontrado;
+     */
+    public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws IdIncorrectoException, MozoNoEncontradoException {
+        mozos.cambiarEstadoMozo(mozoId, estado);
+    }
 
     //MESAS
 
@@ -390,7 +403,7 @@ public class ConfiguracionEmpresa {
      *      password != null && password != ""
      * post: retorna el operario deseado.
      */
-    public Operario login(String nombreDeUsuario, String password) throws DatosLoginIncorrectosException {
+    public Operario login(String nombreDeUsuario, String password) throws DatosLoginIncorrectosException, OperarioInactivoException {
         return operarios.login(nombreDeUsuario,password);
     }
 
