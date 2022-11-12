@@ -85,7 +85,7 @@ public class GestorDeOperarios {
         Operario operario = null;
         int i = 0;
         while(i < operarios.size() && operario == null){
-            if(operarios.get(i).getNombreUsuario() == userName)
+            if(operarios.get(i).getNombreUsuario().equalsIgnoreCase(userName) )
                 operario = operarios.get(i);
             i++;
         }

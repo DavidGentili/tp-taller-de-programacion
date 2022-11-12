@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class ConfiguracionEmpresa {
     private static ConfiguracionEmpresa instance = null;
-    private String nombreLocal;
+    private String nombreLocal = "";
     private GestorDeMozos mozos;
     private GestorDeMesas mesas;
     private GestorDeProductos productos;

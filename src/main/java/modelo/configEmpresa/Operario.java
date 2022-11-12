@@ -146,7 +146,7 @@ public class Operario implements Serializable {
      * @return si son iguales o no las contraseñas
      */
     protected boolean matchPassword(String password){
-        return password == this.password;
+        return this.password.equals(password);
     }
 
     @Override
