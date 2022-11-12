@@ -104,7 +104,7 @@ public class Mesa implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%4d %2d %10s", nroMesa, cantSillas, estado);
+        return String.format("%4d %2d %-10s", nroMesa, cantSillas, estado);
     }
 }
 

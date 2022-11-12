@@ -27,7 +27,7 @@ public class Mozo implements Serializable {
      * post: se creo un nuevo usuario
      */
     public Mozo(String nombreApellido, GregorianCalendar fechaNacimiento, int cantHijos){
-        assert nombreApellido != null && nombreApellido.isEmpty() && nombreApellido.isBlank() : "El nombre debe ser distinto de null, de vacio y de blank";
+        assert nombreApellido != null && !nombreApellido.isEmpty() && !nombreApellido.isBlank() : "El nombre debe ser distinto de null, de vacio y de blank";
         assert isOver18(fechaNacimiento) : "El mozo debe tener al menos 18 años";
         assert cantHijos >= 0 : "La cantidad de hijos debe ser mayor a cero";
 
@@ -167,7 +167,7 @@ public class Mozo implements Serializable {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YY");
-        return String.format("%4d %12s %10s %2d %10s", id, nombreApellido, sdf.format(fechaNacimiento), cantHijos, estado);
+        return String.format("%4d %-12s %-10s %2d %-10s", id, nombreApellido, sdf.format(fechaNacimiento.getTime()), cantHijos, estado);
 
     }
 }

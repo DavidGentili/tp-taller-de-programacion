@@ -80,4 +80,9 @@ public class Sueldo implements Serializable {
 
         assert this.bonificacionPorHijo == bonificacionPorHijo : "No se asigno correctamente la bonificacion";
     }
+
+    @Override
+    public String toString() {
+        return String.format("%6.2f %4.1f %%", basico, bonificacionPorHijo);
+    }
 }

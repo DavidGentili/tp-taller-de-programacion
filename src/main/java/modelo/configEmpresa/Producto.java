@@ -246,6 +246,6 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%4d %12s %4.1f %4.1f %d", id, nombre, precioCosto, precioVenta, stock);
+        return String.format("%4d %-12s %6.1f %6.1f %d", id, nombre, precioCosto, precioVenta, stock);
     }
 }

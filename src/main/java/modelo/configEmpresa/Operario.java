@@ -151,6 +151,6 @@ public class Operario implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%4d %12s %12s", id, nombreApellido, nombreUsuario);
+        return String.format("%4d %-12s %-12s", id, nombreApellido, nombreUsuario);
     }
 }

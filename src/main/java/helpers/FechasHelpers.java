@@ -13,7 +13,6 @@ public class FechasHelpers {
         int YEAR = GregorianCalendar.YEAR;
         GregorianCalendar now = (GregorianCalendar) GregorianCalendar.getInstance();
         int yearDif = now.get(YEAR) - birthday.get(YEAR);
-        System.out.println(yearDif);
         if(birthday.get(MONTH) > now.get(MONTH) || (birthday.get(MONTH) == now.get(MONTH) && birthday.get(DAY) > now.get(DAY)))
             yearDif--;
         return yearDif >= 18;
