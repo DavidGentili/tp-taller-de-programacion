@@ -16,7 +16,7 @@ public class GestorEmpresa {
     private Archivo archivo;
     private Collection<Comanda> comandas;
     private Collection<MozoMesa> asignacionMozosMesas;
-    private Collection<Promocion> promociones;
+    private GestorDePromociones promociones;
     private StateGestorEmpresa state;
 
     /*
@@ -101,45 +101,58 @@ public class GestorEmpresa {
     //METODOS PROMOCION
 
     /**
+     * Retorna las promociones almacenadas
+     * @return Promociones almacenadas
+     */
+    public ArrayList<Promocion> getPromociones(){
+        return promociones.getPromociones();
+    }
+
+    /**
      * Agrega una nueva promocion
      * pre: promocion != null
      * @param promocion : La nueva promocion a añadir
      */
-    public void agregaPromocion(Promocion promocion){
-        //Verdaderamente se agrega la promocion
+    public void agregaPromocion(Promocion promocion) throws PromocionYaExistenteException {
+        assert promocion != null : "La promocion no puede ser nula";
+        promociones.agregarPromocion(promocion);
     }
 
     /**
      * Elimina una promocion del registro de promociones
-     * @param idPromo : El id de la promocion buscada
+     * @param id : El id de la promocion buscada
      * @throws IdIncorrectoException : Si el id es incorrecto
      */
-    public void eliminarPromocion(int idPromo) throws IdIncorrectoException {
-        //Verdaderamente se agrega la promocion
+    public void eliminarPromocion(int id) throws IdIncorrectoException, PromocionNoEncontradaException {
+        if(id < 0 )
+            throw new IdIncorrectoException();
+        promociones.eliminarPromocion(id);
     }
+
+    /**
+     * Se encarga de activar una promocion desactivada
+     * @param id : id de la promocion que se desea activar
+     * @throws IdIncorrectoException : Si el id ingresado es uncorrecto
+     * post : el estado de la promocion asociada al idpromo pasa a activa (activa=true)
+     */
+    public void activarPromocion(int id) throws IdIncorrectoException, PromocionNoEncontradaException {
+        if(id < 0)
+            throw new IdIncorrectoException();
+        promociones.activarPromocion(id);
+    }
+
 
     /**
      * Se encarga de desactivar una promocion activa
-     * @param idpromo : id de la promocion que se desea desactivar
-     * @throws IdIncorrectoException : Si no existe el id ingresado
-     * pre : idpromo != null
+     * @param id : id de la promocion que se desea desactivar
+     * @throws IdIncorrectoException : Si el id ingresado es incorrecto
      * post : el estado de la promocion asociada al idpromo pasa a desactivada (activa=false)
      */
-    public void desactivarpromocion(int idpromo) throws IdIncorrectoException {
-    	
+    public void desactivarpromocion(int id) throws IdIncorrectoException, PromocionNoEncontradaException {
+        if(id < 0)
+            throw new IdIncorrectoException();
+        promociones.desactivarPromocion(id);
     }
-    
-    /**
-     * Se encarga de activar una promocion desactivada
-     * @param idpromo : id de la promocion que se desea activar
-     * @throws IdIncorrectoException : Si no existe el id ingresado
-     * pre : idpromo != null
-     * post : el estado de la promocion asociada al idpromo pasa a activa (activa=true)
-     */
-    public void activarPromocion(int idpromo) throws IdIncorrectoException {
-   	 
-    }
-
 
     //METODOS CONFIGURACION: GENERAL
 
