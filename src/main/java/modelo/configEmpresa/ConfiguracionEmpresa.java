@@ -198,6 +198,10 @@ public class ConfiguracionEmpresa {
         mozos.cambiarEstadoMozo(mozoId, estado);
     }
 
+    public void clearEstadoMozos(){
+        mozos.clearEstadoMozos();
+    }
+
     //MESAS
 
     /**

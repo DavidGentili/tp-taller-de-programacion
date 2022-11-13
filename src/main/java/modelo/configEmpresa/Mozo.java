@@ -160,6 +160,13 @@ public class Mozo implements Serializable {
     };
 
     /**
+     * Limpia el estado del mozo, poniendolo en null
+     */
+    protected void cleanEstado(){
+        this.estado = null;
+    }
+
+    /**
      * Actualiza los atributos del mozo, menos el estado
      * pre: mozo != null
      * @param other El mozo con los nuevos valores

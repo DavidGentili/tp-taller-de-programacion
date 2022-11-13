@@ -22,7 +22,7 @@ public class StateClose implements StateGestorEmpresa{
     }
 
     @Override
-    public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosException, CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosSuperadaException, CantidadMaximaDeMozosActivosException {
+    public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosException, CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosSuperadaException, CantidadMaximaDeMozosActivosException, CantidadMaximaDeMozosDeFrancoException, HayMozoSinEstadoAsignadoException {
         if(empresa.getMozoMeza().size() == 0)
             throw new NoHayMozosAsignadosException("No hay mozos asignados a mesas");
         if(empresa.getProductos().size() > 0)
@@ -30,12 +30,14 @@ public class StateClose implements StateGestorEmpresa{
         if(empresa.getPromocionesProducto().size() >= 2)
             throw new CantidadMinimaDeProductosEnPromocionException("Se debe posee al menos dos productos en promocion");
         ArrayList<Mozo> mozos = empresa.getMozos();
+        if(MozoHelpers.thereIsMozoWithoutState(mozos))
+            throw new HayMozoSinEstadoAsignadoException("Todos los mozos deben tener un estado asignado");
         if(mozos.size() >= Config.NUMERO_MAXIMO_DE_MOZOS)
             throw new CantidadMaximaDeMozosSuperadaException("Se puede tener como maximo " + Config.NUMERO_MAXIMO_DE_MOZOS + " mozos");
         if(MozoHelpers.getCantidadDeMozosEnEstado(mozos, EstadoMozos.ACTIVO) >= Config.NUMERO_MAXIMO_DE_MOZOS_ACTIVOS)
             throw new CantidadMaximaDeMozosActivosException("Se puede tener como maximo " + Config.NUMERO_MAXIMO_DE_MOZOS_ACTIVOS + " mozos activos");
-
-
+        if(MozoHelpers.getCantidadDeMozosEnEstado(mozos, EstadoMozos.DE_FRANCO) >= Config.NUMERO_MAXIMO_DE_MOZOS_DE_FRANCO)
+            throw new CantidadMaximaDeMozosDeFrancoException("Se puede tener como maximo " + Config.NUMERO_MAXIMO_DE_MOZOS_DE_FRANCO + " mozos de franco");
 
         empresa.setState(new StateOpen(empresa));
     }

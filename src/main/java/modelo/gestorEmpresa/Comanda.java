@@ -12,7 +12,7 @@ public class Comanda {
 
     private GregorianCalendar fecha;
     private Mesa mesa;
-    private Collection<Pedido> listaDePedidos;
+    private ArrayList<Pedido> listaDePedidos;
     private EstadoComanda estado;
 
 	/**
@@ -46,6 +46,23 @@ public class Comanda {
 		assert this.listaDePedidos.contains(pedido) : "No se asigno correctamente el pedido";
 	}
 
+	public void cerrarComanda() throws ComandaYaCerradaException {
+		if(this.estado == EstadoComanda.CERRADA)
+			throw new ComandaYaCerradaException();
+		this.estado = EstadoComanda.CERRADA;
+	}
+
+	public boolean getProductoInPedido(int productoId){
+		boolean res = false;
+		int i = 0;
+		while (i < listaDePedidos.size() && !res){
+			if(listaDePedidos.get(i).getProducto().getId() == productoId)
+				res = true;
+			i++;
+		}
+		return res;
+	}
+
 	public GregorianCalendar getFecha() {
 		return fecha;
 	}
@@ -54,7 +71,7 @@ public class Comanda {
 		return mesa;
 	}
 
-	public Collection<Pedido> getListaDePedidos() {
+	public ArrayList<Pedido> getListaDePedidos() {
 		return listaDePedidos;
 	}
 

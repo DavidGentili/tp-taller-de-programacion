@@ -149,4 +149,9 @@ public class GestorDeMozos {
         assert mozo.getEstado() == estado : "No se asigno correctamente el estado";
     }
 
+    protected void clearEstadoMozos(){
+        for(Mozo mozo : mozos){
+            mozo.cleanEstado();
+        }
+    }
 }

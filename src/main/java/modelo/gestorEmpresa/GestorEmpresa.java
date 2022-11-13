@@ -36,11 +36,11 @@ public class GestorEmpresa {
 
     public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosException,
             CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosActivosException,
-            CantidadMaximaDeMozosSuperadaException, EmpresaAbiertaException {
+            CantidadMaximaDeMozosSuperadaException, EmpresaAbiertaException, CantidadMaximaDeMozosDeFrancoException, HayMozoSinEstadoAsignadoException {
         state.abrirEmpresa();
     }
 
-    public void cerrarEmpresa() throws EmpresaCerradaException {
+    public void cerrarEmpresa() throws EmpresaCerradaException, HayComandasActivasException {
         state.cerrarEmpresa();
     }
 
@@ -126,11 +126,11 @@ public class GestorEmpresa {
      * post : la mesa asociada a la comanda pasara de estado "ocupada" a estado "libre"
      * post : facturacion de la comanda , verifica si cumple con alguna promocion activa
      */
-    public void cerrarComanda(int nroMesa) throws MesaYaLiberadaException, EmpresaCerradaException {
+    public void cerrarComanda(int nroMesa) throws MesaYaLiberadaException, EmpresaCerradaException, ComandaYaCerradaException, MesaNoEncontradaException {
         state.cerrarComanda(nroMesa);
     }
 
-    public void agregarPedido(int nroMesa, Pedido pedido) throws EmpresaCerradaException {
+    public void agregarPedido(int nroMesa, Pedido pedido) throws EmpresaCerradaException, ComandaYaCerradaException, ComandaNoEncontradaException {
         state.agregarPedido(nroMesa, pedido);
     }
 
@@ -266,7 +266,6 @@ public class GestorEmpresa {
         state.definirEstadoMozo(mozoId, estado);
     }
 
-
     public void eliminaMozo(int mozoId, Operario user) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, EmpresaAbiertaException {
         state.eliminaMozo(mozoId, user);
     }
@@ -288,7 +287,7 @@ public class GestorEmpresa {
         configuracion.actulizarMesa(mesa,nroMesa,user);
     }
 
-    public void eliminarMesa(int nroMesa, Operario user) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException {
+    public void eliminarMesa(int nroMesa, Operario user) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, MesaYaOcupadaException {
         state.eliminarMesa(nroMesa, user);
     }
 
@@ -309,7 +308,7 @@ public class GestorEmpresa {
         configuracion.actulizarProducto(producto,productoId,user);
     }
 
-    public void eliminarProducto(int productoId, Operario user) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException {
+    public void eliminarProducto(int productoId, Operario user) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, ProductoEnPedidoException {
         state.eliminarProducto(productoId, user);
     }
 

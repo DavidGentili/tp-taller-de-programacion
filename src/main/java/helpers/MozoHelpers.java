@@ -13,4 +13,15 @@ public class MozoHelpers {
             cont += mozos.get(i).getEstado() == estado ? 1 : 0;
         return cont;
     }
+
+    public static boolean thereIsMozoWithoutState(ArrayList<Mozo> mozos){
+        boolean thereIs = false;
+        int i = 0;
+        while(i < mozos.size() && !thereIs){
+            if(mozos.get(i).getEstado() == null)
+                thereIs = true;
+            i++;
+        }
+        return thereIs;
+    }
 }
