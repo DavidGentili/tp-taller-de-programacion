@@ -6,10 +6,12 @@ import exceptions.PromocionYaExistenteException;
 import java.util.ArrayList;
 
 public class GestorDePromociones {
-    private ArrayList<Promocion> promociones;
+    private ArrayList<PromocionTemp> promoTemp;
+    private ArrayList<PromocionProducto> promoProduct;
 
     public GestorDePromociones(){
-        promociones = new ArrayList<Promocion>();
+        promoProduct = new ArrayList<PromocionProducto>();
+        promoTemp = new ArrayList<PromocionTemp>();
     }
 
     /**
@@ -17,7 +19,26 @@ public class GestorDePromociones {
      * @return Promociones almacenadas
      */
     protected ArrayList<Promocion> getPromociones(){
+        ArrayList<Promocion> promociones = new ArrayList<Promocion>();
+        promociones.addAll(promoProduct);
+        promociones.addAll(promoTemp);
         return promociones;
+    }
+
+    /**
+     * Retorna las promociones temporales almacenadas
+     * @return Promociones temporales
+     */
+    protected ArrayList<PromocionProducto> getPromocionProducto(){
+        return promoProduct;
+    }
+
+    /**
+     * Retorna las promociones de producto almacenadas
+     * @return Promociones de producto
+     */
+    protected ArrayList<PromocionTemp> getPromocionTemporales(){
+        return promoTemp;
     }
 
     /**
@@ -27,7 +48,7 @@ public class GestorDePromociones {
      */
     protected Promocion getPromocionById(int id){
         assert id >= 0 : "El id no puede ser negativo";
-
+        ArrayList<Promocion> promociones = getPromociones();
         Promocion promo = null;
         int i = 0;
         while(i < promociones.size() && promo == null){
@@ -39,18 +60,33 @@ public class GestorDePromociones {
     }
 
     /**
-     * Agrega una promocion a la coleccion
+     * Agrega una promocion de producto a la coleccion
      * @param promo Promocion a agregar
      * @throws PromocionYaExistenteException : Si dicha promocion ya existe
      */
-    protected void agregarPromocion(Promocion promo) throws PromocionYaExistenteException {
+    protected void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException {
         assert promo != null : "La promocion no puede ser nula";
 
         if(getPromocionById(promo.getId()) != null)
             throw new PromocionYaExistenteException();
-        promociones.add(promo);
+        promoProduct.add(promo);
 
-        assert promociones.contains(promo) : "No se agrego correctamente la promocion";
+        assert promoProduct.contains(promo) : "No se agrego correctamente la promocion";
+    }
+
+    /**
+     * Agrega una promocion temporal a la coleccion
+     * @param promo Promocion a agregar
+     * @throws PromocionYaExistenteException : Si dicha promocion ya existe
+     */
+    protected void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException {
+        assert promo != null : "La promocion no puede ser nula";
+
+        if(getPromocionById(promo.getId()) != null)
+            throw new PromocionYaExistenteException();
+        promoTemp.add(promo);
+
+        assert promoTemp.contains(promo) : "No se agrego correctamente la promocion";
     }
 
     /**
@@ -60,6 +96,8 @@ public class GestorDePromociones {
      */
     protected void eliminarPromocion(int id) throws PromocionNoEncontradaException {
         assert id >= 0 : "El id no puede ser negativo";
+
+        ArrayList<Promocion> promociones = getPromociones();
         Promocion promo = getPromocionById(id);
         if(promo == null)
             throw new PromocionNoEncontradaException();
@@ -76,6 +114,7 @@ public class GestorDePromociones {
     protected void activarPromocion(int id) throws PromocionNoEncontradaException {
         assert id >= 0 : "El id no puede ser negativo";
 
+        ArrayList<Promocion> promociones = getPromociones();
         Promocion promo = getPromocionById(id);
         if(promo == null)
             throw new PromocionNoEncontradaException();
@@ -92,6 +131,7 @@ public class GestorDePromociones {
     protected void desactivarPromocion(int id) throws PromocionNoEncontradaException {
         assert id >= 0 : "El id no puede ser negativo";
 
+        ArrayList<Promocion> promociones = getPromociones();
         Promocion promo = getPromocionById(id);
         if(promo == null)
             throw new PromocionNoEncontradaException();

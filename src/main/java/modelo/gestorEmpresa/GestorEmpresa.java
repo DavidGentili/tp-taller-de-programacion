@@ -2,8 +2,7 @@
 package modelo.gestorEmpresa;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 import enums.EstadoMozos;
 import exceptions.*;
@@ -12,10 +11,10 @@ import modelo.configEmpresa.*;
 
 public class GestorEmpresa {
     private static GestorEmpresa instance = null;
-    private ConfiguracionEmpresa configuracion;
+    protected ConfiguracionEmpresa configuracion;
     private Archivo archivo;
-    private Collection<Comanda> comandas;
-    private Collection<MozoMesa> asignacionMozosMesas;
+    private ArrayList<Comanda> comandas;
+    private ArrayList<MozoMesa> asignacionMozosMesas;
     private GestorDePromociones promociones;
     private StateGestorEmpresa state;
 
@@ -35,7 +34,9 @@ public class GestorEmpresa {
 
     //METODOS ESTADOS
 
-    public void abrirEmpresa(){
+    public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosException,
+            CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosActivosException,
+            CantidadMaximaDeMozosSuperadaException {
         state.abrirEmpresa();
     }
 
@@ -57,14 +58,34 @@ public class GestorEmpresa {
     
     /**
      * Se encarga de asignarle un Mozo a una mesa un determinado dia, y guarda esta asignacion en la coleccion asignacionMozosMesas
-     * @param mozo : el mozo al que se le asignara la mesa
-     * @param mesa : la mesa que se le asignara al mozo
-     * @param dia : dia especifico en que va a ocurrir esta asignacion
+     * @param mozoId : el mozo al que se le asignara la mesa
+     * @param nroMesa : la mesa que se le asignara al mozo
+     * @param fecha : dia especifico en que va a ocurrir esta asignacion
      * pre: mozo debe ser distinto de null
      * post: se añadira una nueva asignacion a la coleccion 
      */
-    public void asignarMozo(Mozo mozo,Mesa mesa,Date dia) {
-    	
+    public void asignarMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, MesaYaOcupadaException {
+    	state.asignarMozo(mozoId, nroMesa, fecha);
+    }
+
+    public ArrayList<MozoMesa> getMozoMeza(){
+        return asignacionMozosMesas;
+    }
+
+    protected MozoMesa getMozoMezaByNroMesa(int nroMesa){
+        assert nroMesa >= 0 : "El numero mesa debe ser positivo";
+        MozoMesa res = null;
+        int i = 0;
+        while(i < asignacionMozosMesas.size() && res == null){
+            if(asignacionMozosMesas.get(i).getMesa().getNroMesa() == nroMesa)
+                res = asignacionMozosMesas.get(i);
+            i++;
+        }
+        return res;
+    }
+
+    public void eliminarRelacionMozoMesa(int nroMesa){
+        state.eliminarRelacionMozoMesa(nroMesa);
     }
 
     //METODOS COMANDAS
@@ -94,7 +115,7 @@ public class GestorEmpresa {
         state.cerrarComanda(nroMesa);
     }
 
-    public void agregarPedido(int nroMesa, Pedido pedido){
+    public void agregarPedido(int nroMesa, Pedido pedido) throws EmpresaCerradaException {
         state.agregarPedido(nroMesa, pedido);
     }
 
@@ -109,13 +130,39 @@ public class GestorEmpresa {
     }
 
     /**
-     * Agrega una nueva promocion
-     * pre: promocion != null
-     * @param promocion : La nueva promocion a añadir
+     * Retorna las promociones de producto almacenadas
+     * @return promociones de producto
      */
-    public void agregaPromocion(Promocion promocion) throws PromocionYaExistenteException {
-        assert promocion != null : "La promocion no puede ser nula";
-        promociones.agregarPromocion(promocion);
+    public ArrayList<PromocionProducto> getPromocionesProducto(){
+        return promociones.getPromocionProducto();
+    }
+
+    /**
+     * Retorna las promociones temporales almacenadas
+     * @return promociones temprales
+     */
+    public ArrayList<PromocionTemp> getPromocionesTemporales(){
+        return promociones.getPromocionTemporales();
+    }
+
+    /**
+     * Agrega una promocion de producto a la coleccion
+     * @param promo Promocion a agregar
+     * @throws PromocionYaExistenteException : Si dicha promocion ya existe
+     */
+    protected void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException {
+        assert promo != null : "La promocion no puede ser nula";
+        promociones.agregarPromocionProducto(promo);
+    }
+
+    /**
+     * Agrega una promocion temporal a la coleccion
+     * @param promo Promocion a agregar
+     * @throws PromocionYaExistenteException : Si dicha promocion ya existe
+     */
+    protected void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException {
+        assert promo != null : "La promocion no puede ser nula";
+        promociones.agregarPromocionTemp(promo);
     }
 
     /**
@@ -156,6 +203,10 @@ public class GestorEmpresa {
 
     //METODOS CONFIGURACION: GENERAL
 
+    protected ConfiguracionEmpresa getConfiguracion(){
+        return configuracion;
+    }
+
     public void cambiarNombreLocal(String name, Operario user) throws UsuarioNoLogueadoException, UsuarioNoAutorizadoException {
         configuracion.cambiaNombreLocal(name, user);
     }
@@ -178,7 +229,11 @@ public class GestorEmpresa {
         return configuracion.getMozos();
     }
 
-    public void agregaMozo(Mozo nuevoMozo, Operario user){
+    public Mozo getMozoById(int mozoId){
+        return configuracion.getMozoById(mozoId);
+    }
+
+    public void agregaMozo(Mozo nuevoMozo, Operario user) throws UsuarioNoAutorizadoException, MozoYaAgregadoException {
         state.agregarMozo(nuevoMozo, user);
     }
 
@@ -192,18 +247,22 @@ public class GestorEmpresa {
      * @param mozoId Id del mozo
      * @param estado Estado del mozo;
      */
-    public void definirEstadoMozo(int mozoId, EstadoMozos estado){
+    public void definirEstadoMozo(int mozoId, EstadoMozos estado) throws MozoNoEncontradoException, IdIncorrectoException {
         state.definirEstadoMozo(mozoId, estado);
     }
 
 
-    public void eliminaMozo(int mozoId, Operario user){
+    public void eliminaMozo(int mozoId, Operario user) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException {
         state.eliminaMozo(mozoId, user);
     }
 
     //METODOS CONFIGURACION: MESAS
     public ArrayList<Mesa> getMesas(){
         return configuracion.getMesas();
+    }
+
+    public Mesa getMesaByNroMesa(int nroMesa){
+        return configuracion.getMesaNroMesa(nroMesa);
     }
 
     public void agregarMesa(Mesa mesa, Operario user) throws MesaYaExistenteException, UsuarioNoAutorizadoException {
@@ -214,7 +273,7 @@ public class GestorEmpresa {
         configuracion.actulizarMesa(mesa,nroMesa,user);
     }
 
-    public void eliminarMesa(int nroMesa, Operario user){
+    public void eliminarMesa(int nroMesa, Operario user) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException {
         state.eliminarMesa(nroMesa, user);
     }
 
@@ -224,6 +283,9 @@ public class GestorEmpresa {
         return configuracion.getProductos();
     }
 
+    protected Producto getProductoById(int productoId){
+        return configuracion.getProductoById(productoId);
+    }
     public void agregarProducto(Producto producto, Operario user) throws ProductoYaExistenteException, UsuarioNoAutorizadoException {
         configuracion.agregarProducto(producto, user);
     }
@@ -232,7 +294,7 @@ public class GestorEmpresa {
         configuracion.actulizarProducto(producto,productoId,user);
     }
 
-    public void eliminarProducto(int productoId, Operario user){
+    public void eliminarProducto(int productoId, Operario user) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException {
         state.eliminarProducto(productoId, user);
     }
 
