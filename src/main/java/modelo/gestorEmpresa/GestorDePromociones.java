@@ -1,7 +1,7 @@
 package modelo.gestorEmpresa;
 
-import exceptions.PromocionNoEncontradaException;
-import exceptions.PromocionYaExistenteException;
+import exceptions.promociones.PromocionNoEncontradaException;
+import exceptions.promociones.PromocionYaExistenteException;
 
 import java.util.ArrayList;
 

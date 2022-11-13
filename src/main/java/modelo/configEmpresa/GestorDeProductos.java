@@ -1,9 +1,9 @@
 package modelo.configEmpresa;
 
 import exceptions.IdIncorrectoException;
-import exceptions.ProductoNoEncontradoException;
-import exceptions.ProductoYaExistenteException;
-import exceptions.UsuarioNoAutorizadoException;
+import exceptions.productos.ProductoNoEncontradoException;
+import exceptions.productos.ProductoYaExistenteException;
+import exceptions.operarios.UsuarioNoAutorizadoException;
 
 import java.util.ArrayList;
 

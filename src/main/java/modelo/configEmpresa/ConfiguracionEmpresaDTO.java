@@ -1,7 +1,6 @@
 package modelo.configEmpresa;
 
-import exceptions.ArchivoNoInciliazadoException;
-import modelo.persist.OperarioDTO;
+import exceptions.persistencia.ArchivoNoInciliazadoException;
 import modelo.persist.PersistencaiBin;
 
 import java.io.IOException;

@@ -1,9 +1,16 @@
 package modelo.gestorEmpresa;
 
 import config.Config;
-import enums.EstadoMesas;
 import enums.EstadoMozos;
 import exceptions.*;
+import exceptions.gestorEmpresa.*;
+import exceptions.mesas.MesaNoEncontradaException;
+import exceptions.mesas.MesaYaOcupadaException;
+import exceptions.mozos.MozoNoActivoException;
+import exceptions.mozos.MozoNoEncontradoException;
+import exceptions.mozos.MozoYaAgregadoException;
+import exceptions.operarios.UsuarioNoAutorizadoException;
+import exceptions.productos.ProductoNoEncontradoException;
 import helpers.MozoHelpers;
 import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;

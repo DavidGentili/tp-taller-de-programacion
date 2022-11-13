@@ -1,6 +1,7 @@
 package modelo.configEmpresa;
 
 import exceptions.*;
+import exceptions.operarios.*;
 
 import java.util.ArrayList;
 

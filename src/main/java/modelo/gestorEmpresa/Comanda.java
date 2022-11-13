@@ -1,11 +1,10 @@
 package modelo.gestorEmpresa;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.GregorianCalendar;
 
 import enums.EstadoComanda;
-import exceptions.ComandaYaCerradaException;
+import exceptions.comandas.ComandaYaCerradaException;
 import modelo.configEmpresa.Mesa;
 
 public class Comanda {

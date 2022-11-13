@@ -1,6 +1,6 @@
 package modelo.persist;
 
-import exceptions.ArchivoNoInciliazadoException;
+import exceptions.persistencia.ArchivoNoInciliazadoException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

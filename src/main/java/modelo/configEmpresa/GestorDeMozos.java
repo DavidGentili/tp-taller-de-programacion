@@ -2,9 +2,9 @@ package modelo.configEmpresa;
 
 import enums.EstadoMozos;
 import exceptions.IdIncorrectoException;
-import exceptions.MozoNoEncontradoException;
-import exceptions.MozoYaAgregadoException;
-import exceptions.UsuarioNoAutorizadoException;
+import exceptions.mozos.MozoNoEncontradoException;
+import exceptions.mozos.MozoYaAgregadoException;
+import exceptions.operarios.UsuarioNoAutorizadoException;
 
 import java.util.ArrayList;
 

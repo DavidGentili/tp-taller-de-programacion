@@ -1,6 +1,6 @@
 package modelo.configEmpresa;
 
-import exceptions.StockInsuficienteException;
+import exceptions.productos.StockInsuficienteException;
 
 import java.io.Serializable;
 
