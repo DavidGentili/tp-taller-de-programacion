@@ -36,7 +36,7 @@ public class GestorEmpresa {
 
     public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosException,
             CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosActivosException,
-            CantidadMaximaDeMozosSuperadaException {
+            CantidadMaximaDeMozosSuperadaException, EmpresaAbiertaException {
         state.abrirEmpresa();
     }
 
@@ -64,7 +64,7 @@ public class GestorEmpresa {
      * pre: mozo debe ser distinto de null
      * post: se añadira una nueva asignacion a la coleccion 
      */
-    public void asignarMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, MesaYaOcupadaException {
+    public void asignarMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, MesaYaOcupadaException, EmpresaAbiertaException {
     	state.asignarMozo(mozoId, nroMesa, fecha);
     }
 
@@ -84,11 +84,26 @@ public class GestorEmpresa {
         return res;
     }
 
-    public void eliminarRelacionMozoMesa(int nroMesa){
+    public void eliminarRelacionMozoMesa(int nroMesa) throws EmpresaAbiertaException {
         state.eliminarRelacionMozoMesa(nroMesa);
     }
 
     //METODOS COMANDAS
+
+    public ArrayList<Comanda> getComandas(){
+        return comandas;
+    }
+
+    protected Comanda getComandaByNroMesa(int nroMesa){
+        Comanda res = null;
+        int i = 0;
+        while (i < comandas.size() && res == null){
+            if(comandas.get(i).getMesa().getNroMesa() == nroMesa)
+                res = comandas.get(i);
+            i++;
+        }
+        return res;
+    }
 
     /**
      * Se encarga de generar una nueva comanda y agregarla a la coleccion de Comandas
@@ -233,7 +248,7 @@ public class GestorEmpresa {
         return configuracion.getMozoById(mozoId);
     }
 
-    public void agregaMozo(Mozo nuevoMozo, Operario user) throws UsuarioNoAutorizadoException, MozoYaAgregadoException {
+    public void agregaMozo(Mozo nuevoMozo, Operario user) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException {
         state.agregarMozo(nuevoMozo, user);
     }
 
@@ -247,12 +262,12 @@ public class GestorEmpresa {
      * @param mozoId Id del mozo
      * @param estado Estado del mozo;
      */
-    public void definirEstadoMozo(int mozoId, EstadoMozos estado) throws MozoNoEncontradoException, IdIncorrectoException {
+    public void definirEstadoMozo(int mozoId, EstadoMozos estado) throws MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException {
         state.definirEstadoMozo(mozoId, estado);
     }
 
 
-    public void eliminaMozo(int mozoId, Operario user) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException {
+    public void eliminaMozo(int mozoId, Operario user) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, EmpresaAbiertaException {
         state.eliminaMozo(mozoId, user);
     }
 

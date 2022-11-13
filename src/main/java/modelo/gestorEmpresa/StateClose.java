@@ -104,7 +104,10 @@ public class StateClose implements StateGestorEmpresa{
     @Override
     public void eliminarMesa(int nroMesa, Operario user) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException {
         empresa.getConfiguracion().eliminarMesa(nroMesa, user);
-        empresa.eliminarRelacionMozoMesa(nroMesa);
+        try{
+            empresa.eliminarRelacionMozoMesa(nroMesa);
+        }catch (EmpresaAbiertaException e){
+        }
     }
 
     @Override
