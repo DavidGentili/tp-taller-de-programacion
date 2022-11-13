@@ -1,16 +1,20 @@
 package modelo.gestorEmpresa;
 
+import enums.FormasDePago;
+import helpers.FacturaHelpers;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class PromocionTemp extends Promocion implements Serializable {
-	private String formaPago;
+	private FormasDePago formaPago;
 	private int porcentajeDto;
 	private boolean acumulable;
 	private String nombre;
 	
 	
 	
-	public PromocionTemp( String dias, String formaPago, int porcentajeDto, boolean acumulable, String nombre) {
+	public PromocionTemp( String dias, FormasDePago formaPago, int porcentajeDto, boolean acumulable, String nombre) {
 		super(dias);
 		this.formaPago = formaPago;
 		this.porcentajeDto = porcentajeDto;
@@ -18,7 +22,7 @@ public class PromocionTemp extends Promocion implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public void setFormaPago(String formaPago) {
+	public void setFormaPago(FormasDePago formaPago) {
 		this.formaPago = formaPago;
 	}
 
@@ -40,16 +44,24 @@ public class PromocionTemp extends Promocion implements Serializable {
 	public boolean isAcumulable() {
 		return acumulable;
 	}
+
+	@Override
+	public double getDescuento(ArrayList<Pedido> pedidos) {
+		double total = 0;
+		for( Pedido pedido : pedidos)
+			total += pedido.getCantidad() * pedido.getProducto().getPrecioVenta();
+		return total * porcentajeDto / 100;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
-	public String getFormaPago() {
+	public FormasDePago getFormaPago() {
 		return formaPago;
 	}
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public boolean aplicaPromocion(ArrayList<Pedido> pedidos, FormasDePago formaDePago) {
+		return FacturaHelpers.correspondeDia(dias) && this.formaPago == formaDePago;
+	}
 }

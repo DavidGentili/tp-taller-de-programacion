@@ -1,7 +1,10 @@
 
 package modelo.gestorEmpresa;
 
+import enums.FormasDePago;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public abstract class Promocion implements Serializable {
 	protected static int nroPromociones = 0;
@@ -47,5 +50,10 @@ public abstract class Promocion implements Serializable {
 		return activa;
 	}
 
+	public abstract boolean isAcumulable();
+
+	public abstract double getDescuento(ArrayList<Pedido> pedidos);
+
+	public abstract boolean aplicaPromocion(ArrayList<Pedido> pedidos, FormasDePago formaDePago);
 
 }

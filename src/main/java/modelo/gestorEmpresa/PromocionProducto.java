@@ -1,8 +1,11 @@
 package modelo.gestorEmpresa;
 
+import enums.FormasDePago;
+import helpers.FacturaHelpers;
 import modelo.configEmpresa.Producto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class PromocionProducto extends Promocion implements Serializable {
 	private Producto producto;
@@ -68,8 +71,48 @@ public class PromocionProducto extends Promocion implements Serializable {
 	private void invariante(){
 		assert this.dosPorUno | this.dtoPorCant : "Dos por uno y dto por cantidad no pueden ser nulos en simultaneo";
 	}
-	
-	
-	
-	
+
+	public boolean isAcumulable(){
+		return true;
+	}
+
+
+	@Override
+	public boolean aplicaPromocion(ArrayList<Pedido> pedidos, FormasDePago formaDePago) {
+		if(!activa || !FacturaHelpers.correspondeDia(dias))
+			return false;
+		boolean aplica = false;
+		int i = 0;
+		while (i < pedidos.size() && !aplica){
+			if(pedidos.get(i).getProducto().getId() == producto.getId())
+				aplica = true;
+			i++;
+		}
+		return aplica;
+	}
+
+	public double getDescuento(ArrayList<Pedido> pedidos){
+		if(dosPorUno)
+			return calculaDescuentoDosPorUno(pedidos);
+		else
+			return calculoDescuentoPorCantidad(pedidos);
+	}
+
+	private double calculaDescuentoDosPorUno(ArrayList<Pedido> pedidos){
+		double desc = 0;
+		for (Pedido pedido : pedidos){
+			if(pedido.getProducto().getId() == producto.getId())
+				desc += Math.floor(pedido.getCantidad()/2) * pedido.getProducto().getPrecioVenta();
+		}
+		return desc;
+	}
+
+	private double calculoDescuentoPorCantidad(ArrayList<Pedido> pedidos){
+		double desc = 0;
+		for (Pedido pedido : pedidos){
+			if(pedido.getProducto().getId() == producto.getId() && pedido.getCantidad() >= cantMinima)
+				desc += (producto.getPrecioVenta() - precioUnitario) * pedido.getCantidad();
+		}
+		return desc;
+	}
 }

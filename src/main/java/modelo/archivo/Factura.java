@@ -1,9 +1,13 @@
 package modelo.archivo;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
+import enums.FormasDePago;
 import modelo.configEmpresa.Mesa;
+import modelo.gestorEmpresa.Comanda;
 import modelo.gestorEmpresa.Pedido;
 import modelo.gestorEmpresa.Promocion;
 
@@ -16,12 +20,12 @@ import modelo.gestorEmpresa.Promocion;
  */
 public class Factura {
 
-    private Date fecha;
+    private GregorianCalendar fecha;
     private Mesa mesa;
-    private Collection<Pedido> pedidos;
+    private ArrayList<Pedido> pedidos;
     private double total;
-    private String formaDePago;
-    private Collection<Promocion> promocionesAplicadas;
+    private FormasDePago formaDePago;
+    private ArrayList<Promocion> promocionesAplicadas;
 
 
     /**
@@ -29,19 +33,33 @@ public class Factura {
      * la fecha de factura es la fecha de realización de la misma
      * la clase tiene acceso al listado de promociones para poder calcular los descuentos asociados.
      * @param mesa para la cual se desea realizar la factura
-     * @param pedidos de pedidos realizados por esa mesa
+     * @param pedidos lista de pedidos realizados por esa mesa
+	 * @param promocionesAplicadas : las promociones que se van a aplicar
      * @param formaDePago de pago en el que desea pagar el cliente
-     * pre: pedidos no puede estar vació, mesa debe ser distinto de null, la forma de pago se debe encontrar dentro los tipos enunciados en los enums
+     * pre: pedidos != null
+	 *      mesa != null
+	 *      la forma de pago se debe encontrar dentro los tipos enunciados en los enums
      * post: Instancia la factura con los datos relacionados a la misma
      */
-    Factura(Mesa mesa,Collection<Pedido> pedidos, String formaDePago){}
+    public Factura(Mesa mesa, ArrayList<Pedido> pedidos, ArrayList<Promocion> promocionesAplicadas, FormasDePago formaDePago){
+		assert mesa != null : "La mesa no puede ser nula";
+		assert pedidos != null : "Los pedidos no pueden ser nulos";
+		assert promocionesAplicadas != null : "Las promociones no pueden ser nulas";
+		assert formaDePago != null : "La forma de pago no puede ser nula";
+
+		this.fecha = (GregorianCalendar) GregorianCalendar.getInstance();
+		this.mesa = mesa;
+		this.pedidos = pedidos;
+		this.formaDePago = formaDePago;
+		this.total = calculaTotal();
+	}
     
     
     /**
      * Consulta al registro factura
      * @return fecha de la factura instanciada
      */
-    public Date getFecha() {return fecha;}
+    public GregorianCalendar getFecha() {return fecha;}
 
     /**
      * Consulta al registro factura
@@ -56,7 +74,7 @@ public class Factura {
      * Consulta al registro factura
      * @return lista de pedidos relacionado a la factura instanciada
      */
-	public Collection<Pedido> getPedidos() {
+	public ArrayList<Pedido> getPedidos() {
 		return pedidos;
 	}
 
@@ -74,7 +92,7 @@ public class Factura {
 	 * Consulta al registro factura
 	 * @return forma de pago de la factura instanciada
 	 */
-	public String getFormaDePago() {
+	public FormasDePago getFormaDePago() {
 		return formaDePago;
 	}
 	
@@ -83,25 +101,23 @@ public class Factura {
 	 * Consulta al registro factura
 	 * @return promociones aplicadas en la factura instanciada
 	 */
-	public Collection<Promocion> getPromocionesAplicadas() {return promocionesAplicadas;}
-	
-	
-	/**
-	 * Ganera el listado de promociones a aplicar para la factura
-	 * @return listado de promociones que se deben aplicar en la factura instanciada
-	 * Esta clase debe tener acceso al listado de promociones para poder realizar el cálculo correspondiente
-	 */
-	public Collection<Promocion> promocionesAplicadas() {Collection<Promocion> listaPromociones = null; return listaPromociones;}
+	public ArrayList<Promocion> getPromocionesAplicadas() {return promocionesAplicadas;}
+
 	
 	
 	/**
 	 * Calcula el Total del monto a facturar
-	 * @param pedidos
-	 * @param formaDePago
 	 * @return Total a a abonar para la factura realizada
-	 * pre: listado de pedidos no puede estar vacío y forma de pago se debe encontrar dentro los tipos enunciados en los enums
 	 */
-	public double calculaTotal(Collection<Pedido> pedidos, String formaDePago) {return 0;}
+	private double calculaTotal() {
+		double total = 0;
+		double desc = 0;
+		for( Pedido pedido : pedidos )
+			total += pedido.getCantidad() * pedido.getProducto().getPrecioVenta();
+		for(Promocion promocion : promocionesAplicadas)
+			desc += promocion.getDescuento(pedidos);
+		return total - desc;
+	}
     
     
 }

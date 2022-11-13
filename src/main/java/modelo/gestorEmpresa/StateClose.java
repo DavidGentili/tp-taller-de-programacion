@@ -2,6 +2,7 @@ package modelo.gestorEmpresa;
 
 import config.Config;
 import enums.EstadoMozos;
+import enums.FormasDePago;
 import exceptions.*;
 import exceptions.gestorEmpresa.*;
 import exceptions.mesas.MesaNoEncontradaException;
@@ -86,7 +87,7 @@ public class StateClose implements StateGestorEmpresa{
     }
 
     @Override
-    public void cerrarComanda(int nroMesa) throws EmpresaCerradaException {
+    public void cerrarComanda(int nroMesa, FormasDePago formaDePago) throws EmpresaCerradaException {
         throw new EmpresaCerradaException();
     }
 

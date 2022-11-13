@@ -3,6 +3,7 @@ package modelo.gestorEmpresa;
 import enums.EstadoComanda;
 import enums.EstadoMesas;
 import enums.EstadoMozos;
+import enums.FormasDePago;
 import exceptions.*;
 import exceptions.comandas.ComandaNoEncontradaException;
 import exceptions.comandas.ComandaYaCerradaException;
@@ -15,6 +16,8 @@ import exceptions.mesas.MesaYaOcupadaException;
 import exceptions.operarios.UsuarioNoAutorizadoException;
 import exceptions.productos.ProductoEnPedidoException;
 import exceptions.productos.ProductoNoEncontradoException;
+import helpers.FacturaHelpers;
+import modelo.archivo.Factura;
 import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;
 import modelo.configEmpresa.Operario;
@@ -72,7 +75,7 @@ public class StateOpen implements StateGestorEmpresa{
     }
 
     @Override
-    public void cerrarComanda(int nroMesa) throws EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException, ComandaYaCerradaException {
+    public void cerrarComanda(int nroMesa, FormasDePago formaDePago) throws EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException, ComandaYaCerradaException {
         assert nroMesa >= 0 : "El numero de mesa no puede ser negativo";
 
         Comanda comanda = empresa.getComandaByNroMesa(nroMesa);
@@ -81,6 +84,10 @@ public class StateOpen implements StateGestorEmpresa{
         try{
             comanda.getMesa().liberarMesa();
             comanda.cerrarComanda();
+            ArrayList<Promocion> promocionesAplicadas = FacturaHelpers.getPromocionesAplicadas(empresa.getPromociones(), comanda.getListaDePedidos(), formaDePago);
+            Factura factura = new Factura(comanda.getMesa(), comanda.getListaDePedidos(), promocionesAplicadas, formaDePago);
+            //ALMACENAR LA FACTURA
+
         } catch (ComandaYaCerradaException e){
             try {
                 comanda.getMesa().ocuparMesa();

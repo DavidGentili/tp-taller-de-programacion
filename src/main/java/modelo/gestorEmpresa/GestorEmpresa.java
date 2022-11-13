@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import enums.EstadoMozos;
+import enums.FormasDePago;
 import exceptions.*;
 import exceptions.comandas.ComandaNoEncontradaException;
 import exceptions.comandas.ComandaYaCerradaException;
@@ -37,13 +38,13 @@ public class GestorEmpresa {
     private GestorDePromociones promociones;
     private StateGestorEmpresa state;
 
-    /*
-    * ESTADOS EMPRESA:
-    * Abierta
-    * Cerrada
-    */
-
-    private GestorEmpresa(){}
+    private GestorEmpresa(){
+        comandas = new ArrayList<Comanda>();
+        configuracion = ConfiguracionEmpresa.getInstance();
+        asignacionMozosMesas = new ArrayList<MozoMesa>();
+        promociones = new GestorDePromociones();
+        state = new StateClose(this);
+    }
 
     public static GestorEmpresa getInstance(){
         if(instance == null)
@@ -145,8 +146,8 @@ public class GestorEmpresa {
      * post : la mesa asociada a la comanda pasara de estado "ocupada" a estado "libre"
      * post : facturacion de la comanda , verifica si cumple con alguna promocion activa
      */
-    public void cerrarComanda(int nroMesa) throws MesaYaLiberadaException, EmpresaCerradaException, ComandaYaCerradaException, MesaNoEncontradaException {
-        state.cerrarComanda(nroMesa);
+    public void cerrarComanda(int nroMesa, FormasDePago formaDePago) throws MesaYaLiberadaException, EmpresaCerradaException, ComandaYaCerradaException, MesaNoEncontradaException {
+        state.cerrarComanda(nroMesa, formaDePago);
     }
 
     public void agregarPedido(int nroMesa, Pedido pedido) throws EmpresaCerradaException, ComandaYaCerradaException, ComandaNoEncontradaException {

@@ -1,6 +1,7 @@
 package modelo.gestorEmpresa;
 
 import enums.EstadoMozos;
+import enums.FormasDePago;
 import exceptions.*;
 import exceptions.comandas.ComandaNoEncontradaException;
 import exceptions.comandas.ComandaYaCerradaException;
@@ -37,7 +38,7 @@ public interface StateGestorEmpresa {
 
     public void agregaComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException;
 
-    public void cerrarComanda(int nroMesa) throws EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException, ComandaYaCerradaException;
+    public void cerrarComanda(int nroMesa, FormasDePago formaDePago) throws EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException, ComandaYaCerradaException;
 
     public void agregarPedido(int nroMesa, Pedido pedido) throws EmpresaCerradaException, ComandaNoEncontradaException, ComandaYaCerradaException;
 

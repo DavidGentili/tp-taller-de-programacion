@@ -1,6 +1,7 @@
 package modelo.archivo;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import modelo.configEmpresa.Mozo;
 
@@ -11,7 +12,7 @@ import modelo.configEmpresa.Mozo;
  *
  */
 public class Asistencia {
-    private Date fecha;
+    private GregorianCalendar fecha;
     private Mozo mozo;
     private String estado;
     
@@ -20,26 +21,24 @@ public class Asistencia {
      * Registra el estado de asistencia del mozo en el día de la fecha
      * @param mozo del cual se desea registrar el estado
      * @param estado en el que se encuentra el mozo (Activo, De Franco o Ausente) //Ver Enums
+	 * @param fecha : fecha de la asistencia
      * pre: Mozo debe ser distinto de Null y el estado cumplir con los Strings creados como "enums"
      * post: genera el registro de asistencia de un mozo para el día de la fecha
      */
-    public Asistencia(Mozo mozo, String estado){}
+    public Asistencia(Mozo mozo, String estado, GregorianCalendar fecha){
+		assert  mozo != null : "El mozo no puede ser nulo";
+		assert  estado != null && !estado.isBlank() && !estado.isEmpty() : "El estado no puede ser nulo";
 
+		this.fecha = fecha;
+		this.mozo = mozo;
+		this.estado = estado;
+	}
     
     /**
      * Consulta la fecha en la cual se realizó el registro
      * @return fecha de registro
      */
-	public Date getFecha() {return fecha;}
-
-	
-	/**
-	 * Se puede setear la fecha en caso de que no se haya registrado en el día correspondiente
-	 * @param fecha de registro
-	 * pre: fecha debe ser distinto de null y tener un formato de fecha válido
-	 * post: cambia la fecha de la instancia
-	 */
-	public void setFecha(Date fecha) {this.fecha = fecha;}
+	public GregorianCalendar getFecha() {return fecha;}
 
 
 	/**
@@ -55,6 +54,5 @@ public class Asistencia {
 	 * @return estado del mozo (Activo, De Franco o Ausente) //Ver Enums
 	 */
 	public String getEstado() {return estado;}
- 
     
 }
