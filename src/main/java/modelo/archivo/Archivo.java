@@ -2,8 +2,8 @@ package modelo.archivo;
 
 import java.util.Collection;
 
-import modelo.empresa.Comanda;
-import modelo.empresa.MozoMesa;
+import modelo.gestorEmpresa.Comanda;
+import modelo.gestorEmpresa.MozoMesa;
 
 /**
  * Clase que archiva todos los documentos históricos relacionados al sistema

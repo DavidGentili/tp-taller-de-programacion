@@ -33,40 +33,6 @@ public class ConfiguracionEmpresa {
         return instance;
     }
 
-    //NOMBRE LOCAL
-
-    /**
-     * Se encarga de cambiar el nombre del local, para esto el usuario debe ser admin,
-     * en caso de no serlo debe emitir una excepcion
-     * @param name : Nuevo nombre del local
-     * @param user : usuario que intenta realizar la accion
-     * @throws UsuarioNoAutorizadoException : Si el usuario no esta autorizado
-     * pre: El nombre debe ser un string distinto de nulo y de vacio.
-     *      user != null
-     * post: nombreLocal = name || new UsuarioNoAutorizadoException
-     *
-     */
-    public void cambiaNombreLocal(String name, Operario user) throws UsuarioNoAutorizadoException {
-        assert name != null && !name.isBlank() && !name.isEmpty() : "El nombre debe ser distinto de nulo, blanco y vacio";
-        assert user != null : "El usuario no puede ser nulo";
-
-        if(!user.puedeModificarNombreLocal())
-            throw new UsuarioNoAutorizadoException();
-        this.nombreLocal = nombreLocal;
-
-        assert this.nombreLocal == nombreLocal : "No se asigno correctamente el nombre del local";
-
-    }
-
-    /**
-     * Retorna el nombre del local
-     * @return Nombre del local
-     */
-    public String getNombreLocal(){
-        return this.nombreLocal;
-    }
-
-
     //PERSISTENCIA
 
     /**
@@ -95,6 +61,39 @@ public class ConfiguracionEmpresa {
         this.nombreLocal = pers.getNombreLocal();
         this.sueldo = pers.getSueldo();
 
+    }
+
+
+    //NOMBRE LOCAL
+
+    /**
+     * Se encarga de cambiar el nombre del local, para esto el usuario debe ser admin,
+     * en caso de no serlo debe emitir una excepcion
+     * @param name : Nuevo nombre del local
+     * @param user : usuario que intenta realizar la accion
+     * @throws UsuarioNoAutorizadoException : Si el usuario no esta autorizado
+     * pre: El nombre debe ser un string distinto de nulo y de vacio.
+     * post: nombreLocal = name || new UsuarioNoAutorizadoException
+     *
+     */
+    public void cambiaNombreLocal(String name, Operario user) throws UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
+        assert name != null && !name.isBlank() && !name.isEmpty() : "El nombre debe ser distinto de nulo, blanco y vacio";
+        assert user != null : "El usuario no puede ser nulo";
+
+        if(!user.puedeModificarNombreLocal())
+            throw new UsuarioNoAutorizadoException();
+        this.nombreLocal = nombreLocal;
+
+        assert this.nombreLocal == nombreLocal : "No se asigno correctamente el nombre del local";
+
+    }
+
+    /**
+     * Retorna el nombre del local
+     * @return Nombre del local
+     */
+    public String getNombreLocal(){
+        return this.nombreLocal;
     }
 
     //SUELDO

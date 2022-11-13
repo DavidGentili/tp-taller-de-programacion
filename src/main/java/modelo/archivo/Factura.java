@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Date;
 
 import modelo.configEmpresa.Mesa;
-import modelo.empresa.Pedido;
-import modelo.empresa.Promocion;
+import modelo.gestorEmpresa.Pedido;
+import modelo.gestorEmpresa.Promocion;
 
 /**
  * Clase desarrollada para instanciar las facturas generadas por el sistema.
