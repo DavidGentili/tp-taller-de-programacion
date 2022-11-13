@@ -43,6 +43,7 @@ public class StateOpen implements StateGestorEmpresa{
             throw new HayComandasActivasException();
         //ALMACENAR INFORMACION DE LA JORNADA EN ARCHIVO
         empresa.getConfiguracion().clearEstadoMozos();
+        empresa.setState(new StateClose(empresa));
     }
 
     @Override

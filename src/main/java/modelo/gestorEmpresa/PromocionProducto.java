@@ -2,7 +2,9 @@ package modelo.gestorEmpresa;
 
 import modelo.configEmpresa.Producto;
 
-public class PromocionProducto extends Promocion {
+import java.io.Serializable;
+
+public class PromocionProducto extends Promocion implements Serializable {
 	private Producto producto;
 	private boolean dosPorUno;
 	private boolean dtoPorCant;

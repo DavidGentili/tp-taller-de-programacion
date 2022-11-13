@@ -1,5 +1,6 @@
 package modelo.gestorEmpresa;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -7,7 +8,7 @@ import enums.EstadoComanda;
 import exceptions.comandas.ComandaYaCerradaException;
 import modelo.configEmpresa.Mesa;
 
-public class Comanda {
+public class Comanda implements Serializable {
 
     private GregorianCalendar fecha;
     private Mesa mesa;

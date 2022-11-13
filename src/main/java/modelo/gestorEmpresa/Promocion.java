@@ -1,7 +1,9 @@
 
 package modelo.gestorEmpresa;
 
-public abstract class Promocion {
+import java.io.Serializable;
+
+public abstract class Promocion implements Serializable {
 	protected static int nroPromociones = 0;
 	protected int id;
 	protected String dias;

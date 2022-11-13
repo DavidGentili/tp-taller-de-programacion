@@ -2,9 +2,10 @@ package modelo.gestorEmpresa;
 
 import modelo.configEmpresa.Producto;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
-public class Pedido {
+public class Pedido implements Serializable {
     private Producto producto;
     private int cantidad;
     private GregorianCalendar fecha;

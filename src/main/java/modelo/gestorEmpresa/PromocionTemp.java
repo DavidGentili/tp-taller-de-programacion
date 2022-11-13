@@ -1,6 +1,8 @@
 package modelo.gestorEmpresa;
 
-public class PromocionTemp extends Promocion {
+import java.io.Serializable;
+
+public class PromocionTemp extends Promocion implements Serializable {
 	private String formaPago;
 	private int porcentajeDto;
 	private boolean acumulable;

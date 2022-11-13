@@ -3,9 +3,10 @@ package modelo.gestorEmpresa;
 import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
-public class MozoMesa {
+public class MozoMesa implements Serializable {
     private GregorianCalendar fecha;
     private Mozo mozo;
     private Mesa mesa;
