@@ -6,6 +6,7 @@ import exceptions.*;
 import exceptions.comandas.ComandaNoEncontradaException;
 import exceptions.comandas.ComandaYaCerradaException;
 import exceptions.gestorEmpresa.*;
+import exceptions.mesas.MesaNoAsignadaException;
 import exceptions.mesas.MesaNoEncontradaException;
 import exceptions.mesas.MesaYaLiberadaException;
 import exceptions.mesas.MesaYaOcupadaException;
@@ -32,7 +33,7 @@ public interface StateGestorEmpresa {
 
     public void asignarMozo(int idMozo, int nroMesa, GregorianCalendar fecha) throws MozoNoActivoException, MesaYaOcupadaException, MozoNoEncontradoException, MesaNoEncontradaException, EmpresaAbiertaException;
 
-    public void eliminarRelacionMozoMesa(int nroMesa) throws EmpresaAbiertaException;
+    public void eliminarRelacionMozoMesa(int nroMesa) throws EmpresaAbiertaException, MesaNoAsignadaException;
 
     //METODOS COMANDAS
 
@@ -43,16 +44,16 @@ public interface StateGestorEmpresa {
     public void agregarPedido(int nroMesa, Pedido pedido) throws EmpresaCerradaException, ComandaNoEncontradaException, ComandaYaCerradaException;
 
     //METODOS MOZOS
-    public void agregarMozo(Mozo mozo, Operario user) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException;
+    public boolean puedeAgregarMozo() throws EmpresaAbiertaException;
 
-    public void definirEstadoMozo(int mozoId, EstadoMozos estado) throws MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException;
+    public boolean puedeDefinirEstadoMozo() throws EmpresaAbiertaException;
 
-    public void eliminaMozo(int idMozo, Operario user) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, EmpresaAbiertaException;
+    public boolean puedeEliminarMozo(int idMozo) throws MozoNoEncontradoException, EmpresaAbiertaException;
 
     //METODOS MESAS
-    public void eliminarMesa(int nroMesa, Operario user) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, MesaYaOcupadaException;
+    public boolean puedeEliminarMesa(int nroMesa) throws MesaNoEncontradaException, MesaYaOcupadaException;
 
     //METODOS PRODUCTOS
-    public void eliminarProducto(int idProducto, Operario user) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, ProductoEnPedidoException;
+    public boolean puedeEliminarProducto(int idProducto) throws ProductoNoEncontradoException, ProductoEnPedidoException;
 
 }

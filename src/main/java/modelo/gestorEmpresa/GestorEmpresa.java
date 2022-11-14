@@ -10,10 +10,7 @@ import exceptions.*;
 import exceptions.comandas.ComandaNoEncontradaException;
 import exceptions.comandas.ComandaYaCerradaException;
 import exceptions.gestorEmpresa.*;
-import exceptions.mesas.MesaNoEncontradaException;
-import exceptions.mesas.MesaYaExistenteException;
-import exceptions.mesas.MesaYaLiberadaException;
-import exceptions.mesas.MesaYaOcupadaException;
+import exceptions.mesas.*;
 import exceptions.mozos.MozoNoActivoException;
 import exceptions.mozos.MozoNoEncontradoException;
 import exceptions.mozos.MozoYaAgregadoException;
@@ -31,7 +28,7 @@ import modelo.configEmpresa.*;
 
 public class GestorEmpresa {
     private static GestorEmpresa instance = null;
-    protected ConfiguracionEmpresa configuracion;
+    private ConfiguracionEmpresa configuracion;
     private Archivo archivo;
     private ArrayList<Comanda> comandas;
     private ArrayList<MozoMesa> asignacionMozosMesas;
@@ -39,9 +36,9 @@ public class GestorEmpresa {
     private StateGestorEmpresa state;
 
     private GestorEmpresa(){
-        comandas = new ArrayList<Comanda>();
+        comandas = new ArrayList<>();
         configuracion = ConfiguracionEmpresa.getInstance();
-        asignacionMozosMesas = new ArrayList<MozoMesa>();
+        asignacionMozosMesas = new ArrayList<>();
         promociones = new GestorDePromociones();
         state = new StateClose(this);
     }
@@ -104,7 +101,7 @@ public class GestorEmpresa {
         return res;
     }
 
-    public void eliminarRelacionMozoMesa(int nroMesa) throws EmpresaAbiertaException {
+    public void eliminarRelacionMozoMesa(int nroMesa) throws EmpresaAbiertaException, MesaNoAsignadaException {
         state.eliminarRelacionMozoMesa(nroMesa);
     }
 
@@ -236,118 +233,29 @@ public class GestorEmpresa {
         promociones.desactivarPromocion(id);
     }
 
-    //METODOS CONFIGURACION: GENERAL
+    ///METODOS VERIFICACION PARA CONFIGURACION
 
-    protected ConfiguracionEmpresa getConfiguracion(){
-        return configuracion;
+    //METODOS MOZOS
+    public boolean puedeAgregarMozo() throws EmpresaAbiertaException{
+        return state.puedeAgregarMozo();
     }
 
-    public void cambiarNombreLocal(String name, Operario user) throws UsuarioNoLogueadoException, UsuarioNoAutorizadoException {
-        configuracion.cambiaNombreLocal(name, user);
+    public boolean puedeDefinirEstadoMozo() throws EmpresaAbiertaException{
+        return state.puedeDefinirEstadoMozo();
     }
 
-    public String getNombreLocal(){
-        return configuracion.getNombreLocal();
+    public boolean puedeEliminarMozo(int idMozo) throws MozoNoEncontradoException, EmpresaAbiertaException{
+        return state.puedeEliminarMozo(idMozo);
     }
 
-    public void setSueldo(Sueldo sueldo, Operario user) throws UsuarioNoAutorizadoException {
-        configuracion.setSueldo(sueldo, user);
+    //METODOS MESAS
+    public boolean puedeEliminarMesa(int nroMesa) throws MesaNoEncontradaException, MesaYaOcupadaException{
+        return state.puedeEliminarMesa(nroMesa);
     }
 
-    public Sueldo getSueldo(){
-        return configuracion.getSueldo();
-    }
-
-    //METODOS CONFIGURACION: MOZOS
-
-    public ArrayList<Mozo> getMozos(){
-        return configuracion.getMozos();
-    }
-
-    public Mozo getMozoById(int mozoId){
-        return configuracion.getMozoById(mozoId);
-    }
-
-    public void agregaMozo(Mozo nuevoMozo, Operario user) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException {
-        state.agregarMozo(nuevoMozo, user);
-    }
-
-    public void actualizaMozo(Mozo mozoActualizado, int idMozo, Operario user) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException {
-        configuracion.actualizarMozo(mozoActualizado, idMozo, user);
-    }
-
-    /**
-     * Define el estado de un mozo
-     * pre: estado != null
-     * @param mozoId Id del mozo
-     * @param estado Estado del mozo;
-     */
-    public void definirEstadoMozo(int mozoId, EstadoMozos estado) throws MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException {
-        state.definirEstadoMozo(mozoId, estado);
-    }
-
-    public void eliminaMozo(int mozoId, Operario user) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, EmpresaAbiertaException {
-        state.eliminaMozo(mozoId, user);
-    }
-
-    //METODOS CONFIGURACION: MESAS
-    public ArrayList<Mesa> getMesas(){
-        return configuracion.getMesas();
-    }
-
-    public Mesa getMesaByNroMesa(int nroMesa){
-        return configuracion.getMesaNroMesa(nroMesa);
-    }
-
-    public void agregarMesa(Mesa mesa, Operario user) throws MesaYaExistenteException, UsuarioNoAutorizadoException {
-        configuracion.agregarMesa(mesa, user);
-    }
-
-    public void actualizarMeza(Mesa mesa, int nroMesa, Operario user) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException {
-        configuracion.actulizarMesa(mesa,nroMesa,user);
-    }
-
-    public void eliminarMesa(int nroMesa, Operario user) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, MesaYaOcupadaException {
-        state.eliminarMesa(nroMesa, user);
-    }
-
-    //METODOS CONFIGURACION: PRODUCTOS
-
-    public ArrayList<Producto> getProductos(){
-        return configuracion.getProductos();
-    }
-
-    protected Producto getProductoById(int productoId){
-        return configuracion.getProductoById(productoId);
-    }
-    public void agregarProducto(Producto producto, Operario user) throws ProductoYaExistenteException, UsuarioNoAutorizadoException {
-        configuracion.agregarProducto(producto, user);
-    }
-
-    public void actualizarProducto(Producto producto, int productoId, Operario user) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException {
-        configuracion.actulizarProducto(producto,productoId,user);
-    }
-
-    public void eliminarProducto(int productoId, Operario user) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, ProductoEnPedidoException {
-        state.eliminarProducto(productoId, user);
-    }
-
-    //METODOS CONFIGURACION: OPERARIOS
-
-    public ArrayList<Operario> getOperarios(Operario user) throws UsuarioNoAutorizadoException {
-        return configuracion.getOperarios(user);
-    }
-
-    public void agregarOperario(Operario nuevo, Operario user) throws OperarioYaExistenteException, UsuarioNoAutorizadoException {
-        configuracion.agregarOperario(nuevo, user);
-    }
-
-    public void actualizarOperario(Operario actualizado, int operarioId, Operario user) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException {
-        configuracion.actualizarOperario(actualizado, operarioId, user);
-    }
-
-    public void eliminarOperario(int operarioId, Operario user) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException {
-        configuracion.eliminarOperario(operarioId, user);
+    //METODOS PRODUCTOS
+    public boolean puedeEliminarProducto(int idProducto) throws ProductoNoEncontradoException, ProductoEnPedidoException{
+        return state.puedeEliminarProducto(idProducto);
     }
 
     //PERSITENCIA
@@ -359,7 +267,6 @@ public class GestorEmpresa {
     public void guardarEmpresa(){
 
     }
-
 
 
 }

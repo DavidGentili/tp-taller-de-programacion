@@ -2,14 +2,18 @@ package modelo.configEmpresa;
 
 import enums.EstadoMozos;
 import exceptions.*;
+import exceptions.gestorEmpresa.EmpresaAbiertaException;
 import exceptions.mesas.MesaNoEncontradaException;
 import exceptions.mesas.MesaYaExistenteException;
+import exceptions.mesas.MesaYaOcupadaException;
 import exceptions.mozos.MozoNoEncontradoException;
 import exceptions.mozos.MozoYaAgregadoException;
 import exceptions.operarios.*;
 import exceptions.persistencia.ArchivoNoInciliazadoException;
+import exceptions.productos.ProductoEnPedidoException;
 import exceptions.productos.ProductoNoEncontradoException;
 import exceptions.productos.ProductoYaExistenteException;
+import modelo.gestorEmpresa.GestorEmpresa;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,12 +27,15 @@ public class ConfiguracionEmpresa {
     private GestorDeOperarios operarios;
     private Sueldo sueldo;
 
+    private GestorEmpresa empresa;
+
     private ConfiguracionEmpresa(){
         this.productos = new GestorDeProductos();
         this.mozos = new GestorDeMozos();
         this.mesas = new GestorDeMesas();
         this.operarios = new GestorDeOperarios();
         this.sueldo = null;
+        this.empresa = GestorEmpresa.getInstance();
     }
 
     /**
@@ -161,8 +168,9 @@ public class ConfiguracionEmpresa {
      *      user != null
      * post: se añadira un nuevo mozo a la coleccion
      */
-    public void agregaMozo(Mozo nuevoMozo, Operario user) throws UsuarioNoAutorizadoException, MozoYaAgregadoException {
-        mozos.agregaMozo(nuevoMozo,user);
+    public void agregaMozo(Mozo nuevoMozo, Operario user) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException {
+        if(empresa.puedeAgregarMozo())
+            mozos.agregaMozo(nuevoMozo,user);
     }
 
     /**
@@ -190,8 +198,9 @@ public class ConfiguracionEmpresa {
      * pre: user != null
      * post: Se eliminara el mozo con el id ingresado de la coleccion
      */
-    public void eliminaMozo(int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MozoNoEncontradoException {
-        mozos.eliminaMozo(mozoId, user);
+    public void eliminaMozo(int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MozoNoEncontradoException, EmpresaAbiertaException {
+        if(empresa.puedeEliminarMozo(mozoId))
+            mozos.eliminaMozo(mozoId, user);
     };
 
     /**
@@ -202,8 +211,9 @@ public class ConfiguracionEmpresa {
      * @throws IdIncorrectoException : Si el id es incorrecto
      * @throws MozoNoEncontradoException : Si el mozo no es encontrado;
      */
-    public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws IdIncorrectoException, MozoNoEncontradoException {
-        mozos.cambiarEstadoMozo(mozoId, estado);
+    public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws IdIncorrectoException, MozoNoEncontradoException, EmpresaAbiertaException {
+        if(empresa.puedeDefinirEstadoMozo())
+            mozos.cambiarEstadoMozo(mozoId, estado);
     }
 
     public void clearEstadoMozos(){
@@ -270,8 +280,9 @@ public class ConfiguracionEmpresa {
      * pre: user != null
      * post: Se elimina la mesa de la coleccion
      */
-    public void eliminarMesa(int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MesaNoEncontradaException {
-        mesas.eliminarMesa(nroMesa, user);
+    public void eliminarMesa(int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MesaNoEncontradaException, MesaYaOcupadaException {
+        if(empresa.puedeEliminarMesa(nroMesa))
+            mesas.eliminarMesa(nroMesa, user);
     };
 
     //PRODUCTOS
@@ -332,8 +343,9 @@ public class ConfiguracionEmpresa {
      * pre: user != null
      * post: Se elimina el producto de la coleccion
      */
-    public void eliminarProducto(int idProducto, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, ProductoNoEncontradoException {
-        productos.eliminarProducto(idProducto, user);
+    public void eliminarProducto(int idProducto, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, ProductoNoEncontradoException, ProductoEnPedidoException {
+        if(empresa.puedeEliminarProducto(idProducto))
+            productos.eliminarProducto(idProducto, user);
 
     };
 

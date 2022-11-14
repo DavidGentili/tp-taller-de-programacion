@@ -79,7 +79,7 @@ public class Archivo {
 	 * @return colección de registro de asistencias históricas
 	 */
 	public ArrayList<Asistencia> getRegistroDeAsistencia() {return registroDeAsistencia;}
-	
+
 	
 	/**
 	 * Agrega al listado histórico un nuevo registro

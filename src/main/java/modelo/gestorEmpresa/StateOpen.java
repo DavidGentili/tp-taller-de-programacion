@@ -13,11 +13,13 @@ import exceptions.gestorEmpresa.HayComandasActivasException;
 import exceptions.mesas.MesaNoEncontradaException;
 import exceptions.mesas.MesaYaLiberadaException;
 import exceptions.mesas.MesaYaOcupadaException;
+import exceptions.mozos.MozoNoEncontradoException;
 import exceptions.operarios.UsuarioNoAutorizadoException;
 import exceptions.productos.ProductoEnPedidoException;
 import exceptions.productos.ProductoNoEncontradoException;
 import helpers.FacturaHelpers;
 import modelo.archivo.Factura;
+import modelo.configEmpresa.ConfiguracionEmpresa;
 import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;
 import modelo.configEmpresa.Operario;
@@ -28,10 +30,12 @@ import java.util.GregorianCalendar;
 public class StateOpen implements StateGestorEmpresa{
 
     private GestorEmpresa empresa;
+    private ConfiguracionEmpresa configuracion;
 
     public StateOpen(GestorEmpresa empresa){
         assert empresa != null : "La empresa no debe ser nula";
         this.empresa = empresa;
+        this.configuracion = ConfiguracionEmpresa.getInstance();
     }
 
 
@@ -45,7 +49,7 @@ public class StateOpen implements StateGestorEmpresa{
         if(empresa.getComandas().size() > 0)
             throw new HayComandasActivasException();
         //ALMACENAR INFORMACION DE LA JORNADA EN ARCHIVO
-        empresa.getConfiguracion().clearEstadoMozos();
+        configuracion.clearEstadoMozos();
         empresa.setState(new StateClose(empresa));
     }
 
@@ -65,7 +69,7 @@ public class StateOpen implements StateGestorEmpresa{
 
         Comanda comanda = empresa.getComandaByNroMesa(nroMesa);
         ArrayList<Comanda> comandas = empresa.getComandas();
-        Mesa mesa = empresa.getMesaByNroMesa(nroMesa);
+        Mesa mesa = configuracion.getMesaNroMesa(nroMesa);
         if(comanda != null || mesa.getEstado() == EstadoMesas.OCUPADA)
             throw new MesaYaOcupadaException();
         Comanda nueva = new Comanda(mesa);
@@ -120,37 +124,34 @@ public class StateOpen implements StateGestorEmpresa{
     }
 
     @Override
-    public void agregarMozo(Mozo mozo, Operario user) throws EmpresaAbiertaException {
+    public boolean puedeAgregarMozo() throws EmpresaAbiertaException {
         throw new EmpresaAbiertaException();
     }
 
     @Override
-    public void definirEstadoMozo(int mozoId, EstadoMozos estado) throws EmpresaAbiertaException {
+    public boolean puedeDefinirEstadoMozo() throws EmpresaAbiertaException {
         throw new EmpresaAbiertaException();
     }
 
+
     @Override
-    public void eliminaMozo(int idMozo, Operario user) throws EmpresaAbiertaException {
-        throw new EmpresaAbiertaException();
+    public boolean puedeEliminarMozo(int idMozo){
+        return false;
     }
 
     @Override
-    public void eliminarMesa(int nroMesa, Operario user) throws MesaNoEncontradaException, MesaYaOcupadaException, IdIncorrectoException, UsuarioNoAutorizadoException {
-        assert user != null : "El usuario no puede ser nulo";
-        Mesa mesa = empresa.getMesaByNroMesa(nroMesa);
+    public boolean puedeEliminarMesa(int nroMesa) throws MesaNoEncontradaException, MesaYaOcupadaException {
+        Mesa mesa = configuracion.getMesaNroMesa(nroMesa);
         Comanda comanda = empresa.getComandaByNroMesa(nroMesa);
         if(mesa == null)
             throw new MesaNoEncontradaException();
         if(mesa.getEstado() == EstadoMesas.OCUPADA || comanda != null)
             throw new MesaYaOcupadaException();
-        empresa.getConfiguracion().eliminarMesa(nroMesa, user);
+        return true;
     }
 
     @Override
-    public void eliminarProducto(int idProducto, Operario user) throws ProductoEnPedidoException, ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException {
-        assert idProducto >= 0 : "El id no puede ser negativo";
-        assert user != null : "El usuario no puede ser nulo";
-
+    public boolean puedeEliminarProducto(int idProducto) throws ProductoEnPedidoException {
         boolean esta = false;
         int i = 0;
         while (i < empresa.getComandas().size() && !esta){
@@ -160,6 +161,7 @@ public class StateOpen implements StateGestorEmpresa{
         }
         if(esta)
             throw new ProductoEnPedidoException();
-        empresa.configuracion.eliminarProducto(idProducto, user);
+        return true;
     }
+
 }
