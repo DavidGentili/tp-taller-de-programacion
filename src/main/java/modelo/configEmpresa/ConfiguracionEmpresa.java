@@ -27,15 +27,12 @@ public class ConfiguracionEmpresa {
     private GestorDeOperarios operarios;
     private Sueldo sueldo;
 
-    private GestorEmpresa empresa;
-
     private ConfiguracionEmpresa(){
         this.productos = new GestorDeProductos();
         this.mozos = new GestorDeMozos();
         this.mesas = new GestorDeMesas();
         this.operarios = new GestorDeOperarios();
         this.sueldo = null;
-        this.empresa = GestorEmpresa.getInstance();
     }
 
     /**
@@ -169,7 +166,7 @@ public class ConfiguracionEmpresa {
      * post: se añadira un nuevo mozo a la coleccion
      */
     public void agregaMozo(Mozo nuevoMozo, Operario user) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException {
-        if(empresa.puedeAgregarMozo())
+        if(GestorEmpresa.getInstance().puedeAgregarMozo())
             mozos.agregaMozo(nuevoMozo,user);
     }
 
@@ -199,7 +196,7 @@ public class ConfiguracionEmpresa {
      * post: Se eliminara el mozo con el id ingresado de la coleccion
      */
     public void eliminaMozo(int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MozoNoEncontradoException, EmpresaAbiertaException {
-        if(empresa.puedeEliminarMozo(mozoId))
+        if(GestorEmpresa.getInstance().puedeEliminarMozo(mozoId))
             mozos.eliminaMozo(mozoId, user);
     };
 
@@ -212,7 +209,7 @@ public class ConfiguracionEmpresa {
      * @throws MozoNoEncontradoException : Si el mozo no es encontrado;
      */
     public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws IdIncorrectoException, MozoNoEncontradoException, EmpresaAbiertaException {
-        if(empresa.puedeDefinirEstadoMozo())
+        if(GestorEmpresa.getInstance().puedeDefinirEstadoMozo())
             mozos.cambiarEstadoMozo(mozoId, estado);
     }
 
@@ -281,7 +278,7 @@ public class ConfiguracionEmpresa {
      * post: Se elimina la mesa de la coleccion
      */
     public void eliminarMesa(int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MesaNoEncontradaException, MesaYaOcupadaException {
-        if(empresa.puedeEliminarMesa(nroMesa))
+        if(GestorEmpresa.getInstance().puedeEliminarMesa(nroMesa))
             mesas.eliminarMesa(nroMesa, user);
     };
 
@@ -344,7 +341,7 @@ public class ConfiguracionEmpresa {
      * post: Se elimina el producto de la coleccion
      */
     public void eliminarProducto(int idProducto, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, ProductoNoEncontradoException, ProductoEnPedidoException {
-        if(empresa.puedeEliminarProducto(idProducto))
+        if(GestorEmpresa.getInstance().puedeEliminarProducto(idProducto))
             productos.eliminarProducto(idProducto, user);
 
     };
