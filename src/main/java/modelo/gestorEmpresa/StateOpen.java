@@ -2,9 +2,7 @@ package modelo.gestorEmpresa;
 
 import enums.EstadoComanda;
 import enums.EstadoMesas;
-import enums.EstadoMozos;
 import enums.FormasDePago;
-import exceptions.*;
 import exceptions.comandas.ComandaNoEncontradaException;
 import exceptions.comandas.ComandaYaCerradaException;
 import exceptions.gestorEmpresa.EmpresaAbiertaException;
@@ -13,16 +11,11 @@ import exceptions.gestorEmpresa.HayComandasActivasException;
 import exceptions.mesas.MesaNoEncontradaException;
 import exceptions.mesas.MesaYaLiberadaException;
 import exceptions.mesas.MesaYaOcupadaException;
-import exceptions.mozos.MozoNoEncontradoException;
-import exceptions.operarios.UsuarioNoAutorizadoException;
 import exceptions.productos.ProductoEnPedidoException;
-import exceptions.productos.ProductoNoEncontradoException;
 import helpers.FacturaHelpers;
 import modelo.archivo.Factura;
 import modelo.configEmpresa.ConfiguracionEmpresa;
 import modelo.configEmpresa.Mesa;
-import modelo.configEmpresa.Mozo;
-import modelo.configEmpresa.Operario;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;

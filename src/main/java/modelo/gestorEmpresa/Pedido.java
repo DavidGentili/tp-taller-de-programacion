@@ -5,7 +5,7 @@ import modelo.configEmpresa.Producto;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 
-public class Pedido implements Serializable {
+public class Pedido implements Serializable, Cloneable {
     private Producto producto;
     private int cantidad;
     private GregorianCalendar fecha;
@@ -50,11 +50,14 @@ public class Pedido implements Serializable {
 		return cantidad;
 	}
 
-
 	public GregorianCalendar getFecha() {
 		return fecha;
 	}
 
-	
-    
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Pedido clon = (Pedido) super.clone();
+		clon.producto = (Producto) producto.clone();
+		return clon;
+	}
 }

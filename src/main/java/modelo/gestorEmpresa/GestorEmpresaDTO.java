@@ -2,9 +2,6 @@ package modelo.gestorEmpresa;
 
 import config.Config;
 import exceptions.persistencia.ArchivoNoInciliazadoException;
-import modelo.Empresa;
-import modelo.archivo.Archivo;
-import modelo.configEmpresa.ConfiguracionEmpresa;
 import modelo.persist.*;
 
 import java.io.IOException;

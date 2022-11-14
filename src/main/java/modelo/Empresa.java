@@ -19,5 +19,14 @@ public class Empresa {
         return instance;
     }
 
+    /**
+     * COSAS RESTANTES:
+     * Persistencia Archivo
+     * Conexion GestorEmpresa con Archivo
+     * Empresa
+     * Controlador
+     * Vista
+     */
+
 
 }

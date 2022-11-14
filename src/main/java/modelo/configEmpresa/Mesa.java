@@ -7,7 +7,7 @@ import enums.EstadoMesas;
 
 import java.io.Serializable;
 
-public class Mesa implements Serializable {
+public class Mesa implements Serializable, Cloneable{
     private int nroMesa;
     private int cantSillas;
     private EstadoMesas estado;
@@ -105,6 +105,11 @@ public class Mesa implements Serializable {
     @Override
     public String toString() {
         return String.format("%4d %2d %-10s", nroMesa, cantSillas, estado);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
 

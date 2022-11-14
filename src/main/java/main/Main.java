@@ -4,25 +4,31 @@ package main;
 import exceptions.IdIncorrectoException;
 import exceptions.gestorEmpresa.EmpresaAbiertaException;
 import exceptions.mesas.MesaNoEncontradaException;
+import exceptions.mesas.MesaYaExistenteException;
 import exceptions.mesas.MesaYaOcupadaException;
 import exceptions.mozos.MozoNoActivoException;
 import exceptions.mozos.MozoNoEncontradoException;
+import exceptions.mozos.MozoYaAgregadoException;
+import exceptions.operarios.DatosLoginIncorrectosException;
+import exceptions.operarios.OperarioInactivoException;
+import exceptions.operarios.UsuarioNoAutorizadoException;
 import exceptions.persistencia.ArchivoNoInciliazadoException;
+import exceptions.productos.ProductoYaExistenteException;
 import modelo.configEmpresa.ConfiguracionEmpresa;
-import modelo.configEmpresa.Mesa;
-import modelo.configEmpresa.Mozo;
-import modelo.gestorEmpresa.GestorEmpresa;
-import modelo.gestorEmpresa.MozoMesa;
+import modelo.gestorEmpresa.*;
 
 import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws ArchivoNoInciliazadoException, IOException, ClassNotFoundException, MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException, MesaNoEncontradaException, MozoNoActivoException, MesaYaOcupadaException {
+    public static void main(String[] args) throws ArchivoNoInciliazadoException, IOException, ClassNotFoundException, MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException, MesaNoEncontradaException, MozoNoActivoException, MesaYaOcupadaException, ProductoYaExistenteException, UsuarioNoAutorizadoException, OperarioInactivoException, DatosLoginIncorrectosException, MesaYaExistenteException, MozoYaAgregadoException {
         GestorEmpresa empresa = GestorEmpresa.getInstance();
         ConfiguracionEmpresa config = ConfiguracionEmpresa.getInstance();
         config.recuperarConfiguracion();
         empresa.recuperarEmpresa();
 
+
     }
+
+
 }

@@ -1,12 +1,14 @@
 package modelo.archivo;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 import enums.EstadoComanda;
 import exceptions.comandas.ComandaAbiertaException;
 import exceptions.factura.FacturaYaExistenteException;
+import helpers.FechasHelpers;
+import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;
 import modelo.gestorEmpresa.Comanda;
 import modelo.gestorEmpresa.MozoMesa;
@@ -19,7 +21,7 @@ import modelo.gestorEmpresa.MozoMesa;
 public class Archivo {
     private ArrayList<Factura> facturas;
     private ArrayList<Comanda> comandas;
-    private ArrayList<MozoMesa> mozoMesas;
+    private ArrayList<MozoMesa> asignacionesMozoMesa;
     private ArrayList<Asistencia> registroDeAsistencia;
 	
 
@@ -29,7 +31,7 @@ public class Archivo {
     public Archivo() {
 		facturas = new ArrayList<>();
 		comandas = new ArrayList<>();
-		mozoMesas = new ArrayList<>();
+		asignacionesMozoMesa = new ArrayList<>();
 		registroDeAsistencia = new ArrayList<>();
 	}
     
@@ -94,7 +96,7 @@ public class Archivo {
 	 * Permite la consulta de la lista de registros históricos
 	 * @return colección de registro mozo-meza históricas
 	 */
-	public ArrayList<MozoMesa> getMozoMesas() {return mozoMesas;}
+	public ArrayList<MozoMesa> getAsignacionesMozoMesa() {return asignacionesMozoMesa;}
 	
 	
 	/**
@@ -103,13 +105,13 @@ public class Archivo {
 	 */
 	public void agregaMozoMesa(MozoMesa mozoMesa) {
 		assert mozoMesa != null : "La relacion no puede ser nula";
-		mozoMesas.add(mozoMesa);
+		asignacionesMozoMesa.add(mozoMesa);
 	}
 
 	public void agregaMozoMesa(ArrayList<MozoMesa> asignaciones){
 		assert asignaciones != null : "Las asignaciones no pueden ser nulas";
 		for(MozoMesa asignacion : asignaciones)
-			mozoMesas.add(asignacion);
+			asignacionesMozoMesa.add(asignacion);
 	}
 
 
@@ -136,6 +138,60 @@ public class Archivo {
 			Asistencia asistencia = new Asistencia(mozo, mozo.getEstado().toString(), fecha);
 			registroDeAsistencia.add(asistencia);
 		}
+	}
+
+	public HashMap<Integer, VentasMesa>  consumoPromedioXMesa(){
+		HashMap<Integer, VentasMesa> ventasMesa= new HashMap<>();
+		for(Factura factura : facturas){
+			int nroMesa = factura.getMesa().getNroMesa();
+			if(ventasMesa.containsKey(nroMesa))
+				ventasMesa.get(nroMesa).agregaVenta(factura.getTotal());
+			else
+				ventasMesa.put(nroMesa, new VentasMesa(factura.getMesa(), factura.getTotal()));
+		}
+		return ventasMesa;
+	}
+
+	public HashMap<Integer, VentasMozo> calculaEstadisticasMozo(){
+		HashMap<Integer, VentasMozo> ventasMozos = new HashMap<>();
+		for(MozoMesa asignacion : asignacionesMozoMesa){
+			recorreFacturas(ventasMozos, asignacion);
+		}
+		return ventasMozos;
+	}
+
+	private void recorreFacturas(HashMap<Integer, VentasMozo> ventasMozos, MozoMesa asignacion){
+		Mozo mozo = asignacion.getMozo();
+		GregorianCalendar fecha = asignacion.getFecha();
+		Mesa mesa = asignacion.getMesa();
+		for(Factura factura : facturas){
+			if(FechasHelpers.isSameDay(fecha, factura.getFecha()) && factura.getMesa().getNroMesa() == mesa.getNroMesa()){
+				if(ventasMozos.containsKey(mozo.getId()))
+					ventasMozos.get(mozo.getId()).agregaVenta(factura.getTotal());
+				else
+					ventasMozos.put(mozo.getId(), new VentasMozo(mozo, factura.getTotal()));
+			}
+		}
+	}
+
+	public VentasMozo getMozoConMayorVolumenDeVentas(){
+		VentasMozo maximo = null;
+		HashMap<Integer, VentasMozo> ventasMozos = calculaEstadisticasMozo();
+		for(Integer idMozo : ventasMozos.keySet()){
+			if(maximo == null || maximo.getAcum() < ventasMozos.get(idMozo).getAcum())
+				maximo = ventasMozos.get(idMozo);
+		}
+		return maximo;
+	}
+
+	public VentasMozo getMozoConMenorVolumenDeVentas(){
+		VentasMozo minimo = null;
+		HashMap<Integer, VentasMozo> ventasMozos = calculaEstadisticasMozo();
+		for(Integer idMozo : ventasMozos.keySet()){
+			if(minimo == null || minimo.getAcum() > ventasMozos.get(idMozo).getAcum())
+				minimo = ventasMozos.get(idMozo);
+		}
+		return minimo;
 	}
 
 }

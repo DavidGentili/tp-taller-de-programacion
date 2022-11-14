@@ -4,7 +4,7 @@ import exceptions.productos.StockInsuficienteException;
 
 import java.io.Serializable;
 
-public class Producto implements Serializable {
+public class Producto implements Serializable, Cloneable {
     private static int nroProducto = 0;
     private int id;
     private String nombre;
@@ -247,5 +247,10 @@ public class Producto implements Serializable {
     @Override
     public String toString() {
         return String.format("%4d %-12s %6.1f %6.1f %d", id, nombre, precioCosto, precioVenta, stock);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

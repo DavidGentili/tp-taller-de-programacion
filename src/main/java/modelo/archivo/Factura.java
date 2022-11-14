@@ -1,13 +1,10 @@
 package modelo.archivo;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import enums.FormasDePago;
 import modelo.configEmpresa.Mesa;
-import modelo.gestorEmpresa.Comanda;
 import modelo.gestorEmpresa.Pedido;
 import modelo.gestorEmpresa.Promocion;
 
@@ -60,15 +57,36 @@ public class Factura {
 		assert formaDePago != null : "La forma de pago no puede ser nula";
 
 		this.fecha = (GregorianCalendar) GregorianCalendar.getInstance();
-		this.mesa = mesa;
-		this.pedidos = pedidos;
+		this.mesa = getCloneMesa(mesa);
+		this.pedidos = getClonePedido(pedidos);
 		this.formaDePago = formaDePago;
+		this.promocionesAplicadas = promocionesAplicadas;
 		this.total = calculaTotal();
 		this.id = nroFactura;
 		nroFactura++;
 	}
 
+	private ArrayList<Pedido> getClonePedido(ArrayList<Pedido> pedidos){
+		ArrayList<Pedido> clon = new ArrayList<>();
+		for(Pedido pedido : pedidos){
+			try{
+				clon.add((Pedido) pedido.clone());
+			} catch (CloneNotSupportedException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return clon;
+	}
 
+	private Mesa getCloneMesa(Mesa mesa){
+		Mesa clon;
+		try{
+			clon = (Mesa) mesa.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
+		return mesa;
+	}
     
     /**
      * Consulta al registro factura
