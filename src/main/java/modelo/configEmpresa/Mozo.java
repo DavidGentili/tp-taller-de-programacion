@@ -150,19 +150,35 @@ public class Mozo implements Serializable {
 
     /**
      * Setea el estado correspondiente del mozo
+     * pre: estado != null
      * @param estado : Nuevo estado del mozo
      *
      */
     protected void setEstado(EstadoMozos estado) {
+        assert estado != null : "El estado no puede ser nulo";
         this.estado = estado;
     };
 
+    /**
+     * Limpia el estado del mozo, poniendolo en null
+     */
+    protected void cleanEstado(){
+        this.estado = null;
+    }
+
+    /**
+     * Actualiza los atributos del mozo, menos el estado
+     * pre: mozo != null
+     * @param other El mozo con los nuevos valores
+     */
     protected void updateMozo(Mozo other){
-        this.estado = other.estado;
+        assert other != null : "El otro mozo no debe ser nulo";
+
         this.cantHijos = other.cantHijos;
         this.nombreApellido = other.nombreApellido;
         this.fechaNacimiento = other.fechaNacimiento;
     }
+    
 
     @Override
     public String toString() {

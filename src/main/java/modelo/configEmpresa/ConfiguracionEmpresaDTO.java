@@ -1,7 +1,7 @@
 package modelo.configEmpresa;
 
-import exceptions.ArchivoNoInciliazadoException;
-import modelo.persist.OperarioDTO;
+import exceptions.persistencia.ArchivoNoInciliazadoException;
+import modelo.persist.IPersistencia;
 import modelo.persist.PersistencaiBin;
 
 import java.io.IOException;
@@ -52,7 +52,7 @@ public class ConfiguracionEmpresaDTO implements Serializable {
      * Se encarga de guarda la configuracion de la empresa.
      */
     public void guardarConfiguaracion() throws IOException, ArchivoNoInciliazadoException {
-        PersistencaiBin file = new PersistencaiBin();
+        IPersistencia<Serializable> file = new PersistencaiBin();
         file.openOutput(Config.ARCHIVO_CONFIGURACION);
         file.writeFile(this);
         file.closeOutput();
@@ -63,7 +63,7 @@ public class ConfiguracionEmpresaDTO implements Serializable {
      */
     public void recuperarConfiguracion(){
         try{
-            PersistencaiBin file = new PersistencaiBin();
+            IPersistencia<Serializable> file = new PersistencaiBin();
             file.openInput(Config.ARCHIVO_CONFIGURACION);
             ConfiguracionEmpresaDTO aux = (ConfiguracionEmpresaDTO) file.readFile();
             file.closeInput();

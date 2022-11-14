@@ -1,7 +1,7 @@
 package modelo.configEmpresa;
 
-import exceptions.MesaYaLiberadaException;
-import exceptions.MesaYaOcupadaException;
+import exceptions.mesas.MesaYaLiberadaException;
+import exceptions.mesas.MesaYaOcupadaException;
 
 import enums.EstadoMesas;
 

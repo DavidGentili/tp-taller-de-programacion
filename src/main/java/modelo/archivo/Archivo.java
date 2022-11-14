@@ -1,9 +1,11 @@
 package modelo.archivo;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
-import modelo.empresa.Comanda;
-import modelo.empresa.MozoMesa;
+import modelo.configEmpresa.Mozo;
+import modelo.gestorEmpresa.Comanda;
+import modelo.gestorEmpresa.MozoMesa;
 
 /**
  * Clase que archiva todos los documentos históricos relacionados al sistema
@@ -11,12 +13,12 @@ import modelo.empresa.MozoMesa;
  *
  */
 public class Archivo {
-    private Collection<Factura> facturas;
-    private Collection<Comanda> comandas;
-    private Collection<MozoMesa> mozoMesas;
-    private Collection<Asistencia> registroDeAsistencia;
+    private ArrayList<Factura> facturas;
+    private ArrayList<Comanda> comandas;
+    private ArrayList<MozoMesa> mozoMesas;
+    private ArrayList<Asistencia> registroDeAsistencia;
 	
-    
+
     /**
      * Constructor de la clase Archivo que llama al get instance
      */
@@ -76,15 +78,14 @@ public class Archivo {
 	 * Permite la consulta de la lista de registros históricos
 	 * @return colección de registro de asistencias históricas
 	 */
-	public Collection<Asistencia> getRegistroDeAsistencia() {return registroDeAsistencia;}
-	
+	public ArrayList<Asistencia> getRegistroDeAsistencia() {return registroDeAsistencia;}
+
 	
 	/**
 	 * Agrega al listado histórico un nuevo registro
 	 * @param registroDeAsistencia que se desea agregar al listado histórico
 	 */
 	public void agregaRegistroDeAsistencia(Asistencia registroDeAsistencia) {}
-    
     
 
 }

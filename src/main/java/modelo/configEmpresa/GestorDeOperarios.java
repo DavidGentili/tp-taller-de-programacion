@@ -1,6 +1,7 @@
 package modelo.configEmpresa;
 
 import exceptions.*;
+import exceptions.operarios.*;
 
 import java.util.ArrayList;
 
@@ -154,7 +155,7 @@ public class GestorDeOperarios {
      *      password != null && password != ""
      * post: retorna el operario deseado.
      */
-    public Operario login(String nombreDeUsuario, String password) throws DatosLoginIncorrectosException {
+    public Operario login(String nombreDeUsuario, String password) throws DatosLoginIncorrectosException, OperarioInactivoException {
         assert nombreDeUsuario != null && !nombreDeUsuario.isEmpty() && !nombreDeUsuario.isBlank() : "El nombre de usuario debe ser distinto de nulo";
         assert password != null && !password.isEmpty() && !password.isBlank() : "La contraseña debe ser distinto de nulo";
 
@@ -163,6 +164,8 @@ public class GestorDeOperarios {
             throw new DatosLoginIncorrectosException();
         if(!operario.matchPassword(password))
             throw new DatosLoginIncorrectosException();
+        if(!operario.isActivo())
+            throw new OperarioInactivoException();
         return operario;
 
     };

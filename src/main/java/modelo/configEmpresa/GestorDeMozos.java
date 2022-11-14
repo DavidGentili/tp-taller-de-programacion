@@ -1,9 +1,10 @@
 package modelo.configEmpresa;
 
+import enums.EstadoMozos;
 import exceptions.IdIncorrectoException;
-import exceptions.MozoNoEncontradoException;
-import exceptions.MozoYaAgregadoException;
-import exceptions.UsuarioNoAutorizadoException;
+import exceptions.mozos.MozoNoEncontradoException;
+import exceptions.mozos.MozoYaAgregadoException;
+import exceptions.operarios.UsuarioNoAutorizadoException;
 
 import java.util.ArrayList;
 
@@ -127,6 +128,30 @@ public class GestorDeMozos {
         assert getMozoById(mozoId) == null : "No se elimino el mozo correctamente";
     };
 
+    /**
+     * Cambia el estado de un mozo
+     * pre: estado != null
+     * @param mozoId Id del mozo
+     * @param estado Estado del mozo
+     * @throws IdIncorrectoException : Si el id es incorrecto
+     * @throws MozoNoEncontradoException : Si el mozo no es encontrado;
+     */
+    public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws IdIncorrectoException, MozoNoEncontradoException {
+        assert estado != null : "El estado no puede ser nulo";
 
+        if(mozoId < 0)
+            throw new IdIncorrectoException();
+        Mozo mozo = getMozoById(mozoId);
+        if(mozo == null)
+            throw new MozoNoEncontradoException();
+        mozo.setEstado(estado);
 
+        assert mozo.getEstado() == estado : "No se asigno correctamente el estado";
+    }
+
+    protected void clearEstadoMozos(){
+        for(Mozo mozo : mozos){
+            mozo.cleanEstado();
+        }
+    }
 }

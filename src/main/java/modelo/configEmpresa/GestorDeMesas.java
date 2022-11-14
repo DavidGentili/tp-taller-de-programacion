@@ -1,9 +1,9 @@
 package modelo.configEmpresa;
 
 import exceptions.IdIncorrectoException;
-import exceptions.MesaNoEncontradaException;
-import exceptions.MesaYaExistenteException;
-import exceptions.UsuarioNoAutorizadoException;
+import exceptions.mesas.MesaNoEncontradaException;
+import exceptions.mesas.MesaYaExistenteException;
+import exceptions.operarios.UsuarioNoAutorizadoException;
 
 import java.util.ArrayList;
 

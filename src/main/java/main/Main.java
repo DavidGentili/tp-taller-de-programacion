@@ -1,14 +1,10 @@
 package main;
 
 
-import exceptions.*;
-import modelo.configEmpresa.*;
-
-import java.io.IOException;
-import java.util.GregorianCalendar;
+import helpers.FacturaHelpers;
 
 public class Main {
 
-    public static void main(String[] args) throws ArchivoNoInciliazadoException, IOException, ClassNotFoundException, DatosLoginIncorrectosException, MesaYaExistenteException, UsuarioNoAutorizadoException, ProductoYaExistenteException, MozoYaAgregadoException {
+    public static void main(String[] args){
     }
 }

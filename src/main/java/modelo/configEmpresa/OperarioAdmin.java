@@ -1,7 +1,6 @@
 package modelo.configEmpresa;
 
-import exceptions.ContraseñaIncorrectaException;
-import modelo.persist.OperarioDTO;
+import exceptions.operarios.ContraseñaIncorrectaException;
 
 import java.io.Serializable;
 
