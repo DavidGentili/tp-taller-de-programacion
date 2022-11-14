@@ -24,6 +24,5 @@ public class Main {
         config.recuperarConfiguracion();
         empresa.recuperarEmpresa();
 
-
     }
 }

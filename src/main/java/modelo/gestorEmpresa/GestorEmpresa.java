@@ -297,6 +297,7 @@ public class GestorEmpresa {
             comandas = pers.getComandas();
             asignacionMozosMesas = pers.getAsignacionMozosMesas();
             state = pers.getInstanceState(this);
+            Promocion.setNroPromociones(pers.getNroPromocion());
         } catch(ArchivoNoInciliazadoException | IOException | ClassNotFoundException e){
 
         }

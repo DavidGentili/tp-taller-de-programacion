@@ -19,7 +19,8 @@ import modelo.gestorEmpresa.Promocion;
  *
  */
 public class Factura {
-
+	private static int nroFactura = 0;
+	private int id;
     private GregorianCalendar fecha;
     private Mesa mesa;
     private ArrayList<Pedido> pedidos;
@@ -27,8 +28,19 @@ public class Factura {
     private FormasDePago formaDePago;
     private ArrayList<Promocion> promocionesAplicadas;
 
+	public static void setNroFactura(int nroFactura) {
+		Factura.nroFactura = nroFactura;
+	}
 
-    /**
+	public static int getNroFactura() {
+		return nroFactura;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	/**
      * Constructor para instanciar una factura dentro del sistema
      * la fecha de factura es la fecha de realización de la misma
      * la clase tiene acceso al listado de promociones para poder calcular los descuentos asociados.
@@ -52,8 +64,11 @@ public class Factura {
 		this.pedidos = pedidos;
 		this.formaDePago = formaDePago;
 		this.total = calculaTotal();
+		this.id = nroFactura;
+		nroFactura++;
 	}
-    
+
+
     
     /**
      * Consulta al registro factura

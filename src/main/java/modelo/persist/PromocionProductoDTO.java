@@ -8,6 +8,8 @@ import modelo.gestorEmpresa.PromocionProducto;
 import java.io.Serializable;
 
 public class PromocionProductoDTO implements Serializable {
+
+    private int id;
     private String dias;
     private int idProducto;
     private boolean dosPorUno;
@@ -16,6 +18,7 @@ public class PromocionProductoDTO implements Serializable {
     private double precioUnitario;
 
     public PromocionProductoDTO(PromocionProducto promocion){
+        this.id = promocion.getId();
         this.dias = promocion.getDias();
         this.idProducto = promocion.getProducto().getId();
         this.dosPorUno = promocion.isDosPorUno();
@@ -26,7 +29,9 @@ public class PromocionProductoDTO implements Serializable {
 
     public PromocionProducto getPromocionProducto(){
         Producto producto = ConfiguracionEmpresa.getInstance().getProductoById(idProducto);
-        return new PromocionProducto(dias, producto, dosPorUno, dtoPorCant, cantMinima, precioUnitario);
+        PromocionProducto promo = new PromocionProducto(dias, producto, dosPorUno, dtoPorCant, cantMinima, precioUnitario);
+        promo.setId(id);
+        return promo;
     }
 
 
