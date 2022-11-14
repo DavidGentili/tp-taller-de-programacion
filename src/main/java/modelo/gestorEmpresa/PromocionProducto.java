@@ -13,7 +13,20 @@ public class PromocionProducto extends Promocion implements Serializable {
 	private boolean dtoPorCant;
 	private int cantMinima;
 	private double precioUnitario;
-	
+
+	public PromocionProducto(String dias, Producto producto, boolean dosPorUno, boolean dtoPorCant, int cantMin, double precioUnitario){
+		super(dias);
+		assert dosPorUno || dtoPorCant : "Ambos no pueden ser falsos";
+		assert producto != null : "El producto no puede ser nulo";
+		assert cantMin > 0 : "La cantidad minima debe ser mayor a 0";
+		assert precioUnitario > 0 : "El precio unitario debe ser mayor a 0";
+		this.producto = producto;
+		this.dosPorUno = dosPorUno;
+		this.dtoPorCant = dtoPorCant;
+		this.cantMinima = cantMin;
+		this.precioUnitario = precioUnitario;
+	}
+
 	public PromocionProducto(String dias, Producto producto, int cantMin, double precioUnitario) {
 		super(dias);
 		assert producto != null : "El producto no puede ser nulo";
@@ -72,6 +85,9 @@ public class PromocionProducto extends Promocion implements Serializable {
 	public double getPrecioUnitario() {
 		return precioUnitario;
 	}
+
+	public Producto getProducto(){ return producto;}
+
 	
 	private void invariante(){
 		assert this.dosPorUno | this.dtoPorCant : "Dos por uno y dto por cantidad no pueden ser nulos en simultaneo";

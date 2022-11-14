@@ -25,6 +25,22 @@ public class Pedido implements Serializable {
 		this.fecha = (GregorianCalendar) GregorianCalendar.getInstance();
 	}
 
+	/**
+	 * Crea una instancia de pedido
+	 * pre: producto != null
+	 * 		cantidad > 0
+	 * @param producto : Producto del pedido
+	 * @param cantidad : cantidad solicitada
+	 * @param fecha : la fecha del pedido
+	 */
+	public Pedido(Producto producto, int cantidad, GregorianCalendar fecha) {
+		assert producto != null : "El producto no puede ser nulo";
+		assert cantidad > 0 : "La catidad debe ser positiva";
+		this.producto = producto;
+		this.cantidad = cantidad;
+		this.fecha = fecha;
+	}
+
 
 	public Producto getProducto() {
 		return producto;

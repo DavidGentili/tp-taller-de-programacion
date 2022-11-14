@@ -38,6 +38,6 @@ public class MozoMesa implements Serializable {
 	@Override
 	public String toString() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
-		return String.format("%-10s | %-15s | %-3d", sdf.format(fecha.getTime()), mozo.getNombreApellido(), mesa.getNroMesa());
+		return String.format("%-10s %-15s %-3d", sdf.format(fecha.getTime()), mozo.getNombreApellido(), mesa.getNroMesa());
 	}
 }

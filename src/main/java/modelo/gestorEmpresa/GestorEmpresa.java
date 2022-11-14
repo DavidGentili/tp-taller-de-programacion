@@ -289,13 +289,18 @@ public class GestorEmpresa {
     //PERSITENCIA
 
     public void recuperarEmpresa() throws ArchivoNoInciliazadoException, IOException, ClassNotFoundException {
-        GestorEmpresaDTO pers = new GestorEmpresaDTO();
-        pers.recuperarDatos();
-        promociones.setPromoTemp(pers.getPromocionTemporales());
-        promociones.setPromoProduct(pers.getPromocionesProducto());
-        comandas = pers.getComandas();
-        asignacionMozosMesas = pers.getAsignacionMozosMesas();
-        state = pers.getInstanceState(this);
+        try{
+            GestorEmpresaDTO pers = new GestorEmpresaDTO();
+            pers.recuperarDatos();
+            promociones.setPromoTemp(pers.getPromocionTemporales());
+            promociones.setPromoProduct(pers.getPromocionesProducto());
+            comandas = pers.getComandas();
+            asignacionMozosMesas = pers.getAsignacionMozosMesas();
+            state = pers.getInstanceState(this);
+        } catch(ArchivoNoInciliazadoException | IOException | ClassNotFoundException e){
+
+        }
+
     }
 
     public void guardarEmpresa() throws ArchivoNoInciliazadoException, IOException {

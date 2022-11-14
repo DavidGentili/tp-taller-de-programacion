@@ -28,6 +28,24 @@ public class Comanda implements Serializable {
 		this.listaDePedidos = new ArrayList<Pedido>();
 		this.estado = EstadoComanda.ABIERTA;
 	}
+
+
+	/**
+	 * Crea una nueva instancia de una comanda
+	 * Pre: La mesa no puede ser nula;
+	 * @param mesa : Mesa que se le asigna a la comanda
+	 * @param pedidos
+	 * @param estado
+	 * @param fecha
+	 */
+	public Comanda(Mesa mesa, ArrayList<Pedido> pedidos, EstadoComanda estado, GregorianCalendar fecha){
+		assert mesa != null : "La mesa debe ser no nula";
+
+		this.fecha = fecha;
+		this.mesa = mesa;
+		this.listaDePedidos = pedidos;
+		this.estado = estado;
+	}
     
     
     /**

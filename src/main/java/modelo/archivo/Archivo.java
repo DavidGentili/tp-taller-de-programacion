@@ -36,21 +36,24 @@ public class Archivo {
      * Permite la consulta de la lista de registros históricos
      * @return colección de facturas históricas
      */
-    public Collection<Factura> getFacturas() {return facturas;}
+    public ArrayList<Factura> getFacturas() {return facturas;}
     
     
     /**
      * Agrega al listado histórico un nuevo registro
      * @param factura que se desea agregar al listado histórico
      */
-	public void agregaFacturas(Factura factura) {};
+	public void agregaFacturas(Factura factura) {
+
+	};
+
 	
 	
 	/**
 	 * Permite la consulta de la lista de registros históricos
 	 * @return colección de comandas históricas
 	 */
-	public Collection<Comanda> getComandas() {return comandas;}
+	public ArrayList<Comanda> getComandas() {return comandas;}
 	
 	
 	/**
@@ -64,7 +67,7 @@ public class Archivo {
 	 * Permite la consulta de la lista de registros históricos
 	 * @return colección de registro mozo-meza históricas
 	 */
-	public Collection<MozoMesa> getMozoMesas() {return mozoMesas;}
+	public ArrayList<MozoMesa> getMozoMesas() {return mozoMesas;}
 	
 	
 	/**
@@ -86,6 +89,7 @@ public class Archivo {
 	 * @param registroDeAsistencia que se desea agregar al listado histórico
 	 */
 	public void agregaRegistroDeAsistencia(Asistencia registroDeAsistencia) {}
-    
+
+
 
 }

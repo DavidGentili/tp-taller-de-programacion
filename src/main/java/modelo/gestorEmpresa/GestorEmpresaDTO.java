@@ -5,28 +5,48 @@ import exceptions.persistencia.ArchivoNoInciliazadoException;
 import modelo.Empresa;
 import modelo.archivo.Archivo;
 import modelo.configEmpresa.ConfiguracionEmpresa;
-import modelo.persist.IPersistencia;
-import modelo.persist.PersistencaiBin;
+import modelo.persist.*;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class GestorEmpresaDTO implements Serializable{
-    private ArrayList<Comanda> comandas;
-    private ArrayList<MozoMesa> asignacionMozosMesas;
-    private ArrayList<PromocionProducto> promocionesProducto;
+    private ArrayList<ComandaDTO> comandas;
+    private ArrayList<MozoMezaDTO> asignacionMozosMesas;
+    private ArrayList<PromocionProductoDTO> promocionesProducto;
     private ArrayList<PromocionTemp> promocionTemporales;
     private String state;
     private int nroPromocion;
 
     public GestorEmpresaDTO(GestorEmpresa empresa) {
-        this.comandas = empresa.getComandas();
-        this.asignacionMozosMesas = empresa.getAsignacionMozosMesas();
-        this.promocionesProducto = empresa.getPromocionesProducto();
+        this.comandas = convertComandas(empresa.getComandas());
+        this.asignacionMozosMesas = convertAsignaciones(empresa.getAsignacionMozosMesas());
+        this.promocionesProducto = convertPromoProduct(empresa.getPromocionesProducto());
         this.promocionTemporales = empresa.getPromocionesTemporales();
         this.state = empresa.getState() instanceof StateClose ? "close" : "open";
         this.nroPromocion = Promocion.getNroPromociones();
+    }
+
+    private ArrayList<ComandaDTO> convertComandas(ArrayList<Comanda> comandas){
+        ArrayList<ComandaDTO> res = new ArrayList<>();
+        for(Comanda comanda : comandas)
+            res.add(new ComandaDTO(comanda));
+        return res;
+    }
+
+    private ArrayList<MozoMezaDTO> convertAsignaciones(ArrayList<MozoMesa> asignaciones){
+        ArrayList <MozoMezaDTO> res = new ArrayList<>();
+        for(MozoMesa asignacion : asignaciones)
+            res.add(new MozoMezaDTO(asignacion));
+        return res;
+    }
+
+    private ArrayList<PromocionProductoDTO> convertPromoProduct(ArrayList<PromocionProducto> promociones){
+        ArrayList <PromocionProductoDTO> res = new ArrayList<>();
+        for(PromocionProducto promocion : promociones)
+            res.add(new PromocionProductoDTO(promocion));
+        return res;
     }
 
     public GestorEmpresaDTO(){
@@ -56,51 +76,38 @@ public class GestorEmpresaDTO implements Serializable{
     }
 
     public ArrayList<Comanda> getComandas() {
-        return comandas;
-    }
-
-    public void setComandas(ArrayList<Comanda> comandas) {
-        this.comandas = comandas;
+        ArrayList <Comanda> res = new ArrayList<>();
+        for(ComandaDTO comanda : comandas)
+            res.add( comanda.getComanda());
+        return res;
     }
 
     public ArrayList<MozoMesa> getAsignacionMozosMesas() {
-        return asignacionMozosMesas;
-    }
-
-    public void setAsignacionMozosMesas(ArrayList<MozoMesa> asignacionMozosMesas) {
-        this.asignacionMozosMesas = asignacionMozosMesas;
+        ArrayList <MozoMesa> res = new ArrayList<>();
+        for(MozoMezaDTO asignacion : asignacionMozosMesas)
+            res.add( asignacion.getMozoMeza());
+        return res;
     }
 
     public ArrayList<PromocionProducto> getPromocionesProducto() {
-        return promocionesProducto;
+        ArrayList <PromocionProducto> res = new ArrayList<>();
+        for(PromocionProductoDTO promo : promocionesProducto)
+            res.add( promo.getPromocionProducto());
+        return res;
     }
 
-    public void setPromocionesProducto(ArrayList<PromocionProducto> promocionesProducto) {
-        this.promocionesProducto = promocionesProducto;
-    }
 
     public ArrayList<PromocionTemp> getPromocionTemporales() {
         return promocionTemporales;
     }
 
-    public void setPromocionTemporales(ArrayList<PromocionTemp> promocionTemporales) {
-        this.promocionTemporales = promocionTemporales;
-    }
 
     public String getState() {
         return state;
     }
 
-    public void setState(String state) {
-        this.state = state;
-    }
-
     public int getNroPromocion() {
         return nroPromocion;
-    }
-
-    public void setNroPromocion(int nroPromocion) {
-        this.nroPromocion = nroPromocion;
     }
 
     protected StateGestorEmpresa getInstanceState(GestorEmpresa empresa){
