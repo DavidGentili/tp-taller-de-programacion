@@ -4,6 +4,7 @@ import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 public class MozoMesa implements Serializable {
@@ -33,6 +34,10 @@ public class MozoMesa implements Serializable {
 	public Mesa getMesa() {
 		return mesa;
 	}
-    
-    
+
+	@Override
+	public String toString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+		return String.format("%-10s | %-15s | %-3d", sdf.format(fecha.getTime()), mozo.getNombreApellido(), mesa.getNroMesa());
+	}
 }

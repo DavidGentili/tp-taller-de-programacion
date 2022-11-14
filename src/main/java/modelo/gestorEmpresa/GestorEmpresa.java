@@ -210,7 +210,7 @@ public class GestorEmpresa {
      * @param promo Promocion a agregar
      * @throws PromocionYaExistenteException : Si dicha promocion ya existe
      */
-    protected void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException {
+    public void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException {
         assert promo != null : "La promocion no puede ser nula";
         promociones.agregarPromocionProducto(promo);
     }
@@ -220,7 +220,7 @@ public class GestorEmpresa {
      * @param promo Promocion a agregar
      * @throws PromocionYaExistenteException : Si dicha promocion ya existe
      */
-    protected void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException {
+    public void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException {
         assert promo != null : "La promocion no puede ser nula";
         promociones.agregarPromocionTemp(promo);
     }
@@ -295,7 +295,7 @@ public class GestorEmpresa {
         promociones.setPromoProduct(pers.getPromocionesProducto());
         comandas = pers.getComandas();
         asignacionMozosMesas = pers.getAsignacionMozosMesas();
-        state = pers.getState();
+        state = pers.getInstanceState(this);
     }
 
     public void guardarEmpresa() throws ArchivoNoInciliazadoException, IOException {

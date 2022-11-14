@@ -64,4 +64,9 @@ public class PromocionTemp extends Promocion implements Serializable {
 	public boolean aplicaPromocion(ArrayList<Pedido> pedidos, FormasDePago formaDePago) {
 		return FacturaHelpers.correspondeDia(dias) && this.formaPago == formaDePago;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("| %-12s  %-10s  %s |", nombre, formaPago.toString(), dias);
+	}
 }

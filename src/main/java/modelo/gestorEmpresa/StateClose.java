@@ -19,11 +19,10 @@ import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;
 import modelo.configEmpresa.Operario;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class StateClose implements StateGestorEmpresa, Serializable {
+public class StateClose implements StateGestorEmpresa{
 
     private GestorEmpresa empresa;
     private ConfiguracionEmpresa configuracion;

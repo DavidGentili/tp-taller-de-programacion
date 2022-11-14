@@ -17,7 +17,7 @@ public class GestorEmpresaDTO implements Serializable{
     private ArrayList<MozoMesa> asignacionMozosMesas;
     private ArrayList<PromocionProducto> promocionesProducto;
     private ArrayList<PromocionTemp> promocionTemporales;
-    private StateGestorEmpresa state;
+    private String state;
     private int nroPromocion;
 
     public GestorEmpresaDTO(GestorEmpresa empresa) {
@@ -25,7 +25,7 @@ public class GestorEmpresaDTO implements Serializable{
         this.asignacionMozosMesas = empresa.getAsignacionMozosMesas();
         this.promocionesProducto = empresa.getPromocionesProducto();
         this.promocionTemporales = empresa.getPromocionesTemporales();
-        this.state = empresa.getState();
+        this.state = empresa.getState() instanceof StateClose ? "close" : "open";
         this.nroPromocion = Promocion.getNroPromociones();
     }
 
@@ -87,11 +87,11 @@ public class GestorEmpresaDTO implements Serializable{
         this.promocionTemporales = promocionTemporales;
     }
 
-    public StateGestorEmpresa getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(StateGestorEmpresa state) {
+    public void setState(String state) {
         this.state = state;
     }
 
@@ -101,5 +101,9 @@ public class GestorEmpresaDTO implements Serializable{
 
     public void setNroPromocion(int nroPromocion) {
         this.nroPromocion = nroPromocion;
+    }
+
+    protected StateGestorEmpresa getInstanceState(GestorEmpresa empresa){
+        return state.equalsIgnoreCase("open") ? new StateOpen(empresa) : new StateClose(empresa);
     }
 }

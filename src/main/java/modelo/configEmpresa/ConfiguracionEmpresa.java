@@ -16,6 +16,7 @@ import exceptions.productos.ProductoYaExistenteException;
 import modelo.gestorEmpresa.GestorEmpresa;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ConfiguracionEmpresa {
