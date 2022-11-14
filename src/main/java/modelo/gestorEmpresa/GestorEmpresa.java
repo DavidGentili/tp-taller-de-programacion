@@ -1,6 +1,7 @@
 
 package modelo.gestorEmpresa;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -18,6 +19,7 @@ import exceptions.operarios.OperarioNoEncontradoException;
 import exceptions.operarios.OperarioYaExistenteException;
 import exceptions.operarios.UsuarioNoAutorizadoException;
 import exceptions.operarios.UsuarioNoLogueadoException;
+import exceptions.persistencia.ArchivoNoInciliazadoException;
 import exceptions.productos.ProductoEnPedidoException;
 import exceptions.productos.ProductoNoEncontradoException;
 import exceptions.productos.ProductoYaExistenteException;
@@ -286,13 +288,19 @@ public class GestorEmpresa {
 
     //PERSITENCIA
 
-    public void recuperarEmpresa(){
-
+    public void recuperarEmpresa() throws ArchivoNoInciliazadoException, IOException, ClassNotFoundException {
+        GestorEmpresaDTO pers = new GestorEmpresaDTO();
+        pers.recuperarDatos();
+        promociones.setPromoTemp(pers.getPromocionTemporales());
+        promociones.setPromoProduct(pers.getPromocionesProducto());
+        comandas = pers.getComandas();
+        asignacionMozosMesas = pers.getAsignacionMozosMesas();
+        state = pers.getState();
     }
 
-    public void guardarEmpresa(){
-
+    public void guardarEmpresa() throws ArchivoNoInciliazadoException, IOException {
+        GestorEmpresaDTO persitencia = new GestorEmpresaDTO(this);
+        persitencia.almacenarDatos();
     }
-
 
 }

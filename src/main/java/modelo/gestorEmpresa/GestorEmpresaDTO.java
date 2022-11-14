@@ -20,14 +20,20 @@ public class GestorEmpresaDTO implements Serializable{
     private StateGestorEmpresa state;
     private int nroPromocion;
 
-    public GestorEmpresaDTO(){
-        GestorEmpresa empresa = GestorEmpresa.getInstance();
+    public GestorEmpresaDTO(GestorEmpresa empresa) {
         this.comandas = empresa.getComandas();
         this.asignacionMozosMesas = empresa.getAsignacionMozosMesas();
         this.promocionesProducto = empresa.getPromocionesProducto();
         this.promocionTemporales = empresa.getPromocionesTemporales();
         this.state = empresa.getState();
         this.nroPromocion = Promocion.getNroPromociones();
+    }
+
+    public GestorEmpresaDTO(){
+        this.comandas = new ArrayList<>();
+        this.asignacionMozosMesas =new ArrayList<>();
+        this.promocionesProducto = new ArrayList<>();
+        this.promocionTemporales = new ArrayList<>();
     }
 
     public void almacenarDatos() throws IOException, ArchivoNoInciliazadoException {
