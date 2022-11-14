@@ -3,9 +3,10 @@ package modelo.gestorEmpresa;
 import exceptions.promociones.PromocionNoEncontradaException;
 import exceptions.promociones.PromocionYaExistenteException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GestorDePromociones {
+public class GestorDePromociones implements Serializable {
     private ArrayList<PromocionTemp> promoTemp;
     private ArrayList<PromocionProducto> promoProduct;
 
@@ -31,6 +32,22 @@ public class GestorDePromociones {
      */
     protected ArrayList<PromocionProducto> getPromocionProducto(){
         return promoProduct;
+    }
+
+    protected ArrayList<PromocionTemp> getPromoTemp() {
+        return promoTemp;
+    }
+
+    protected void setPromoTemp(ArrayList<PromocionTemp> promoTemp) {
+        this.promoTemp = promoTemp;
+    }
+
+    protected ArrayList<PromocionProducto> getPromoProduct() {
+        return promoProduct;
+    }
+
+    protected void setPromoProduct(ArrayList<PromocionProducto> promoProduct) {
+        this.promoProduct = promoProduct;
     }
 
     /**

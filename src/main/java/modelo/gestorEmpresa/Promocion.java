@@ -21,6 +21,15 @@ public abstract class Promocion implements Serializable {
 		this.activa = true;
 	}
 
+	protected static int getNroPromociones(){
+		return nroPromociones;
+	}
+
+	protected static void setNroPromociones(int nroPromociones){
+		assert nroPromociones >= 0 : "El numero de promociones no puede ser negativo";
+		Promocion.nroPromociones = nroPromociones;
+	}
+
 	public void desactivarPromocion() {
 		this.activa = false;
 	 }

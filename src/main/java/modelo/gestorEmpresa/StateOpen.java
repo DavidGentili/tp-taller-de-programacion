@@ -24,10 +24,11 @@ import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;
 import modelo.configEmpresa.Operario;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class StateOpen implements StateGestorEmpresa{
+public class StateOpen implements StateGestorEmpresa, Serializable {
 
     private GestorEmpresa empresa;
     private ConfiguracionEmpresa configuracion;
@@ -37,7 +38,6 @@ public class StateOpen implements StateGestorEmpresa{
         this.empresa = empresa;
         this.configuracion = ConfiguracionEmpresa.getInstance();
     }
-
 
     @Override
     public void abrirEmpresa() throws EmpresaAbiertaException {

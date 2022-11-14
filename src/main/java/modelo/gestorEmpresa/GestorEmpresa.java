@@ -61,6 +61,10 @@ public class GestorEmpresa {
         state.cerrarEmpresa();
     }
 
+    protected StateGestorEmpresa getState(){
+        return state;
+    }
+
     /**
      * Define un estado para la empresa
      * pre: state != null
@@ -83,6 +87,15 @@ public class GestorEmpresa {
      */
     public void asignarMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, MesaYaOcupadaException, EmpresaAbiertaException {
     	state.asignarMozo(mozoId, nroMesa, fecha);
+    }
+
+    public ArrayList<MozoMesa> getAsignacionMozosMesas(){
+        return asignacionMozosMesas;
+    }
+
+    protected void setAsignacionMozosMesas(ArrayList<MozoMesa> asignacionMozosMesas){
+        assert asignacionMozosMesas != null : "Las asignaciones no pueden ser nulas";
+        this.asignacionMozosMesas = asignacionMozosMesas;
     }
 
     public ArrayList<MozoMesa> getMozoMeza(){
@@ -120,6 +133,11 @@ public class GestorEmpresa {
             i++;
         }
         return res;
+    }
+
+    protected void setComandas(ArrayList<Comanda> comandas){
+        assert comandas != null : "Las comandas no pueden ser nulas";
+        this.comandas = comandas;
     }
 
     /**
@@ -169,12 +187,20 @@ public class GestorEmpresa {
         return promociones.getPromocionProducto();
     }
 
+    protected void setPromoProduct(ArrayList<PromocionProducto> promoProduct) {
+        promociones.setPromoProduct(promoProduct);
+    }
+
     /**
      * Retorna las promociones temporales almacenadas
      * @return promociones temprales
      */
     public ArrayList<PromocionTemp> getPromocionesTemporales(){
         return promociones.getPromocionTemporales();
+    }
+
+    protected void setPromoTemp(ArrayList<PromocionTemp> promoTemp) {
+        promociones.setPromoTemp(promoTemp);
     }
 
     /**
