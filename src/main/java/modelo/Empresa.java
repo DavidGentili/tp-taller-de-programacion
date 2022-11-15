@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-public class Empresa implements StateEmpresa{
+public class Empresa{
     private static Empresa instance = null;
     private GestorEmpresa gestorEmpresa;
     private ConfiguracionEmpresa configuracion;
@@ -100,7 +100,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return nombre del local;
      */
-    @Override
     public String getNombreLocal() throws UsuarioNoLogueadoException {
         return state.getNombreLocal();
     }
@@ -111,7 +110,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param name nuevo nombre;
      */
-    @Override
     public void cambiarNombreLocal(String name) throws UsuarioNoLogueadoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
         state.cambiarNombreLocal(name);
     }
@@ -121,7 +119,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return elemento sueldo
      */
-    @Override
     public Sueldo getSueldo() throws UsuarioNoLogueadoException {
         return state.getSueldo();
     }
@@ -132,7 +129,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param sueldo : sueldo de la empresa
      */
-    @Override
     public void setSueldo(Sueldo sueldo) throws UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.setSueldo(sueldo);
     }
@@ -142,7 +138,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return mozos de la empresa
      */
-    @Override
     public ArrayList<Mozo> getMozos() throws UsuarioNoLogueadoException {
         return state.getMozos();
     }
@@ -153,7 +148,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param nuevo nuevo mozo
      */
-    @Override
     public void agregarMozo(Mozo nuevo) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarMozo(nuevo);
     }
@@ -166,7 +160,6 @@ public class Empresa implements StateEmpresa{
      * @param actualizado : mozo con los valores actualizados
      * @param mozoId      : id del mozo a modificar
      */
-    @Override
     public void actualizarMozo(Mozo actualizado, int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.actualizarMozo(actualizado, mozoId);
     }
@@ -177,7 +170,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param mozoId : id del mozo
      */
-    @Override
     public void eliminarMozo(int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, EmpresaAbiertaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.eliminarMozo(mozoId);
     }
@@ -188,7 +180,6 @@ public class Empresa implements StateEmpresa{
      * @param mozoId : id del mozo a cambiar
      * @param estado : nuevo estado del mozo
      */
-    @Override
     public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.cambiarEstadoMozo(mozoId, estado);
     }
@@ -198,7 +189,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return mesas de la empresa
      */
-    @Override
     public ArrayList<Mesa> getMesas() throws UsuarioNoLogueadoException {
         return state.getMesas();
     }
@@ -209,7 +199,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param nueva : mesa a agregar
      */
-    @Override
     public void agregarMesa(Mesa nueva) throws MesaYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarMesa(nueva);
     }
@@ -222,7 +211,6 @@ public class Empresa implements StateEmpresa{
      * @param actualizada : mesa con valores nuevos
      * @param nroMesa     : nro de la mesa a actualizar
      */
-    @Override
     public void actualizarMesa(Mesa actualizada, int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.actualizarMesa(actualizada, nroMesa);
     }
@@ -233,7 +221,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param nroMesa : numero de la mesa a liminar
      */
-    @Override
     public void eliminarMesa(int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.eliminarMesa(nroMesa);
     }
@@ -243,7 +230,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return productos de la empresa
      */
-    @Override
     public ArrayList<Producto> getProductos() throws UsuarioNoLogueadoException {
         return state.getProductos();
     }
@@ -254,7 +240,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param nuevo nuevo producto de la empresa
      */
-    @Override
     public void agregarProducto(Producto nuevo) throws ProductoYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarProducto(nuevo);
     }
@@ -267,7 +252,6 @@ public class Empresa implements StateEmpresa{
      * @param actualizado : producto con los valores actualzados
      * @param idProducto  : id del producto a actualizar
      */
-    @Override
     public void actualizaProducto(Producto actualizado, int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.actualizaProducto(actualizado, idProducto);
     }
@@ -278,7 +262,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param idProducto id del producto a eliminar
      */
-    @Override
     public void eliminarProducto(int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, ProductoEnPedidoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.eliminarProducto(idProducto);
     }
@@ -288,7 +271,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return operarios de la empresa
      */
-    @Override
     public ArrayList<Operario> getOperarios() throws UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
         return state.getOperarios();
     }
@@ -299,7 +281,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param nuevo operario nuevo
      */
-    @Override
     public void agregarOperario(Operario nuevo) throws OperarioYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarOperario(nuevo);
     }
@@ -312,7 +293,6 @@ public class Empresa implements StateEmpresa{
      * @param actualizado : operario con los valores actualizados
      * @param idOperario  : id del operario
      */
-    @Override
     public void actualizarOperario(Operario actualizado, int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.actualizarOperario(actualizado, idOperario);
     }
@@ -327,7 +307,6 @@ public class Empresa implements StateEmpresa{
      * @throws ContraseniaIncorrectaException si la nueva contraseña no cumple con el formato
      * @throws UsuarioNoAutorizadoException   si la actual contraseña no coincide
      */
-    @Override
     public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
         state.cambiarContraseniaOperario(password, newPassword, idOperario);
     }
@@ -338,7 +317,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param idOperario : id del operario a eliminar
      */
-    @Override
     public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.eliminarOperario(idOperario);
     }
@@ -351,7 +329,6 @@ public class Empresa implements StateEmpresa{
      * @param userName Nombre de ususario
      * @param password Contraseña
      */
-    @Override
     public void login(String userName, String password) throws UsuarioYaLogueadoException, OperarioInactivoException, DatosLoginIncorrectosException {
         state.login(userName, password);
     }
@@ -359,7 +336,6 @@ public class Empresa implements StateEmpresa{
     /**
      * Cierra la sesion del ususario actual
      */
-    @Override
     public void logout() throws UsuarioNoLogueadoException {
         state.logout();
     }
@@ -367,7 +343,6 @@ public class Empresa implements StateEmpresa{
     /**
      * Abre la empresa
      */
-    @Override
     public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosActivosException, EmpresaAbiertaException, CantidadMinimaDeProductosException, CantidadMaximaDeMozosSuperadaException, CantidadMaximaDeMozosDeFrancoException, HayMozoSinEstadoAsignadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.abrirEmpresa();
     }
@@ -375,7 +350,6 @@ public class Empresa implements StateEmpresa{
     /**
      * Cierra la empresa
      */
-    @Override
     public void cerrarEmpresa() throws EmpresaCerradaException, HayComandasActivasException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.cerrarEmpresa();
     }
@@ -385,7 +359,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return asignaciones mozo mesa
      */
-    @Override
     public ArrayList<MozoMesa> getAsignacionMozoMeza() throws UsuarioNoLogueadoException {
         return state.getAsignacionMozoMeza();
     }
@@ -397,7 +370,6 @@ public class Empresa implements StateEmpresa{
      * @param nroMesa nro de mesa
      * @param fecha   fecha de la asignacion
      */
-    @Override
     public void asignaMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, EmpresaAbiertaException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.asignaMozo(mozoId, nroMesa, fecha);
     }
@@ -407,7 +379,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param nroMesa nro de mesa
      */
-    @Override
     public void eliminarRelacionMozoMeza(int nroMesa) throws MesaNoAsignadaException, EmpresaAbiertaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.eliminarRelacionMozoMeza(nroMesa);
     }
@@ -417,7 +388,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return comandas activas
      */
-    @Override
     public ArrayList<Comanda> getComandas() throws UsuarioNoLogueadoException {
         return state.getComandas();
     }
@@ -427,7 +397,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param nroMesa nro de la mesa a la cual se asigna la comanda
      */
-    @Override
     public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarComanda(nroMesa);
     }
@@ -438,7 +407,6 @@ public class Empresa implements StateEmpresa{
      * @param nroMesa numero de la mesa
      * @param pago    tipo de  pago
      */
-    @Override
     public void cerrarComanda(int nroMesa, FormasDePago pago) throws ComandaYaCerradaException, EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.cerrarComanda(nroMesa, pago);
     }
@@ -449,7 +417,6 @@ public class Empresa implements StateEmpresa{
      * @param nroMesa numero de mesa
      * @param pedido  pedido a agregar
      */
-    @Override
     public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarPedido(nroMesa, pedido);
     }
@@ -459,7 +426,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return lista de promociones
      */
-    @Override
     public ArrayList<Promocion> getPromociones() throws UsuarioNoLogueadoException {
         return state.getPromociones();
     }
@@ -469,7 +435,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return lista de promociones de producto
      */
-    @Override
     public ArrayList<PromocionProducto> getPromocionesProducto() throws UsuarioNoLogueadoException {
         return state.getPromocionesProducto();
     }
@@ -479,7 +444,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return lista de promociones temporales
      */
-    @Override
     public ArrayList<PromocionTemp> getPromocionesTemporales() throws UsuarioNoLogueadoException {
         return state.getPromocionesTemporales();
     }
@@ -490,7 +454,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param promo promocion de prodcuto a agregar
      */
-    @Override
     public void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarPromocionProducto(promo);
     }
@@ -501,7 +464,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param promo : promocion temporal a agregar
      */
-    @Override
     public void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarPromocionTemp(promo);
     }
@@ -512,7 +474,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param id : id de la promocion a eliminar
      */
-    @Override
     public void eliminarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.eliminarPromocion(id);
     }
@@ -523,7 +484,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param id : id de la promocion a activar
      */
-    @Override
     public void activarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.activarPromocion(id);
     }
@@ -534,7 +494,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param id : id de la promocion a desactivar
      */
-    @Override
     public void desactivarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.desactivarPromocion(id);
     }
@@ -544,7 +503,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return lista de facturas
      */
-    @Override
     public ArrayList<Factura> getFacturas() throws UsuarioNoLogueadoException {
         return state.getFacturas();
     }
@@ -555,7 +513,6 @@ public class Empresa implements StateEmpresa{
      *
      * @param factura factura a agregar
      */
-    @Override
     public void agregarFactura(Factura factura) throws FacturaYaExistenteException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarFactura(factura);
     }
@@ -565,7 +522,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return comandas archivadas
      */
-    @Override
     public ArrayList<Comanda> getComandasArchivadas() throws UsuarioNoLogueadoException {
         return state.getComandasArchivadas();
     }
@@ -575,7 +531,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return relaciones archivadas
      */
-    @Override
     public ArrayList<MozoMesa> getAsignacionMozoMesaArchivadas() throws UsuarioNoLogueadoException {
         return state.getAsignacionMozoMesaArchivadas();
     }
@@ -585,7 +540,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return coleccion de ventas por mesa
      */
-    @Override
     public HashMap<Integer, VentasMesa> calculaPromedioPorMesa() throws UsuarioNoLogueadoException {
         return state.calculaPromedioPorMesa();
     }
@@ -595,7 +549,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return coleccion de ventas por mozo
      */
-    @Override
     public HashMap<Integer, VentasMozo> calculaEstadisticasMozo() throws UsuarioNoLogueadoException {
         return state.calculaEstadisticasMozo();
     }
@@ -605,7 +558,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return informacion de ventas del mozo que mas vendio
      */
-    @Override
     public VentasMozo getMozoConMayorVolumenDeVentas() throws UsuarioNoLogueadoException {
         return state.getMozoConMayorVolumenDeVentas();
     }
@@ -615,7 +567,6 @@ public class Empresa implements StateEmpresa{
      *
      * @return informacion de ventas del mozo que menos vendio
      */
-    @Override
     public VentasMozo getMozoConMenorVolumenDeVentas() throws UsuarioNoLogueadoException {
         return state.getMozoConMenorVolumenDeVentas();
     }
