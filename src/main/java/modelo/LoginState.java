@@ -265,6 +265,25 @@ public class LoginState implements StateEmpresa{
     }
 
     /**
+     * Cambia la contraseña de un usuario usuario
+     *
+     * @param password    Contraseña actual
+     * @param newPassword
+     * @param idOperario  id del operario
+     * @throws OperarioNoEncontradoException  si no se encuentra el operario con dicho id
+     * @throws ContraseniaIncorrectaException si la nueva contraseña no cumple con el formato
+     * @throws UsuarioNoAutorizadoException   si la actual contraseña no coincide
+     */
+    @Override
+    public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException {
+        assert password != null;
+        assert newPassword != null;
+        if(empresa.getUsuario().getId() != idOperario)
+            throw new UsuarioNoAutorizadoException("El usuario actual no se encuentra autorizado a ");
+        empresa.getConfiguracion().cambiarContraseniaOperario(password, newPassword, idOperario);
+    }
+
+    /**
      * elimina al operario que corresponde con el id
      * pre : idOperario >= 0
      *

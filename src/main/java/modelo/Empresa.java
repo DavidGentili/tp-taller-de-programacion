@@ -89,7 +89,7 @@ public class Empresa {
 
     /**
      * TAREAS RESTANTES:
-     * Empresa
+     * Primer inicio de sesion
      * Controlador
      * Vista
      */

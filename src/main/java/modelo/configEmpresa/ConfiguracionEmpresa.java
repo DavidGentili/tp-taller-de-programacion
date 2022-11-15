@@ -401,6 +401,18 @@ public class ConfiguracionEmpresa {
     };
 
     /**
+     * Cambia la contraseña de un usuario usuario
+     * @param password Contraseña actual
+     * @param idOperario id del operario
+     * @throws OperarioNoEncontradoException si no se encuentra el operario con dicho id
+     * @throws ContraseniaIncorrectaException si la nueva contraseña no cumple con el formato
+     * @throws UsuarioNoAutorizadoException  si la actual contraseña no coincide
+     */
+    public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException{
+        operarios.cambiarContrasenia(password, newPassword, idOperario);
+    }
+
+    /**
      * Se elimina de la colecicon el producto indicada
      * @param idOperario : el id del operario a eliminar
      * @param user : El usuario que intenta realizar la accion

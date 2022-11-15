@@ -1,6 +1,6 @@
 package modelo.configEmpresa;
 
-import exceptions.operarios.ContraseñaIncorrectaException;
+import exceptions.operarios.ContraseniaIncorrectaException;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ public class OperarioAdmin extends Operario implements Serializable {
      * @param nombreApellido : nombre y apellido
      * @param nombreUsuario  : nombre de usuario
      * @param password       : contraseña
-     * @throws ContraseñaIncorrectaException : Si la contraseña no cumple con los requisitos de la documentacion
+     * @throws ContraseniaIncorrectaException : Si la contraseña no cumple con los requisitos de la documentacion
      *                                       pre: nombreApellido != null && nombreApellido != ""
      *                                       nombreUsuario != null && nombreUsuruaio != ""
      *                                       post: se retorna un operario nuevo activo

@@ -174,6 +174,17 @@ public interface StateEmpresa {
     public void actualizarOperario(Operario actualizado, int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException;
 
     /**
+     * Cambia la contraseña de un usuario usuario
+     * @param password Contraseña actual
+     * @param idOperario id del operario
+     * @throws OperarioNoEncontradoException si no se encuentra el operario con dicho id
+     * @throws ContraseniaIncorrectaException si la nueva contraseña no cumple con el formato
+     * @throws UsuarioNoAutorizadoException  si la actual contraseña no coincide
+     */
+    public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException;
+
+
+    /**
      * elimina al operario que corresponde con el id
      * pre : idOperario >= 0
      * @param idOperario : id del operario a eliminar

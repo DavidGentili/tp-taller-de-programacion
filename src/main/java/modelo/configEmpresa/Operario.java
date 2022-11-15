@@ -1,6 +1,8 @@
 package modelo.configEmpresa;
 
-import modelo.persist.OperarioDTO;
+import exceptions.operarios.ContraseniaIncorrectaException;
+import exceptions.operarios.UsuarioNoAutorizadoException;
+import helpers.OperarioHelpers;
 
 import java.io.Serializable;
 
@@ -136,17 +138,39 @@ public class Operario implements Serializable {
     protected void updateOperario(Operario other){
         this.nombreApellido = other.nombreApellido;
         this.nombreUsuario = other.nombreUsuario;
-        this.password = other.password;
         this.activo = other.activo;
     }
 
     /**
      * Retorna si la contraseña coincide con la contraseña ingresada
+     * pre : password != null;
      * @param password contraseña ingresada
      * @return si son iguales o no las contraseñas
      */
     protected boolean matchPassword(String password){
+        assert password != null;
         return this.password.equals(password);
+    }
+
+    /**
+     * Cambia la contraseña del usuario
+     * @param password Contraseña actual
+     * @param newPassword nueva contraseña
+     * @throws ContraseniaIncorrectaException si la nueva contraseña no cumple con el formato
+     * @throws UsuarioNoAutorizadoException  si la actual contraseña no coincide
+     */
+    public void cambiarContrasenia(String password, String newPassword) throws ContraseniaIncorrectaException, UsuarioNoAutorizadoException {
+        assert password != null;
+        assert newPassword != null;
+        if(!matchPassword(password))
+            throw new UsuarioNoAutorizadoException("La contraseña es incorrecta");
+        if(!OperarioHelpers.correctPassword(newPassword))
+            throw new ContraseniaIncorrectaException("La nueva contraseña no cumple con los requisitos");
+        this.password = newPassword;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override

@@ -8,6 +8,9 @@ import java.util.ArrayList;
 public class GestorDeOperarios {
     private ArrayList<Operario> operarios;
 
+    /**
+     * Instancia un gestor de operario
+     */
     public GestorDeOperarios(){
         this.operarios = new ArrayList<Operario>();
     }
@@ -23,10 +26,20 @@ public class GestorDeOperarios {
         assert this.operarios == operarios : "Los operarios no se asignaron correctamente";
     }
 
+    /**
+     * Retorna los operarios
+     * @return
+     */
     protected ArrayList<Operario> getOperarios() {
         return operarios;
     }
 
+    /**
+     * Retorna los operarios
+     * @param user usuario que los solicita
+     * @return Lista de operarios
+     * @throws UsuarioNoAutorizadoException si el ususario no esta autorizado
+     */
     public ArrayList<Operario> getOperarios(Operario user) throws UsuarioNoAutorizadoException {
         assert user != null : "El usuario no puede ser nulo";
 
@@ -119,6 +132,26 @@ public class GestorDeOperarios {
         operario.updateOperario(operarioActualizado);
 
     };
+
+    /**
+     * Cambia la contraseña de un usuario usuario
+     * @param password Contraseña actual
+     * @param idOperario id del operario
+     * @throws OperarioNoEncontradoException si no se encuentra el operario con dicho id
+     * @throws ContraseniaIncorrectaException si la nueva contraseña no cumple con el formato
+     * @throws UsuarioNoAutorizadoException  si la actual contraseña no coincide
+     */
+    public void cambiarContrasenia(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException {
+        assert password != null;
+        assert newPassword != null;
+        assert idOperario >= 0;
+
+        Operario op = getOperarioById(idOperario);
+        if(op == null)
+            throw new OperarioNoEncontradoException("No se encontro el operario al que se le desea cambiar la contraseña");
+        op.cambiarContrasenia(password, newPassword);
+
+    }
 
     /**
      * Se elimina de la colecicon el producto indicada

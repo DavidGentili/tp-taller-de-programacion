@@ -259,6 +259,19 @@ public class LogoutState implements StateEmpresa{
     }
 
     /**
+     * Cambia la contraseña de un usuario usuario
+     *
+     * @param password    Contraseña actual
+     * @param newPassword
+     * @param idOperario  id del operario
+     * @throws UsuarioNoLogueadoException : Si el usuario no esta logueado
+     */
+    @Override
+    public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws UsuarioNoLogueadoException {
+        throw new UsuarioNoLogueadoException();
+    }
+
+    /**
      * elimina al operario que corresponde con el id
      * pre : idOperario >= 0
      *
