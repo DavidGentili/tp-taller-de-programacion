@@ -4,14 +4,18 @@ import config.Config;
 import enums.EstadoMozos;
 import enums.FormasDePago;
 import exceptions.*;
+import exceptions.comandas.ComandaNoEncontradaException;
+import exceptions.comandas.ComandaYaCerradaException;
 import exceptions.gestorEmpresa.*;
 import exceptions.mesas.MesaNoAsignadaException;
 import exceptions.mesas.MesaNoEncontradaException;
+import exceptions.mesas.MesaYaLiberadaException;
 import exceptions.mesas.MesaYaOcupadaException;
 import exceptions.mozos.MozoNoActivoException;
 import exceptions.mozos.MozoNoEncontradoException;
 import exceptions.mozos.MozoYaAgregadoException;
 import exceptions.operarios.UsuarioNoAutorizadoException;
+import exceptions.productos.ProductoEnPedidoException;
 import exceptions.productos.ProductoNoEncontradoException;
 import helpers.MozoHelpers;
 import modelo.archivo.Archivo;
@@ -34,6 +38,16 @@ public class StateClose implements StateGestorEmpresa{
         this.configuracion = ConfiguracionEmpresa.getInstance();
     }
 
+    /**
+     * Abre la empresa
+     * @throws NoHayMozosAsignadosException : No hay mozos asignados
+     * @throws CantidadMinimaDeProductosException : No se cumple la cantidad minima de productos
+     * @throws CantidadMinimaDeProductosEnPromocionException : No se cumple la cantidad minima de productos en promocion
+     * @throws CantidadMaximaDeMozosSuperadaException : Se supero la cantidad maxima de mozos
+     * @throws CantidadMaximaDeMozosActivosException : Se supero la cantida maxima de mozos activo
+     * @throws CantidadMaximaDeMozosDeFrancoException : Se supero la cantidad maxima de mozos de franco
+     * @throws HayMozoSinEstadoAsignadoException : Hay mozos sin estado asignado
+     */
     @Override
     public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosException, CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosSuperadaException, CantidadMaximaDeMozosActivosException, CantidadMaximaDeMozosDeFrancoException, HayMozoSinEstadoAsignadoException {
         if(empresa.getMozoMeza().size() == 0)
@@ -56,11 +70,25 @@ public class StateClose implements StateGestorEmpresa{
         empresa.setState(new StateOpen(empresa));
     }
 
+    /**
+     * Se cierra la empresa, se limpian los estados de los mozos y se vacian las asignaciones
+     * @throws EmpresaCerradaException Si la empresa ya esta cerrada
+     */
     @Override
     public void cerrarEmpresa() throws EmpresaCerradaException {
         throw new EmpresaCerradaException();
     }
 
+    /**
+     * Asigna un mozo a una mesa
+     * @param idMozo : id del mozo
+     * @param nroMesa : numero de la mesa
+     * @param fecha : fecha de la asignacion
+     * @throws MozoNoActivoException : El mozo asignado no esta activo
+     * @throws MesaYaOcupadaException : La mesa ya esta ocupada
+     * @throws MozoNoEncontradoException : No se encontro el mozo con ese id
+     * @throws MesaNoEncontradaException : No se encontro mesa con ese numero de mesa
+     */
     @Override
     public void asignarMozo(int idMozo, int nroMesa, GregorianCalendar fecha) throws MozoNoActivoException, MesaYaOcupadaException, MozoNoEncontradoException, MesaNoEncontradaException {
         assert idMozo >= 0 : "El id del mozo no puede ser negativo";
@@ -78,6 +106,11 @@ public class StateClose implements StateGestorEmpresa{
         empresa.getMozoMeza().add(new MozoMesa(fecha, mozo, mesa));
     }
 
+    /**
+     * Elimina una relacion mozo con mesa
+     * @param nroMesa : Numero de mesa a la cual desasignar
+     * @throws MesaNoAsignadaException : Si no existe dicha asignacion
+     */
     @Override
     public void eliminarRelacionMozoMesa(int nroMesa) throws MesaNoAsignadaException {
         assert nroMesa >= 0 : "El numero de mesa no puede ser mayor a 0";
@@ -90,42 +123,81 @@ public class StateClose implements StateGestorEmpresa{
         assert !empresa.getMozoMeza().contains(relacion) : "No se elimino correctamente la relacion mozo mesa";
     }
 
+    /**
+     * Agrega una nueva comanda al sistema
+     * @param nroMesa Mesa a la cual asignar la nueva comanda
+     * @throws EmpresaCerradaException La empresa ya se encuentra cerrada
+     */
     @Override
     public void agregaComanda(int nroMesa) throws EmpresaCerradaException {
         throw new EmpresaCerradaException();
     }
 
+    /**
+     * Se cierra una comanda, se crea la factura y se la almacena en archivo
+     * @param nroMesa Numero de la mesa a la cual cerrar la comanda
+     * @param formaDePago : La forma de pago
+     * @throws EmpresaCerradaException : La empresa ya se encuentra cerrada
+     */
     @Override
     public void cerrarComanda(int nroMesa, FormasDePago formaDePago) throws EmpresaCerradaException {
         throw new EmpresaCerradaException();
     }
 
+    /**
+     * Agrega un pedido a una comanda especifica
+     * @param nroMesa numero de mesa a la cual adicionar el pedido
+     * @param pedido : pedido a agregar
+     * @throws EmpresaCerradaException : Si la empresa se encuentra cerrada
+     */
     @Override
     public void agregarPedido(int nroMesa, Pedido pedido) throws EmpresaCerradaException {
         throw new EmpresaCerradaException();
     }
 
+    /**
+     * Retorna si el sistema puede agregar un mozo
+     * @return puede agregar un mozo
+     */
     @Override
     public boolean puedeAgregarMozo(){
         return true;
     }
 
+    /**
+     * Retorna si el sistema puede definir el estado de un mozo
+     * @return : puede definir el estado de unmozo
+     */
     @Override
     public boolean puedeDefinirEstadoMozo(){
         return true;
     }
 
-
+    /**
+     * Retorna si el sistema puede eliminar un mozo
+     * @param idMozo id del mozo que se quiere eliminar
+     * @return : Sis se puede eliminar el mozo
+     */
     @Override
     public boolean puedeEliminarMozo(int idMozo) {
         return true;
     }
 
+    /**
+     * Retorna si el sistema puede eliminar una mesa
+     * @param nroMesa numero de la mesa
+     * @return Retorna si la mesa puede ser eliminada
+     */
     @Override
     public boolean puedeEliminarMesa(int nroMesa) {
         return true;
     }
 
+    /**
+     * Retorna si el sistema puede eliminar un producto
+     * @param idProducto : id del producto a eliminar
+     * @return Si se puede eliminar un producto
+     */
     @Override
     public boolean puedeEliminarProducto(int idProducto) {
         return true;

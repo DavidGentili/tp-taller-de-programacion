@@ -109,6 +109,10 @@ public class GestorEmpresa {
         return res;
     }
 
+    protected void limpiarAsignaciones(){
+        asignacionMozosMesas.clear();
+    }
+
     public void eliminarRelacionMozoMesa(int nroMesa) throws EmpresaAbiertaException, MesaNoAsignadaException {
         state.eliminarRelacionMozoMesa(nroMesa);
     }
