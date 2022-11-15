@@ -16,7 +16,6 @@ import exceptions.productos.ProductoYaExistenteException;
 import modelo.gestorEmpresa.GestorEmpresa;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ConfiguracionEmpresa {
@@ -27,6 +26,7 @@ public class ConfiguracionEmpresa {
     private GestorDeProductos productos;
     private GestorDeOperarios operarios;
     private Sueldo sueldo;
+    private boolean primerAcceso;
 
     private ConfiguracionEmpresa(){
         this.productos = new GestorDeProductos();
@@ -34,6 +34,7 @@ public class ConfiguracionEmpresa {
         this.mesas = new GestorDeMesas();
         this.operarios = new GestorDeOperarios();
         this.sueldo = null;
+        this.primerAcceso = false;
     }
 
     /**
@@ -76,6 +77,15 @@ public class ConfiguracionEmpresa {
 
     }
 
+    //PRIMER ACCESO
+
+    /**
+     * Retorna si ya sucedio el primer acceso;
+     * @return si se dio el primer acceso
+     */
+    public boolean isPrimerAcceso(){
+        return primerAcceso;
+    }
 
     //NOMBRE LOCAL
 
@@ -401,7 +411,7 @@ public class ConfiguracionEmpresa {
     };
 
     /**
-     * Cambia la contraseña de un usuario usuario
+     * Cambia la contraseña de un usuario usuario, si todavia no se habia dado el primer cambio de contraseña se marca como que se hizo
      * @param password Contraseña actual
      * @param idOperario id del operario
      * @throws OperarioNoEncontradoException si no se encuentra el operario con dicho id
@@ -410,6 +420,8 @@ public class ConfiguracionEmpresa {
      */
     public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException{
         operarios.cambiarContrasenia(password, newPassword, idOperario);
+        if(!primerAcceso)
+            primerAcceso = true;
     }
 
     /**

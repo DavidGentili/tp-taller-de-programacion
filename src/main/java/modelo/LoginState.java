@@ -38,6 +38,11 @@ public class LoginState implements StateEmpresa{
 
     }
 
+    private void cambioContrasenia() throws NoSeCambioContraseniaException {
+        if(!empresa.getConfiguracion().isPrimerAcceso())
+            throw new NoSeCambioContraseniaException("Debe cambiar la contraseña antes de realizar cualquier accion");
+    }
+
     /**
      * Obtiene el nombre del local
      *
@@ -56,8 +61,9 @@ public class LoginState implements StateEmpresa{
      * @UsuarioNoAutorizadoException : Si el ususario no esta autorizado
      */
     @Override
-    public void cambiarNombreLocal(String name) throws UsuarioNoAutorizadoException {
+    public void cambiarNombreLocal(String name) throws UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
         assert name != null && !name.isBlank() && !name.isEmpty();
+        cambioContrasenia();
         empresa.getConfiguracion().cambiaNombreLocal(name, user);
     }
 
@@ -79,8 +85,9 @@ public class LoginState implements StateEmpresa{
      * @Throw UsuarioNoAutorizadoException: si el usuario no esta autorizado
      */
     @Override
-    public void setSueldo(Sueldo sueldo) throws UsuarioNoAutorizadoException {
+    public void setSueldo(Sueldo sueldo) throws UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
         assert sueldo != null;
+        cambioContrasenia();
         empresa.getConfiguracion().setSueldo(sueldo, user);
     }
 
@@ -101,7 +108,8 @@ public class LoginState implements StateEmpresa{
      * @param nuevo nuevo mozo
      */
     @Override
-    public void agregarMozo(Mozo nuevo) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException {
+    public void agregarMozo(Mozo nuevo) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getConfiguracion().agregaMozo(nuevo,user);
     }
 
@@ -114,7 +122,8 @@ public class LoginState implements StateEmpresa{
      * @param mozoId      : id del mozo a modificar
      */
     @Override
-    public void actualizarMozo(Mozo actualizado, int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException {
+    public void actualizarMozo(Mozo actualizado, int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getConfiguracion().actualizarMozo(actualizado, mozoId, user);
     }
 
@@ -125,7 +134,8 @@ public class LoginState implements StateEmpresa{
      * @param mozoId : id del mozo
      */
     @Override
-    public void eliminarMozo(int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, EmpresaAbiertaException {
+    public void eliminarMozo(int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, EmpresaAbiertaException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getConfiguracion().eliminaMozo(mozoId, user);
     }
 
@@ -136,7 +146,8 @@ public class LoginState implements StateEmpresa{
      * @param estado : nuevo estado del mozo
      */
     @Override
-    public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException {
+    public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getConfiguracion().cambiarEstadoMozo(mozoId, estado);
     }
 
@@ -157,7 +168,8 @@ public class LoginState implements StateEmpresa{
      * @param nueva : mesa a agregar
      */
     @Override
-    public void agregarMesa(Mesa nueva) throws MesaYaExistenteException, UsuarioNoAutorizadoException {
+    public void agregarMesa(Mesa nueva) throws MesaYaExistenteException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getConfiguracion().agregarMesa(nueva, user);
     }
 
@@ -170,7 +182,8 @@ public class LoginState implements StateEmpresa{
      * @param nroMesa     : nro de la mesa a actualizar
      */
     @Override
-    public void actualizarMesa(Mesa actualizada, int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException {
+    public void actualizarMesa(Mesa actualizada, int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getConfiguracion().actulizarMesa(actualizada, nroMesa, user);
     }
 
@@ -181,7 +194,8 @@ public class LoginState implements StateEmpresa{
      * @param nroMesa : numero de la mesa a liminar
      */
     @Override
-    public void eliminarMesa(int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, MesaYaOcupadaException {
+    public void eliminarMesa(int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, MesaYaOcupadaException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getConfiguracion().eliminarMesa(nroMesa, user);
     }
 
@@ -202,7 +216,8 @@ public class LoginState implements StateEmpresa{
      * @param nuevo nuevo producto de la empresa
      */
     @Override
-    public void agregarProducto(Producto nuevo) throws ProductoYaExistenteException, UsuarioNoAutorizadoException {
+    public void agregarProducto(Producto nuevo) throws ProductoYaExistenteException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getConfiguracion().agregarProducto(nuevo, user);
     }
 
@@ -215,7 +230,8 @@ public class LoginState implements StateEmpresa{
      * @param idProducto  : id del producto a actualizar
      */
     @Override
-    public void actualizaProducto(Producto actualizado, int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException {
+    public void actualizaProducto(Producto actualizado, int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getConfiguracion().actulizarProducto(actualizado, idProducto, user);
     }
 
@@ -226,7 +242,8 @@ public class LoginState implements StateEmpresa{
      * @param idProducto id del producto a eliminar
      */
     @Override
-    public void eliminarProducto(int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, ProductoEnPedidoException {
+    public void eliminarProducto(int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, ProductoEnPedidoException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getConfiguracion().eliminarProducto(idProducto, user);
     }
 
@@ -247,7 +264,8 @@ public class LoginState implements StateEmpresa{
      * @param nuevo operario nuevo
      */
     @Override
-    public void agregarOperario(Operario nuevo) throws OperarioYaExistenteException, UsuarioNoAutorizadoException {
+    public void agregarOperario(Operario nuevo) throws OperarioYaExistenteException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getConfiguracion().agregarOperario(nuevo, user);
     }
 
@@ -260,7 +278,8 @@ public class LoginState implements StateEmpresa{
      * @param idOperario  : id del operario
      */
     @Override
-    public void actualizarOperario(Operario actualizado, int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException {
+    public void actualizarOperario(Operario actualizado, int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getConfiguracion().actualizarOperario(actualizado, idOperario, user);
     }
 
@@ -290,7 +309,8 @@ public class LoginState implements StateEmpresa{
      * @param idOperario : id del operario a eliminar
      */
     @Override
-    public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException {
+    public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getConfiguracion().eliminarOperario(idOperario, user);
     }
 
@@ -320,7 +340,8 @@ public class LoginState implements StateEmpresa{
      * Abre la empresa
      */
     @Override
-    public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosActivosException, EmpresaAbiertaException, CantidadMinimaDeProductosException, CantidadMaximaDeMozosSuperadaException, CantidadMaximaDeMozosDeFrancoException, HayMozoSinEstadoAsignadoException {
+    public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosActivosException, EmpresaAbiertaException, CantidadMinimaDeProductosException, CantidadMaximaDeMozosSuperadaException, CantidadMaximaDeMozosDeFrancoException, HayMozoSinEstadoAsignadoException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getGestorEmpresa().abrirEmpresa();
     }
 
@@ -328,7 +349,8 @@ public class LoginState implements StateEmpresa{
      * Cierra la empresa
      */
     @Override
-    public void cerrarEmpresa() throws EmpresaCerradaException, HayComandasActivasException {
+    public void cerrarEmpresa() throws EmpresaCerradaException, HayComandasActivasException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getGestorEmpresa().cerrarEmpresa();
     }
 
@@ -350,7 +372,8 @@ public class LoginState implements StateEmpresa{
      * @param fecha   fecha de la asignacion
      */
     @Override
-    public void asignaMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, EmpresaAbiertaException, MesaYaOcupadaException {
+    public void asignaMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, EmpresaAbiertaException, MesaYaOcupadaException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getGestorEmpresa().asignarMozo(mozoId, nroMesa, fecha);
     }
 
@@ -360,7 +383,8 @@ public class LoginState implements StateEmpresa{
      * @param nroMesa nro de mesa
      */
     @Override
-    public void eliminarRelacionMozoMeza(int nroMesa) throws MesaNoAsignadaException, EmpresaAbiertaException {
+    public void eliminarRelacionMozoMeza(int nroMesa) throws MesaNoAsignadaException, EmpresaAbiertaException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getGestorEmpresa().eliminarRelacionMozoMesa(nroMesa);
     }
 
@@ -380,7 +404,8 @@ public class LoginState implements StateEmpresa{
      * @param nroMesa nro de la mesa a la cual se asigna la comanda
      */
     @Override
-    public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException {
+    public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getGestorEmpresa().agregarComanda(nroMesa);
     }
 
@@ -391,7 +416,8 @@ public class LoginState implements StateEmpresa{
      * @param pago    tipo de  pago
      */
     @Override
-    public void cerrarComanda(int nroMesa, FormasDePago pago) throws ComandaYaCerradaException, EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException {
+    public void cerrarComanda(int nroMesa, FormasDePago pago) throws ComandaYaCerradaException, EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getGestorEmpresa().cerrarComanda(nroMesa, pago);
     }
 
@@ -402,7 +428,8 @@ public class LoginState implements StateEmpresa{
      * @param pedido  pedido a agregar
      */
     @Override
-    public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException {
+    public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getGestorEmpresa().agregarPedido(nroMesa, pedido);
     }
 
@@ -443,7 +470,8 @@ public class LoginState implements StateEmpresa{
      * @param promo promocion de prodcuto a agregar
      */
     @Override
-    public void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException {
+    public void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getGestorEmpresa().agregarPromocionProducto(promo);
     }
 
@@ -454,7 +482,8 @@ public class LoginState implements StateEmpresa{
      * @param promo : promocion temporal a agregar
      */
     @Override
-    public void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException {
+    public void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getGestorEmpresa().agregarPromocionTemp(promo);
     }
 
@@ -465,7 +494,8 @@ public class LoginState implements StateEmpresa{
      * @param id : id de la promocion a eliminar
      */
     @Override
-    public void eliminarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException {
+    public void eliminarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getGestorEmpresa().eliminarPromocion(id);
     }
 
@@ -476,7 +506,8 @@ public class LoginState implements StateEmpresa{
      * @param id : id de la promocion a activar
      */
     @Override
-    public void activarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException {
+    public void activarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getGestorEmpresa().activarPromocion(id);
     }
 
@@ -487,7 +518,8 @@ public class LoginState implements StateEmpresa{
      * @param id : id de la promocion a desactivar
      */
     @Override
-    public void desactivarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException {
+    public void desactivarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getGestorEmpresa().desactivarpromocion(id);
     }
 
@@ -508,7 +540,8 @@ public class LoginState implements StateEmpresa{
      * @param factura factura a agregar
      */
     @Override
-    public void agregarFactura(Factura factura) throws FacturaYaExistenteException {
+    public void agregarFactura(Factura factura) throws FacturaYaExistenteException, NoSeCambioContraseniaException {
+        cambioContrasenia();
         empresa.getArchivo().agregaFacturas(factura);
     }
 

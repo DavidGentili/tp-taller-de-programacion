@@ -14,6 +14,7 @@ import exceptions.operarios.OperarioInactivoException;
 import exceptions.operarios.UsuarioNoAutorizadoException;
 import exceptions.persistencia.ArchivoNoInciliazadoException;
 import exceptions.productos.ProductoYaExistenteException;
+import modelo.archivo.Archivo;
 import modelo.configEmpresa.ConfiguracionEmpresa;
 import modelo.gestorEmpresa.*;
 
@@ -24,8 +25,12 @@ public class Main {
     public static void main(String[] args) throws ArchivoNoInciliazadoException, IOException, ClassNotFoundException, MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException, MesaNoEncontradaException, MozoNoActivoException, MesaYaOcupadaException, ProductoYaExistenteException, UsuarioNoAutorizadoException, OperarioInactivoException, DatosLoginIncorrectosException, MesaYaExistenteException, MozoYaAgregadoException {
         GestorEmpresa empresa = GestorEmpresa.getInstance();
         ConfiguracionEmpresa config = ConfiguracionEmpresa.getInstance();
+        Archivo archivo = Archivo.getInstance();
         config.recuperarConfiguracion();
         empresa.recuperarEmpresa();
+        archivo.recuperarArchivo();
+
+
 
 
     }

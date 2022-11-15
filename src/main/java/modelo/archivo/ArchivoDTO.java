@@ -56,12 +56,19 @@ public class ArchivoDTO implements Serializable{
     }
 
     public void recuperarArchivo() throws ArchivoNoInciliazadoException, IOException, ClassNotFoundException {
-        IPersistencia file = new PersistencaiBin();
-        file.openInput(Config.FILE_ARCHIVO);
-        ArchivoDTO pers = (ArchivoDTO) file.readFile();
-        facturas = pers.getFacturas();
-        comandas = pers.getComandas();
-        asignacionesMozoMesa = pers.getAsignacionesMozoMesa();
-        registroDeAsistencia = pers.getRegistroDeAsistencia();
+        try {
+            IPersistencia file = new PersistencaiBin();
+            file.openInput(Config.FILE_ARCHIVO);
+            ArchivoDTO pers = (ArchivoDTO) file.readFile();
+            facturas = pers.getFacturas();
+            comandas = pers.getComandas();
+            asignacionesMozoMesa = pers.getAsignacionesMozoMesa();
+            registroDeAsistencia = pers.getRegistroDeAsistencia();
+        } catch(ArchivoNoInciliazadoException | IOException | ClassNotFoundException e){
+            facturas = new ArrayList<>();
+            comandas = new ArrayList<>();
+            asignacionesMozoMesa = new ArrayList<>();
+            registroDeAsistencia = new ArrayList<>();
+        }
     }
 }

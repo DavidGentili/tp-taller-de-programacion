@@ -42,7 +42,7 @@ public interface StateEmpresa {
      * pre : name != null !name.isBlank() !name.isEmpty;
      * @param name nuevo nombre;
      */
-    public void cambiarNombreLocal(String name) throws UsuarioNoLogueadoException, UsuarioNoAutorizadoException;
+    public void cambiarNombreLocal(String name) throws UsuarioNoLogueadoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException;
 
     /**
      * retorna el elemento sueldo de la empresa
@@ -55,7 +55,7 @@ public interface StateEmpresa {
      * pre: sueldo != null
      * @param sueldo : sueldo de la empresa
      */
-    public void setSueldo(Sueldo sueldo) throws UsuarioNoAutorizadoException, UsuarioNoLogueadoException;
+    public void setSueldo(Sueldo sueldo) throws UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Retorna los mozos de la empresa
@@ -68,7 +68,7 @@ public interface StateEmpresa {
      * pre: nuevo != null
      * @param nuevo nuevo mozo
      */
-    public void agregarMozo(Mozo nuevo) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException, UsuarioNoLogueadoException;
+    public void agregarMozo(Mozo nuevo) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Actualiza un mozo
@@ -77,21 +77,21 @@ public interface StateEmpresa {
      * @param actualizado : mozo con los valores actualizados
      * @param mozoId : id del mozo a modificar
      */
-    public void actualizarMozo(Mozo actualizado, int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException;
+    public void actualizarMozo(Mozo actualizado, int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Elimina el mozo correspondiente a la id
      * pre: mozoId >= 0;
      * @param mozoId : id del mozo
      */
-    public void eliminarMozo(int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, EmpresaAbiertaException, UsuarioNoLogueadoException;
+    public void eliminarMozo(int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, EmpresaAbiertaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Cambia el estado de un mozo
      * @param mozoId : id del mozo a cambiar
      * @param estado : nuevo estado del mozo
      */
-    public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException, UsuarioNoLogueadoException;
+    public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Retorna las mesas de la empresa
@@ -104,7 +104,7 @@ public interface StateEmpresa {
      * pre : nueva != null
      * @param nueva : mesa a agregar
      */
-    public void agregarMesa(Mesa nueva) throws MesaYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException;
+    public void agregarMesa(Mesa nueva) throws MesaYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Actualiza una mesa
@@ -113,14 +113,14 @@ public interface StateEmpresa {
      * @param actualizada : mesa con valores nuevos
      * @param nroMesa : nro de la mesa a actualizar
      */
-    public void actualizarMesa(Mesa actualizada, int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException;
+    public void actualizarMesa(Mesa actualizada, int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * elimina una mesa con el numero correspondiente
      * pre: mesa >= 0;
      * @param nroMesa : numero de la mesa a liminar
      */
-    public void eliminarMesa(int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, MesaYaOcupadaException, UsuarioNoLogueadoException;
+    public void eliminarMesa(int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Retorna los productos de la empresa
@@ -133,7 +133,7 @@ public interface StateEmpresa {
      * pre : nuevo != null
      * @param nuevo nuevo producto de la empresa
      */
-    public void agregarProducto(Producto nuevo) throws ProductoYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException;
+    public void agregarProducto(Producto nuevo) throws ProductoYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * actualiza el producto con el id correspondiente
@@ -142,14 +142,14 @@ public interface StateEmpresa {
       * @param actualizado : producto con los valores actualzados
      * @param idProducto : id del producto a actualizar
      */
-    public void actualizaProducto(Producto actualizado, int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException;
+    public void actualizaProducto(Producto actualizado, int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * elimina un producto
      * pre id >= 0
      * @param idProducto id del producto a eliminar
      */
-    public void eliminarProducto(int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, ProductoEnPedidoException, UsuarioNoLogueadoException;
+    public void eliminarProducto(int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, ProductoEnPedidoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * retorna los operarios de la empresa
@@ -162,7 +162,7 @@ public interface StateEmpresa {
      * pre : nuevo != null
      * @param nuevo operario nuevo
      */
-    public void agregarOperario(Operario nuevo) throws OperarioYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException;
+    public void agregarOperario(Operario nuevo) throws OperarioYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * actualiza un operario, correspondiente con el id
@@ -171,7 +171,7 @@ public interface StateEmpresa {
      * @param actualizado : operario con los valores actualizados
      * @param idOperario : id del operario
      */
-    public void actualizarOperario(Operario actualizado, int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException;
+    public void actualizarOperario(Operario actualizado, int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Cambia la contraseña de un usuario usuario
@@ -189,7 +189,7 @@ public interface StateEmpresa {
      * pre : idOperario >= 0
      * @param idOperario : id del operario a eliminar
      */
-    public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException;
+    public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Inicia sesion de un usuario segun un nombre de usuario y una contraseña
@@ -210,12 +210,12 @@ public interface StateEmpresa {
     /**
      * Abre la empresa
      */
-    public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosActivosException, EmpresaAbiertaException, CantidadMinimaDeProductosException, CantidadMaximaDeMozosSuperadaException, CantidadMaximaDeMozosDeFrancoException, HayMozoSinEstadoAsignadoException, UsuarioNoLogueadoException;
+    public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosActivosException, EmpresaAbiertaException, CantidadMinimaDeProductosException, CantidadMaximaDeMozosSuperadaException, CantidadMaximaDeMozosDeFrancoException, HayMozoSinEstadoAsignadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Cierra la empresa
      */
-    public void cerrarEmpresa() throws EmpresaCerradaException, HayComandasActivasException, UsuarioNoLogueadoException;
+    public void cerrarEmpresa() throws EmpresaCerradaException, HayComandasActivasException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Retorna las asignaciones activas de mozos con mesas
@@ -229,13 +229,13 @@ public interface StateEmpresa {
      * @param nroMesa nro de mesa
      * @param fecha fecha de la asignacion
      */
-    public void asignaMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, EmpresaAbiertaException, MesaYaOcupadaException, UsuarioNoLogueadoException;
+    public void asignaMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, EmpresaAbiertaException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Elimina una relacion de mozo con mesa
      * @param nroMesa nro de mesa
      */
-    public void eliminarRelacionMozoMeza(int nroMesa) throws MesaNoAsignadaException, EmpresaAbiertaException, UsuarioNoLogueadoException;
+    public void eliminarRelacionMozoMeza(int nroMesa) throws MesaNoAsignadaException, EmpresaAbiertaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * retorna las comandas activas
@@ -247,21 +247,21 @@ public interface StateEmpresa {
      * agrega una comanda asignandola a una mesa
      * @param nroMesa nro de la mesa a la cual se asigna la comanda
      */
-    public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, UsuarioNoLogueadoException;
+    public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Cierra una comanda segun un tipo de pago y un numero de mesa
      * @param nroMesa numero de la mesa
      * @param pago tipo de  pago
      */
-    public void cerrarComanda(int nroMesa, FormasDePago pago) throws ComandaYaCerradaException, EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException, UsuarioNoLogueadoException;
+    public void cerrarComanda(int nroMesa, FormasDePago pago) throws ComandaYaCerradaException, EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * agrega un pedido a una comanda, segun un numero de mesa
      * @param nroMesa numero de mesa
      * @param pedido pedido a agregar
      */
-    public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, UsuarioNoLogueadoException;
+    public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Retorna una lista de todas las promociones
@@ -286,35 +286,35 @@ public interface StateEmpresa {
      * pre: promo != null
      * @param promo promocion de prodcuto a agregar
      */
-    public void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException, UsuarioNoLogueadoException;
+    public void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * agrega una promocion tempora
      * pre: promo != null
      * @param promo : promocion temporal a agregar
      */
-    public void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException, UsuarioNoLogueadoException;
+    public void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Elimina una promocion segun un id
      * pre: id >= 0
      * @param id : id de la promocion a eliminar
      */
-    public void eliminarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException;
+    public void eliminarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Activa una promocion segun un id
      * pre: id >= 0
      * @param id : id de la promocion a activar
      */
-    public void activarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException;
+    public void activarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Desactiva una promocion segun un id
      * pre: id >= 0
      * @param id : id de la promocion a desactivar
      */
-    public void desactivarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException;
+    public void desactivarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     //ARCHIVO
 
@@ -329,7 +329,7 @@ public interface StateEmpresa {
      * pre : factura != null
      * @param factura factura a agregar
      */
-    public void agregarFactura(Factura factura) throws FacturaYaExistenteException, UsuarioNoLogueadoException;
+    public void agregarFactura(Factura factura) throws FacturaYaExistenteException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 
     /**
      * Retorna las comandas archivadas

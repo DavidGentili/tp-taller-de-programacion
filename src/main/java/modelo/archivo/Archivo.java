@@ -22,6 +22,7 @@ import modelo.gestorEmpresa.MozoMesa;
  *
  */
 public class Archivo implements Serializable {
+	private static Archivo instance = null;
     private ArrayList<Factura> facturas;
     private ArrayList<Comanda> comandas;
     private ArrayList<MozoMesa> asignacionesMozoMesa;
@@ -31,7 +32,7 @@ public class Archivo implements Serializable {
     /**
      * Constructor de la clase Archivo que llama al get instance
      */
-    public Archivo() {
+    private Archivo() {
 		facturas = new ArrayList<>();
 		comandas = new ArrayList<>();
 		asignacionesMozoMesa = new ArrayList<>();
@@ -43,7 +44,11 @@ public class Archivo implements Serializable {
      * PAtron Singleton para el sistema de archivos del sistema
      * @return instancia única de archivos
      */
-    public static Archivo getInstance() {return null;}
+    public static Archivo getInstance() {
+		if(instance == null)
+			instance = new Archivo();
+		return instance;
+	}
     
     
     /**

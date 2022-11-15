@@ -260,9 +260,8 @@ public class LogoutState implements StateEmpresa{
 
     /**
      * Cambia la contraseña de un usuario usuario
-     *
-     * @param password    Contraseña actual
-     * @param newPassword
+     * @param password Contraseña actual
+     * @param newPassword  Nueva contraseña
      * @param idOperario  id del operario
      * @throws UsuarioNoLogueadoException : Si el usuario no esta logueado
      */
