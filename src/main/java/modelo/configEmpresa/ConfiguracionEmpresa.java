@@ -89,7 +89,7 @@ public class ConfiguracionEmpresa {
      * post: nombreLocal = name || new UsuarioNoAutorizadoException
      *
      */
-    public void cambiaNombreLocal(String name, Operario user) throws UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
+    public void cambiaNombreLocal(String name, Operario user) throws UsuarioNoAutorizadoException {
         assert name != null && !name.isBlank() && !name.isEmpty() : "El nombre debe ser distinto de nulo, blanco y vacio";
         assert user != null : "El usuario no puede ser nulo";
 

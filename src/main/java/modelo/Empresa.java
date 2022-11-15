@@ -16,6 +16,7 @@ public class Empresa {
     private ConfiguracionEmpresa configuracion;
     private Archivo archivo;
     private Operario usuario;
+    private StateEmpresa state;
 
     private Empresa(){
         gestorEmpresa = GestorEmpresa.getInstance();
@@ -62,45 +63,32 @@ public class Empresa {
         this.usuario = usuario;
     }
 
-    //CONFIGURACION: SUELDO
-
-    /**
-     * Retorna el elemento sueldo de la empresa
-     * @return elemento sueldo
-     */
-    public Sueldo getSueldo(){
-        return configuracion.getSueldo();
+    public GestorEmpresa getGestorEmpresa() {
+        return gestorEmpresa;
     }
 
-    /**
-     * Define el elemento sueldo de la empresa
-     * @param sueldo : Elemento sueldo
-     * @throws UsuarioNoLogueadoException : Si el usuario no esta logueado
-     * @throws UsuarioNoAutorizadoException : Si el usuario no esta autorizado
-     */
-    public void setSueldo(Sueldo sueldo) throws UsuarioNoLogueadoException, UsuarioNoAutorizadoException {
-        assert sueldo != null : "El sueldo no puede ser nulo";
-        if(usuario == null)
-            throw new UsuarioNoLogueadoException("El usuario no ha sido logueado");
-        configuracion.setSueldo(sueldo, usuario);
+    public ConfiguracionEmpresa getConfiguracion() {
+        return configuracion;
     }
 
-    //CONFIGURACION: NOMBRE LOCAL
-
-    /**
-     *
-     * @return
-     */
-    public String getNombreLocal(){
-        return configuracion.getNombreLocal();
+    public Archivo getArchivo() {
+        return archivo;
     }
 
+    protected Operario getUsuario(){
+        return usuario;
+    }
 
+    protected void setUsuario(Operario user){
+        usuario = user;
+    }
 
+    protected void setState(StateEmpresa state){
+        this.state = state;
+    }
 
     /**
      * TAREAS RESTANTES:
-     * Conexion GestorEmpresa con Archivo
      * Empresa
      * Controlador
      * Vista
