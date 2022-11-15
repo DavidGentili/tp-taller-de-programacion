@@ -1,5 +1,7 @@
 package modelo.archivo;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -7,6 +9,7 @@ import java.util.HashMap;
 import enums.EstadoComanda;
 import exceptions.comandas.ComandaAbiertaException;
 import exceptions.factura.FacturaYaExistenteException;
+import exceptions.persistencia.ArchivoNoInciliazadoException;
 import helpers.FechasHelpers;
 import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;
@@ -18,7 +21,7 @@ import modelo.gestorEmpresa.MozoMesa;
  * @author
  *
  */
-public class Archivo {
+public class Archivo implements Serializable {
     private ArrayList<Factura> facturas;
     private ArrayList<Comanda> comandas;
     private ArrayList<MozoMesa> asignacionesMozoMesa;
@@ -192,6 +195,28 @@ public class Archivo {
 				minimo = ventasMozos.get(idMozo);
 		}
 		return minimo;
+	}
+
+	public void almacenarArchivo() throws ArchivoNoInciliazadoException, IOException {
+		ArchivoDTO file = new ArchivoDTO(this);
+		file.almacenarArchivo();
+	}
+
+	public void recuperarArchivo(){
+		ArchivoDTO file = new ArchivoDTO();
+		try{
+			file.recuperarArchivo();
+			facturas = file.getFacturas();
+			comandas = file.getComandas();
+			asignacionesMozoMesa = file.getAsignacionesMozoMesa();
+			registroDeAsistencia = file.getRegistroDeAsistencia();
+		} catch (ArchivoNoInciliazadoException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

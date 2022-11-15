@@ -55,14 +55,14 @@ public class GestorEmpresaDTO implements Serializable{
 
     public void almacenarDatos() throws IOException, ArchivoNoInciliazadoException {
         IPersistencia<Serializable> file = new PersistencaiBin();
-        file.openOutput(Config.ARCHIVO_GESTOR_EMPRESA);
+        file.openOutput(Config.FILE_GESTOR_EMPRESA);
         file.writeFile(this);
         file.closeOutput();
     }
 
     public void recuperarDatos() throws IOException, ArchivoNoInciliazadoException, ClassNotFoundException {
         IPersistencia<Serializable> file = new PersistencaiBin();
-        file.openInput(Config.ARCHIVO_GESTOR_EMPRESA);
+        file.openInput(Config.FILE_GESTOR_EMPRESA);
         GestorEmpresaDTO aux = (GestorEmpresaDTO) file.readFile();
         this.comandas = aux.comandas;
         this.promocionesProducto = aux.promocionesProducto;

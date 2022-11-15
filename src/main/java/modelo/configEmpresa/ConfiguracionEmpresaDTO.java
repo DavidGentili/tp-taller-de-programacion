@@ -53,7 +53,7 @@ public class ConfiguracionEmpresaDTO implements Serializable {
      */
     public void guardarConfiguaracion() throws IOException, ArchivoNoInciliazadoException {
         IPersistencia<Serializable> file = new PersistencaiBin();
-        file.openOutput(Config.ARCHIVO_CONFIGURACION);
+        file.openOutput(Config.FILE_CONFIGURACION);
         file.writeFile(this);
         file.closeOutput();
     }
@@ -64,7 +64,7 @@ public class ConfiguracionEmpresaDTO implements Serializable {
     public void recuperarConfiguracion(){
         try{
             IPersistencia<Serializable> file = new PersistencaiBin();
-            file.openInput(Config.ARCHIVO_CONFIGURACION);
+            file.openInput(Config.FILE_CONFIGURACION);
             ConfiguracionEmpresaDTO aux = (ConfiguracionEmpresaDTO) file.readFile();
             file.closeInput();
             this.nombreLocal = aux.getNombreLocal();

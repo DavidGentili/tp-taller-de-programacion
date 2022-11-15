@@ -20,8 +20,7 @@ public class Empresa {
     }
 
     /**
-     * COSAS RESTANTES:
-     * Persistencia Archivo
+     * TAREAS RESTANTES:
      * Conexion GestorEmpresa con Archivo
      * Empresa
      * Controlador
