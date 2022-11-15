@@ -198,7 +198,7 @@ public interface StateEmpresa {
      * @param userName Nombre de ususario
      * @param password Contraseña
      */
-    public void login(String userName, String password) throws UsuarioYaLogueadoException;
+    public void login(String userName, String password) throws UsuarioYaLogueadoException, OperarioInactivoException, DatosLoginIncorrectosException;
 
     /**
      * Cierra la sesion del ususario actual

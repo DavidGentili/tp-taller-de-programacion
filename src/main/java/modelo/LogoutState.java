@@ -290,8 +290,10 @@ public class LogoutState implements StateEmpresa{
      * @param password Contraseña
      */
     @Override
-    public void login(String userName, String password) throws UsuarioYaLogueadoException {
-
+    public void login(String userName, String password) throws UsuarioYaLogueadoException, OperarioInactivoException, DatosLoginIncorrectosException {
+        Operario user = empresa.getConfiguracion().login(userName, password);
+        empresa.setUsuario(user);
+        empresa.setState(new LoginState(empresa));
     }
 
     /**
