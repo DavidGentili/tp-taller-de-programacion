@@ -48,6 +48,13 @@ public interface StateGestorEmpresa {
 
     public boolean puedeDefinirEstadoMozo() throws EmpresaAbiertaException;
 
+    /**
+     * Docu
+     * @param idMozo
+     * @return
+     * @throws MozoNoEncontradoException
+     * @throws EmpresaAbiertaException
+     */
     public boolean puedeEliminarMozo(int idMozo) throws MozoNoEncontradoException, EmpresaAbiertaException;
 
     //METODOS MESAS

@@ -5,6 +5,7 @@ import enums.EstadoMesas;
 import enums.FormasDePago;
 import exceptions.comandas.ComandaNoEncontradaException;
 import exceptions.comandas.ComandaYaCerradaException;
+import exceptions.factura.FacturaYaExistenteException;
 import exceptions.gestorEmpresa.EmpresaAbiertaException;
 import exceptions.gestorEmpresa.EmpresaCerradaException;
 import exceptions.gestorEmpresa.HayComandasActivasException;
@@ -13,6 +14,7 @@ import exceptions.mesas.MesaYaLiberadaException;
 import exceptions.mesas.MesaYaOcupadaException;
 import exceptions.productos.ProductoEnPedidoException;
 import helpers.FacturaHelpers;
+import modelo.archivo.Archivo;
 import modelo.archivo.Factura;
 import modelo.configEmpresa.ConfiguracionEmpresa;
 import modelo.configEmpresa.Mesa;
@@ -41,7 +43,6 @@ public class StateOpen implements StateGestorEmpresa {
     public void cerrarEmpresa() throws HayComandasActivasException {
         if(empresa.getComandas().size() > 0)
             throw new HayComandasActivasException();
-        //ALMACENAR INFORMACION DE LA JORNADA EN ARCHIVO
         configuracion.clearEstadoMozos();
         empresa.setState(new StateClose(empresa));
     }
@@ -82,20 +83,17 @@ public class StateOpen implements StateGestorEmpresa {
             comanda.getMesa().liberarMesa();
             comanda.cerrarComanda();
             ArrayList<Promocion> promocionesAplicadas = FacturaHelpers.getPromocionesAplicadas(empresa.getPromociones(), comanda.getListaDePedidos(), formaDePago);
-            Factura factura = new Factura(comanda.getMesa(), comanda.getListaDePedidos(), promocionesAplicadas, formaDePago);
-            //ALMACENAR LA FACTURA
+            Factura factura = new Factura(comanda.getMesa(), comanda.getListaDePedidos(), promocionesAplicadas, formaDePago, comanda.getFecha());
+            Archivo.getInstance().agregaFacturas(factura);
 
-        } catch (ComandaYaCerradaException e){
+        } catch (ComandaYaCerradaException | FacturaYaExistenteException e) {
             try {
                 comanda.getMesa().ocuparMesa();
                 throw new ComandaYaCerradaException();
             } catch (MesaYaOcupadaException ex) {
             }
         }
-
         empresa.getComandas().remove(comanda);
-
-        //FACTURAR : Falta modulo facturacion para conocer correctamente la interface;
 
         assert !empresa.getComandas().contains(comanda) : "No se retiro correctamente la comanda de la coleccion";
         assert comanda.getEstado() == EstadoComanda.CERRADA : "No se cerro correctamente la comanda";

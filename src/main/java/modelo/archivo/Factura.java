@@ -66,6 +66,23 @@ public class Factura {
 		nroFactura++;
 	}
 
+	public Factura(Mesa mesa, ArrayList<Pedido> pedidos, ArrayList<Promocion> promocionesAplicadas, FormasDePago formaDePago, GregorianCalendar fecha){
+		assert mesa != null : "La mesa no puede ser nula";
+		assert pedidos != null : "Los pedidos no pueden ser nulos";
+		assert promocionesAplicadas != null : "Las promociones no pueden ser nulas";
+		assert formaDePago != null : "La forma de pago no puede ser nula";
+		assert fecha != null : "La fecha no puede ser nula";
+
+		this.fecha = fecha;
+		this.mesa = getCloneMesa(mesa);
+		this.pedidos = getClonePedido(pedidos);
+		this.formaDePago = formaDePago;
+		this.promocionesAplicadas = promocionesAplicadas;
+		this.total = calculaTotal();
+		this.id = nroFactura;
+		nroFactura++;
+	}
+
 	private ArrayList<Pedido> getClonePedido(ArrayList<Pedido> pedidos){
 		ArrayList<Pedido> clon = new ArrayList<>();
 		for(Pedido pedido : pedidos){

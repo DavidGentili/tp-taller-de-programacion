@@ -143,7 +143,7 @@ public class GestorEmpresa {
      * post : se añadira una nueva comanda a la coleccion 
      * post : la mesa pasa a estado ocupado
      */
-    public void agregarComanda(int nroMesa, Comanda comanda) throws MesaYaOcupadaException, EmpresaCerradaException {
+    public void agregarComanda(int nroMesa) throws MesaYaOcupadaException, EmpresaCerradaException {
     	state.agregaComanda(nroMesa);
     }
 
@@ -281,7 +281,7 @@ public class GestorEmpresa {
 
     //PERSITENCIA
 
-    public void recuperarEmpresa() throws ArchivoNoInciliazadoException, IOException, ClassNotFoundException {
+    public void recuperarEmpresa() {
         try{
             GestorEmpresaDTO pers = new GestorEmpresaDTO();
             pers.recuperarDatos();

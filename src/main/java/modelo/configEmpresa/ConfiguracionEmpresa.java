@@ -61,7 +61,7 @@ public class ConfiguracionEmpresa {
      * Se encarga de recuperar la configuracion de la empresa
      * (faltan agregar las excepciones correspondientes)
      */
-    public void recuperarConfiguracion() throws ArchivoNoInciliazadoException, IOException, ClassNotFoundException {
+    public void recuperarConfiguracion() {
         ConfiguracionEmpresaDTO pers = new ConfiguracionEmpresaDTO();
         pers.recuperarConfiguracion();
         Operario.setNroOperario(pers.getNroOperarios());

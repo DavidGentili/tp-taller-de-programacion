@@ -14,6 +14,7 @@ import exceptions.mozos.MozoYaAgregadoException;
 import exceptions.operarios.UsuarioNoAutorizadoException;
 import exceptions.productos.ProductoNoEncontradoException;
 import helpers.MozoHelpers;
+import modelo.archivo.Archivo;
 import modelo.configEmpresa.ConfiguracionEmpresa;
 import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;
@@ -50,7 +51,8 @@ public class StateClose implements StateGestorEmpresa{
             throw new CantidadMaximaDeMozosActivosException("Se puede tener como maximo " + Config.NUMERO_MAXIMO_DE_MOZOS_ACTIVOS + " mozos activos");
         if(MozoHelpers.getCantidadDeMozosEnEstado(mozos, EstadoMozos.DE_FRANCO) >= Config.NUMERO_MAXIMO_DE_MOZOS_DE_FRANCO)
             throw new CantidadMaximaDeMozosDeFrancoException("Se puede tener como maximo " + Config.NUMERO_MAXIMO_DE_MOZOS_DE_FRANCO + " mozos de franco");
-
+        Archivo.getInstance().agregaRegistroDeAsistencia(mozos, (GregorianCalendar) GregorianCalendar.getInstance());
+        Archivo.getInstance().agregaMozoMesa(empresa.getMozoMeza());
         empresa.setState(new StateOpen(empresa));
     }
 
@@ -112,6 +114,7 @@ public class StateClose implements StateGestorEmpresa{
     public boolean puedeDefinirEstadoMozo(){
         return true;
     }
+
 
     @Override
     public boolean puedeEliminarMozo(int idMozo) {
