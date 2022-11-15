@@ -425,7 +425,7 @@ public class LoginState implements StateEmpresa{
      * agrega un pedido a una comanda, segun un numero de mesa
      *
      * @param nroMesa numero de mesa
-     * @param pedido  pedido a agregar
+     * @param pedido  pedido a ingresar
      */
     @Override
     public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, NoSeCambioContraseniaException {

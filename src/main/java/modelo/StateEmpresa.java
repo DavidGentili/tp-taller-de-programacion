@@ -258,8 +258,15 @@ public interface StateEmpresa {
 
     /**
      * agrega un pedido a una comanda, segun un numero de mesa
+     *
      * @param nroMesa numero de mesa
-     * @param pedido pedido a agregar
+     * @param pedido  pedido a agregar
+     * @throws ComandaYaCerradaException      : Si la comanda ya esta cerrada
+     * @throws EmpresaCerradaException        : Si la empresa esta cerrada
+     * @throws ComandaNoEncontradaException   : SI no se encontro la comanda
+     * @throws UsuarioNoLogueadoException     : si el ususario no esta logueado
+     * @throws NoSeCambioContraseniaException : Si no se cambio la contraseña
+     * @throws ProductoNoEncontradoException  : Si el producto nose encontro
      */
     public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
 

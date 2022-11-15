@@ -417,8 +417,23 @@ public class Empresa{
      * @param nroMesa numero de mesa
      * @param pedido  pedido a agregar
      */
-    public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
-        state.agregarPedido(nroMesa, pedido);
+    public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException, ProductoNoEncontradoException {
+        state.agregarPedido(nroMesa,  pedido);
+    }
+
+    /**
+     * agrega un pedido a una comanda, segun un numero de mesa
+     *
+     * @param nroMesa numero de mesa
+     * @param idProducto  id del producto pedido
+     * @param cantidad cantidad de productos del pedido
+     */
+    public void agregarPedido(int nroMesa, int idProducto, int cantidad) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException, ProductoNoEncontradoException {
+        Producto prod = configuracion.getProductoById(idProducto);
+        if(prod == null)
+            throw new ProductoNoEncontradoException("El producto ingresado no existe");
+        Pedido pedido = new Pedido(prod, cantidad);
+        state.agregarPedido(nroMesa,  pedido);
     }
 
     /**
