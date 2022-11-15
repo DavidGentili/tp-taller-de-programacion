@@ -63,15 +63,15 @@ public class Empresa {
         this.usuario = usuario;
     }
 
-    public GestorEmpresa getGestorEmpresa() {
+    protected GestorEmpresa getGestorEmpresa() {
         return gestorEmpresa;
     }
 
-    public ConfiguracionEmpresa getConfiguracion() {
+    protected ConfiguracionEmpresa getConfiguracion() {
         return configuracion;
     }
 
-    public Archivo getArchivo() {
+    protected Archivo getArchivo() {
         return archivo;
     }
 
@@ -87,9 +87,18 @@ public class Empresa {
         this.state = state;
     }
 
+    public boolean isPrimerAcceso(){
+        return configuracion.isPrimerAcceso();
+    }
+
+    public void recuperaEstado(){
+        configuracion.recuperarConfiguracion();
+        gestorEmpresa.recuperarEmpresa();
+        archivo.recuperarArchivo();
+    }
+
     /**
      * TAREAS RESTANTES:
-     * Primer inicio de sesion
      * Controlador
      * Vista
      */
