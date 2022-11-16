@@ -65,9 +65,9 @@ public class GestorDeProductos {
         assert user != null : "El usuario no puede ser nulo";
 
         if(!user.puedeGestionarProductos())
-            throw new UsuarioNoAutorizadoException();
+            throw new UsuarioNoAutorizadoException("El usuario no esta autorizado para realizar dicha accion");
         if(getProductoById(nuevoProducto.getId()) != null)
-            throw new ProductoYaExistenteException();
+            throw new ProductoYaExistenteException("El id del producto ya existe");
         productos.add(nuevoProducto);
 
         assert getProductoById(nuevoProducto.getId()) != null : "No se agrego correctamente el producto";
@@ -90,12 +90,12 @@ public class GestorDeProductos {
         assert user != null : "El usuario debe ser distinto de nulo";
 
         if(!user.puedeGestionarProductos())
-            throw new UsuarioNoAutorizadoException();
+            throw new UsuarioNoAutorizadoException("El usuario no esta autorizado para realizar dicha accion");
         if(productoId < 0)
-            throw new IdIncorrectoException();
+            throw new IdIncorrectoException("El id es incorrecto");
         Producto producto = getProductoById(productoId);
         if(producto == null)
-            throw new ProductoNoEncontradoException();
+            throw new ProductoNoEncontradoException("No se encontro el producto buscado");
 
         producto.updateProducto(productoActualizado);
     };
@@ -114,12 +114,12 @@ public class GestorDeProductos {
         assert user != null : "El usuario no puede ser nulo";
 
         if(!user.puedeGestionarProductos())
-            throw new UsuarioNoAutorizadoException();
+            throw new UsuarioNoAutorizadoException("El usuario no esta autorizado para realizar dicha accion");
         if(idProducto < 0)
-            throw new IdIncorrectoException();
+            throw new IdIncorrectoException("El id es incorrecto");
         Producto producto = getProductoById(idProducto);
         if(producto == null)
-            throw new ProductoNoEncontradoException();
+            throw new ProductoNoEncontradoException("No se encontro el producto buscado");
         productos.remove(producto);
 
         assert getProductoById(idProducto) == null : "No se elimino correctamente el producto";

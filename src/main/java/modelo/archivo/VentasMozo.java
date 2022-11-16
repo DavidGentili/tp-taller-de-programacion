@@ -39,6 +39,6 @@ public class VentasMozo {
 
     @Override
     public String toString() {
-        return String.format("Total : %6.1f Promedio : %5.1f", acum, getPromedio());
+        return String.format("Mozo: %5d %-20s Total : $%6.1f Promedio : $%5.1f", mozo.getId(), mozo.getNombreApellido(), acum, getPromedio());
     }
 }

@@ -38,6 +38,6 @@ public class VentasMesa {
 
     @Override
     public String toString() {
-        return String.format("Total : %6.1f Promedio : %5.1f", acum, getPromedio());
+        return String.format("Nro. mesa: %4d Total: $%6.1f Promedio: $%5.1f", mesa.getNroMesa(), acum, getPromedio());
     }
 }

@@ -178,8 +178,11 @@ public class Mozo implements Serializable {
         this.nombreApellido = other.nombreApellido;
         this.fechaNacimiento = other.fechaNacimiento;
     }
-    
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YY");

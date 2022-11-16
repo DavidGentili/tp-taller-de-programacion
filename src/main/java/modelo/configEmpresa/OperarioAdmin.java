@@ -12,10 +12,12 @@ public class OperarioAdmin extends Operario implements Serializable {
      * @param nombreApellido : nombre y apellido
      * @param nombreUsuario  : nombre de usuario
      * @param password       : contraseña
-     * @throws ContraseniaIncorrectaException : Si la contraseña no cumple con los requisitos de la documentacion
-     *                                       pre: nombreApellido != null && nombreApellido != ""
-     *                                       nombreUsuario != null && nombreUsuruaio != ""
-     *                                       post: se retorna un operario nuevo activo
+     * pre: nombreApellido != null && nombreApellido != ""
+     * nombreUsuario != null && nombreUsuruaio != ""
+     * password != null && password.length <= 12 && password.length > 6
+     * password debe contener al menos una letra mayuscula
+     * password debe contener al menos un numero
+     * post: se retorna un operario nuevo activo
      */
     public OperarioAdmin(String nombreApellido, String nombreUsuario, String password) {
         super(nombreApellido, nombreUsuario, password);

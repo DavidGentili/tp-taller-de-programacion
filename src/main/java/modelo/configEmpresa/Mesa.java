@@ -31,7 +31,6 @@ public class Mesa implements Serializable, Cloneable{
         assert this.nroMesa == nroMesa : "No se asigno correctamente el numero de mesa";
         assert this.cantSillas == cantSillas : "No se asigno correctamente la cantidad de sillas";
         assert  this.estado == EstadoMesas.LIBRE : "No se asigno correctamente el estado inicial de la mesa";
-
     }
 
     /**
@@ -80,7 +79,7 @@ public class Mesa implements Serializable, Cloneable{
      */
     public void ocuparMesa() throws MesaYaOcupadaException {
         if(this.estado == EstadoMesas.OCUPADA)
-            throw new MesaYaOcupadaException();
+            throw new MesaYaOcupadaException("La mesa se encuentra ocupada");
         this.estado = EstadoMesas.OCUPADA;
 
         assert this.estado == EstadoMesas.OCUPADA : "La mesa no se ocupo correctamente";
@@ -92,7 +91,7 @@ public class Mesa implements Serializable, Cloneable{
      */
     public void liberarMesa() throws MesaYaLiberadaException {
         if(this.estado == EstadoMesas.LIBRE)
-            throw new MesaYaLiberadaException();
+            throw new MesaYaLiberadaException("La mesa se encuentra libre");
         this.estado = EstadoMesas.LIBRE;
 
         assert this.estado == EstadoMesas.LIBRE : "La mesa no se libero correctamente";

@@ -116,10 +116,13 @@ public class Archivo implements Serializable {
 		asignacionesMozoMesa.add(mozoMesa);
 	}
 
+	/**
+	 * Agrega un conjunto de relaciones mozo mesa
+	 * @param asignaciones lista de asignaciones mozo mesa
+	 */
 	public void agregaMozoMesa(ArrayList<MozoMesa> asignaciones){
 		assert asignaciones != null : "Las asignaciones no pueden ser nulas";
-		for(MozoMesa asignacion : asignaciones)
-			asignacionesMozoMesa.add(asignacion);
+		asignacionesMozoMesa.addAll(asignaciones);
 	}
 
 
@@ -139,6 +142,11 @@ public class Archivo implements Serializable {
 		this.registroDeAsistencia.add(registroDeAsistencia);
 	}
 
+	/**
+	 * Agrega asistencias al registro apartir de un listado de mozos y una fecha
+	 * @param mozos Mozos que se interesa registrar el estado
+	 * @param fecha Fecha de los estados
+	 */
 	public void agregaRegistroDeAsistencia(ArrayList<Mozo> mozos, GregorianCalendar fecha){
 		assert mozos != null : "Los mozos no pueden ser nulos";
 		assert fecha != null : "la fecha no puede ser nula";
@@ -148,6 +156,10 @@ public class Archivo implements Serializable {
 		}
 	}
 
+	/**
+	 * Retorna una coleccion de VentasMesa, que permiten ver el consumo total y promedio de mesas
+	 * @return
+	 */
 	public HashMap<Integer, VentasMesa>  consumoPromedioXMesa(){
 		HashMap<Integer, VentasMesa> ventasMesa= new HashMap<>();
 		for(Factura factura : facturas){
@@ -160,6 +172,10 @@ public class Archivo implements Serializable {
 		return ventasMesa;
 	}
 
+	/**
+	 * Retorna las estadisticas de un mozo total y promedio de ventas
+	 * @return coleccion con estadisticas de un mozo
+	 */
 	public HashMap<Integer, VentasMozo> calculaEstadisticasMozo(){
 		HashMap<Integer, VentasMozo> ventasMozos = new HashMap<>();
 		for(MozoMesa asignacion : asignacionesMozoMesa){
@@ -168,6 +184,11 @@ public class Archivo implements Serializable {
 		return ventasMozos;
 	}
 
+	/**
+	 * Recorre las facturas, acumulando las ventas del mozo
+	 * @param ventasMozos : coleccion de mozo con sus ventas
+	 * @param asignacion : coleccion de asignaciones
+	 */
 	private void recorreFacturas(HashMap<Integer, VentasMozo> ventasMozos, MozoMesa asignacion){
 		Mozo mozo = asignacion.getMozo();
 		GregorianCalendar fecha = asignacion.getFecha();
@@ -192,6 +213,10 @@ public class Archivo implements Serializable {
 		return maximo;
 	}
 
+	/**
+	 * Retorna el mozo con menor volumen de ventas
+	 * @return coleccion de ventas mozo, donde se tiene el total y promedio de ventas
+	 */
 	public VentasMozo getMozoConMenorVolumenDeVentas(){
 		VentasMozo minimo = null;
 		HashMap<Integer, VentasMozo> ventasMozos = calculaEstadisticasMozo();
@@ -202,26 +227,26 @@ public class Archivo implements Serializable {
 		return minimo;
 	}
 
+	/**
+	 * Se encarga de almacenar el archivo
+	 * @throws ArchivoNoInciliazadoException : Si no se inicializo el archivo
+	 * @throws IOException : Si hubo un problema de lectura
+	 */
 	public void almacenarArchivo() throws ArchivoNoInciliazadoException, IOException {
 		ArchivoDTO file = new ArchivoDTO(this);
 		file.almacenarArchivo();
 	}
 
+	/**
+	 * Recupera la informacion del archivo
+	 */
 	public void recuperarArchivo(){
 		ArchivoDTO file = new ArchivoDTO();
-		try{
-			file.recuperarArchivo();
-			facturas = file.getFacturas();
-			comandas = file.getComandas();
-			asignacionesMozoMesa = file.getAsignacionesMozoMesa();
-			registroDeAsistencia = file.getRegistroDeAsistencia();
-		} catch (ArchivoNoInciliazadoException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
-		}
+		file.recuperarArchivo();
+		facturas = file.getFacturas();
+		comandas = file.getComandas();
+		asignacionesMozoMesa = file.getAsignacionesMozoMesa();
+		registroDeAsistencia = file.getRegistroDeAsistencia();
 	}
 
 }

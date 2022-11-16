@@ -68,9 +68,10 @@ public class ControladorComandas implements Observer, ActionListener, ListSelect
     }
 
     private void actualizarPedido(Comanda comanda) {
-        if(comanda != null){
+        if(comanda != null)
             vComanda.actuliazaPedido(comanda.getListaDePedidos());
-        }
+        else
+            vComanda.actuliazaPedido(new ArrayList<Pedido>());
     }
 
     private void actualizaComandas(){

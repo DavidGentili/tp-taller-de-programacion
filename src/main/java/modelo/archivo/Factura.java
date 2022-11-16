@@ -68,6 +68,14 @@ public class Factura implements Serializable {
 		nroFactura++;
 	}
 
+	/**
+	 * Constructor completo de factura, con todos los valores para poder recuperarlas mas facil
+	 * @param mesa para la cual se desea realizar la factura
+	 * @param pedidos lista de pedidos realizados por esa mesa
+	 * @param promocionesAplicadas : las promociones que se van a aplicar
+	 * @param formaDePago de pago en el que desea pagar el cliente
+	 * @param fecha : fecha de la factura
+	 */
 	public Factura(Mesa mesa, ArrayList<Pedido> pedidos, ArrayList<Promocion> promocionesAplicadas, FormasDePago formaDePago, GregorianCalendar fecha){
 		assert mesa != null : "La mesa no puede ser nula";
 		assert pedidos != null : "Los pedidos no pueden ser nulos";
@@ -85,6 +93,11 @@ public class Factura implements Serializable {
 		nroFactura++;
 	}
 
+	/**
+	 * Retorna un clon de una lista de pedido
+	 * @param pedidos : lista de pedidos a clonar
+	 * @return clon de la lista de pedidos
+	 */
 	private ArrayList<Pedido> getClonePedido(ArrayList<Pedido> pedidos){
 		ArrayList<Pedido> clon = new ArrayList<>();
 		for(Pedido pedido : pedidos){
@@ -97,6 +110,11 @@ public class Factura implements Serializable {
 		return clon;
 	}
 
+	/**
+	 * Retorna un clon de una mesa
+	 * @param mesa mesa a clonar
+	 * @return mesa clonada
+	 */
 	private Mesa getCloneMesa(Mesa mesa){
 		Mesa clon;
 		try{
@@ -171,9 +189,13 @@ public class Factura implements Serializable {
 		return total - desc;
 	}
 
+	/**
+	 * Retorna una version string de la factura
+	 * @return
+	 */
 	public String toString(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		return String.format("%-10s %-10s %6.1f", sdf.format(fecha.getTime()), formaDePago.toString(), total);
+		return String.format("%-4d %-20s %-20s $%10.1f", id, sdf.format(fecha.getTime()), formaDePago.toString(), total);
 	}
     
 }

@@ -224,7 +224,7 @@ public class Producto implements Serializable, Cloneable {
     public void reducirStock(int cantidad) throws StockInsuficienteException {
         int oldStock = stock;
         if(stock < cantidad)
-            throw new StockInsuficienteException();
+            throw new StockInsuficienteException("stock insuficiente");
         stock -= cantidad;
 
         invariante();
