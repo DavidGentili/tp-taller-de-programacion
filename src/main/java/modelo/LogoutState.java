@@ -453,7 +453,7 @@ public class LogoutState implements StateEmpresa{
      * @param id : id de la promocion a eliminar
      */
     @Override
-    public void eliminarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException {
+    public void eliminarPromocion(int id) throws UsuarioNoLogueadoException {
         throw new UsuarioNoLogueadoException();
     }
 

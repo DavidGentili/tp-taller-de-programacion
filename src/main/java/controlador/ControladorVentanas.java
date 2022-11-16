@@ -19,6 +19,7 @@ public class ControladorVentanas implements Observer, WindowListener {
     ControladorLogin cLogin;
     ControladorSalon cSalon;
     ControladorProductos cProductos;
+    ControladorArchivo cArchivo;
 
 
     public ControladorVentanas(){
@@ -96,6 +97,7 @@ public class ControladorVentanas implements Observer, WindowListener {
         vEmpresa.addWindowListener(this);
         cSalon = new ControladorSalon(vEmpresa, vEmpresa, vEmpresa);
         cProductos = new ControladorProductos(vEmpresa, vEmpresa);
+        cArchivo = new ControladorArchivo(vEmpresa);
 
     }
 

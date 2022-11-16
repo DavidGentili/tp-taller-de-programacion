@@ -1,5 +1,6 @@
 package controlador;
 
+import enums.EstadoMozos;
 import exceptions.IdIncorrectoException;
 import exceptions.controlador.*;
 import exceptions.gestorEmpresa.EmpresaAbiertaException;
@@ -66,13 +67,16 @@ public class ControladorSalon implements ActionListener, Observer {
                 agregaAsignacion();
             if(command.equals(Commands.ELIMINAR_ASIGNACION))
                 eliminarAsignacion();
+            if(command.equals(Commands.DEFINIR_ESTADO_MOZO))
+                definirEstadoMozo();
 
         }catch (ErrorAlAgregarMesaException | NoSeCambioContraseniaException | MesaYaExistenteException |
                 UsuarioNoLogueadoException | UsuarioNoAutorizadoException | MesaNoEncontradaException |
                 IdIncorrectoException | ErrorAlEliminarMesaException | MesaYaOcupadaException |
                 MozoYaAgregadoException | EmpresaAbiertaException | ErrorAlAgregarMozoException |
                 ErrorAlEliminarMozoException | MozoNoEncontradoException | ErrorAlEliminarUnaAsignacionException |
-                MesaNoAsignadaException | ErrorAlAgregarUnaAsignacionException | MozoNoActivoException ex) {
+                MesaNoAsignadaException | ErrorAlAgregarUnaAsignacionException | MozoNoActivoException |
+                ErrorAlDefinirEstadoMozoException ex) {
             System.out.println(ex);
             vMesas.showMessage(ex.getMessage());
         }
@@ -166,6 +170,22 @@ public class ControladorSalon implements ActionListener, Observer {
             vAsignaciones.actualizarAsignacionesMozoMesa(Empresa.getInstance().getAsignacionMozoMeza());
         } catch (UsuarioNoLogueadoException ignored) {
 
+        }
+    }
+
+    private void definirEstadoMozo() throws ErrorAlDefinirEstadoMozoException {
+        String estado = vMozos.getEstadoMozo();
+        Mozo mozo = vMozos.getSelectedMozo();
+
+        if(estado == null)
+            throw new ErrorAlDefinirEstadoMozoException("Debe seleccionar un estado");
+        if(mozo == null)
+            throw new ErrorAlDefinirEstadoMozoException("Debe seleccionar un mozo");
+        try{
+            EstadoMozos nuevoEstado = EstadoMozos.valueOf(estado);
+            Empresa.getInstance().cambiarEstadoMozo(mozo.getId(), nuevoEstado);
+        }catch (Exception e){
+            throw new ErrorAlDefinirEstadoMozoException("Estado incorrecto");
         }
     }
 }

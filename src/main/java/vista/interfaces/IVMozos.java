@@ -14,4 +14,5 @@ public interface IVMozos {
     public void showMessage(String message);
     public Mozo getSelectedMozo();
     public void clearFieldsMozo();
+    public String getEstadoMozo();
 }

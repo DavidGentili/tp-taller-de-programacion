@@ -1,21 +1,24 @@
 package vista;
 
 import controlador.Commands;
+import enums.EstadoMozos;
 import enums.FormasDePago;
+import modelo.archivo.Asistencia;
+import modelo.archivo.Factura;
+import modelo.archivo.VentasMesa;
+import modelo.archivo.VentasMozo;
 import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;
 import modelo.configEmpresa.Producto;
 import modelo.gestorEmpresa.MozoMesa;
 import modelo.gestorEmpresa.Promocion;
-import modelo.gestorEmpresa.PromocionProducto;
-import modelo.gestorEmpresa.PromocionTemp;
 import vista.interfaces.*;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, IVAsignaciones, IVProductos, IVPromociones {
+public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, IVAsignaciones, IVProductos, IVPromociones, IVArchivo {
     private JTabbedPane tabbedPane1;
     private JPanel mainPanel;
     private JPanel tabMozoMesa;
@@ -86,6 +89,20 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
     private JButton btnDesactivarPromocion;
     private JButton btnEliminarPromocion;
     private JTextField fieldDescuentoPromoTemp;
+    private JList<VentasMesa> listVentasMesas;
+    private DefaultListModel<VentasMesa> listaVentasMesaModel;
+    private JList<VentasMozo> listVentasMozos;
+    private DefaultListModel<VentasMozo> listaVentasMozoModel;
+    private JPanel panelDatos;
+    private JTextField fieldMayorVentas;
+    private JTextField fieldMenorVentas;
+    private JButton btnEstadisticas;
+    private JList<Asistencia> listAsistencia;
+    private DefaultListModel<Asistencia> listaAsitenciaModel;
+    private JList<Factura> listFacturas;
+    private JComboBox<String> comboBoxEstadoMozo;
+    private JButton btnDefinirEstadoMozo;
+    private DefaultListModel<Factura> listaFacturasModel;
 
     public VentanaEmpresa(){
         setTitle("Restaurante");
@@ -147,8 +164,10 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
     public void setActionListenerMozo(ActionListener a) {
         this.btnAgregarMozo.setActionCommand(Commands.AGREGAR_MOZO);
         this.btnEliminarMozo.setActionCommand(Commands.ELIMINAR_MOZO);
+        this.btnDefinirEstadoMozo.setActionCommand(Commands.DEFINIR_ESTADO_MOZO);
         this.btnAgregarMozo.addActionListener(a);
         this.btnEliminarMozo.addActionListener(a);
+        this.btnDefinirEstadoMozo.addActionListener(a);
     }
 
     @Override
@@ -375,6 +394,11 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
         this.fieldCantHijosMozo.setText("");
     }
 
+    @Override
+    public String getEstadoMozo() {
+        return (String) this.comboBoxEstadoMozo.getSelectedItem();
+    }
+
     private void createUIComponents() {
         this.comboBoxFormasDePagoPromocion = new JComboBox<>();
         this.comboBoxFormasDePagoPromocion.addItem(FormasDePago.EFECTIVO.toString());
@@ -382,6 +406,10 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
         this.comboBoxFormasDePagoPromocion.addItem(FormasDePago.TARJETA.toString());
         this.comboBoxFormasDePagoPromocion.addItem(FormasDePago.CTADNI.toString());
 
+        this.comboBoxEstadoMozo = new JComboBox<>();
+        this.comboBoxEstadoMozo.addItem(EstadoMozos.ACTIVO.toString());
+        this.comboBoxEstadoMozo.addItem(EstadoMozos.AUSENTE.toString());
+        this.comboBoxEstadoMozo.addItem(EstadoMozos.DE_FRANCO.toString());
 
         //Lista Mesas
         this.listaMesasModel = new DefaultListModel<>();
@@ -389,25 +417,84 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
         listMesas.setModel(listaMesasModel);
 
         //Lista Mozos
-        this.listaMozosModel = new DefaultListModel();
+        this.listaMozosModel = new DefaultListModel<>();
         this.listMozos = new JList<>();
         listMozos.setModel(listaMozosModel);
 
         //Lista asignaciones mozo mesa
-        this.listaAsignacionesMozoMesaModel = new DefaultListModel();
+        this.listaAsignacionesMozoMesaModel = new DefaultListModel<>();
         this.listAsignacionesMozoMesa = new JList<>();
         listAsignacionesMozoMesa.setModel(listaAsignacionesMozoMesaModel);
 
         //Lista Productos
-        this.listaProductosDefault = new DefaultListModel();
+        this.listaProductosDefault = new DefaultListModel<>();
         this.listProductos = new JList<>();
         listProductos.setModel(listaProductosDefault);
 
         //Lista Promociones
-        this.listaPromocionesModel = new DefaultListModel();
+        this.listaPromocionesModel = new DefaultListModel<>();
         this.listPromociones = new JList<>();
         listPromociones.setModel(listaPromocionesModel);
 
+        //Lista VentasMozo
+        this.listaVentasMozoModel = new DefaultListModel<>();
+        this.listVentasMozos = new JList<>();
+        listVentasMozos.setModel(listaVentasMozoModel);
+
+        //Lista VentasMesa
+        this.listaVentasMesaModel = new DefaultListModel<>();
+        this.listVentasMesas = new JList<>();
+        listVentasMesas.setModel(listaVentasMesaModel);
+
+        //Lista Asistencia
+        this.listaAsitenciaModel = new DefaultListModel<>();
+        this.listAsistencia = new JList<>();
+        listAsistencia.setModel(listaAsitenciaModel);
+
+        //Lista Facturas
+        this.listaFacturasModel = new DefaultListModel<>();
+        this.listFacturas = new JList<>();
+        listFacturas.setModel(listaFacturasModel);
+
     }
 
+    @Override
+    public void setActionListenerEstadisticas(ActionListener a) {
+        this.btnEstadisticas.setActionCommand(Commands.CALCULAR_ESTADISTICAS);
+        this.btnEstadisticas.addActionListener(a);
+    }
+
+    @Override
+    public void setMozoMayorVolumenVentas(VentasMozo mozo) {
+        this.fieldMayorVentas.setText(mozo != null ? mozo.toString() : "No hay registro");
+    }
+
+    @Override
+    public void setMozoMenorVolumenVentas(VentasMozo mozo) {
+        this.fieldMenorVentas.setText(mozo != null ? mozo.toString() : "No hay registro");
+    }
+
+    @Override
+    public void setEstadisticasMozos(ArrayList<VentasMozo> mozos) {
+        listaVentasMozoModel.clear();
+        listaVentasMozoModel.addAll(mozos);
+    }
+
+    @Override
+    public void setPromedioMesas(ArrayList<VentasMesa> mesas) {
+        listaVentasMesaModel.clear();
+        listaVentasMesaModel.addAll(mesas);
+    }
+
+    @Override
+    public void cargaAsistencia(ArrayList<Asistencia> asistencias) {
+        listaAsitenciaModel.clear();
+        listaAsitenciaModel.addAll(asistencias);
+    }
+
+    @Override
+    public void actualizaFacturas(ArrayList<Factura> facturas) {
+        listaFacturasModel.clear();
+        listaFacturasModel.addAll(facturas);
+    }
 }

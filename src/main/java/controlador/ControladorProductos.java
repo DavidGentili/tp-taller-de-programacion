@@ -72,7 +72,6 @@ public class ControladorProductos implements Observer, ActionListener {
     }
 
 
-
     @Override
     public void update(Observable o, Object arg) {
         actualizarProductos();
@@ -192,8 +191,6 @@ public class ControladorProductos implements Observer, ActionListener {
         try{
             vPromociones.actualizaPromociones(Empresa.getInstance().getPromociones());
         } catch (UsuarioNoLogueadoException ignored) {
-            System.out.println(ignored);
-
         }
     }
 }

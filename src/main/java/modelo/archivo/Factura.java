@@ -1,5 +1,7 @@
 package modelo.archivo;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -15,7 +17,7 @@ import modelo.gestorEmpresa.Promocion;
  * @author
  *
  */
-public class Factura {
+public class Factura implements Serializable {
 	private static int nroFactura = 0;
 	private int id;
     private GregorianCalendar fecha;
@@ -168,6 +170,10 @@ public class Factura {
 			desc += promocion.getDescuento(pedidos);
 		return total - desc;
 	}
-    
+
+	public String toString(){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return String.format("%-10s %-10s %6.1f", sdf.format(fecha.getTime()), formaDePago.toString(), total);
+	}
     
 }

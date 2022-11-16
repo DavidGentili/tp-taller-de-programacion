@@ -1,5 +1,6 @@
 package modelo.archivo;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -11,7 +12,7 @@ import modelo.configEmpresa.Mozo;
  * @author
  *
  */
-public class Asistencia {
+public class Asistencia implements Serializable {
     private GregorianCalendar fecha;
     private Mozo mozo;
     private String estado;

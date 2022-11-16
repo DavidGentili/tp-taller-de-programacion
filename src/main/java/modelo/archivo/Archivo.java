@@ -77,7 +77,7 @@ public class Archivo implements Serializable {
 		assert factura != null : "La factura no puede ser nula";
 
 		Factura actual = getFacturaById(factura.getId());
-		if(actual == null)
+		if(actual != null)
 			throw new FacturaYaExistenteException();
 		facturas.add(factura);
 	};

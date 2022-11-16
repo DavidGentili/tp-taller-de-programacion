@@ -113,12 +113,15 @@ public class GestorDePromociones implements Serializable {
      */
     protected void eliminarPromocion(int id) throws PromocionNoEncontradaException {
         assert id >= 0 : "El id no puede ser negativo";
-
         ArrayList<Promocion> promociones = getPromociones();
         Promocion promo = getPromocionById(id);
         if(promo == null)
             throw new PromocionNoEncontradaException();
-        promociones.remove(promo);
+        if(promoProduct.contains(promo))
+            promoProduct.remove(promo);
+        else
+            promoTemp.remove(promo);
+        promociones = getPromociones();
 
         assert !promociones.contains(promo) : "No se elimino correctamente la promocion";
     }

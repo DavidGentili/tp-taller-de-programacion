@@ -18,10 +18,7 @@ import exceptions.productos.ProductoNoEncontradoException;
 import exceptions.productos.ProductoYaExistenteException;
 import exceptions.promociones.PromocionNoEncontradaException;
 import exceptions.promociones.PromocionYaExistenteException;
-import modelo.archivo.Archivo;
-import modelo.archivo.Factura;
-import modelo.archivo.VentasMesa;
-import modelo.archivo.VentasMozo;
+import modelo.archivo.*;
 import modelo.configEmpresa.*;
 import modelo.gestorEmpresa.*;
 
@@ -666,4 +663,11 @@ public class Empresa extends Observable {
     public VentasMozo getMozoConMenorVolumenDeVentas() throws UsuarioNoLogueadoException {
         return state.getMozoConMenorVolumenDeVentas();
     }
+
+    public ArrayList<Asistencia> getAsistencia(){
+        return archivo.getRegistroDeAsistencia();
+    }
+
+
+
 }
