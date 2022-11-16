@@ -17,4 +17,7 @@ public class Commands {
     public static String DESACTIVAR_PROMOCION = "desactivarPromocion";
     public static String CALCULAR_ESTADISTICAS = "calculaestadisticas";
     public static String DEFINIR_ESTADO_MOZO = "definirestadomozo";
+    public static String CAMBIAR_CONTRASENIA = "cambiarcontrasenia";
+    public static String AGREGAR_OPERARIO = "agregaroperario";
+    public static String ELIMINAR_OPERARIO = "eliminaroperario";
 }

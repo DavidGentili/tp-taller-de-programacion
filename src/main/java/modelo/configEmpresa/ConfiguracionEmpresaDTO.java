@@ -23,9 +23,6 @@ public class ConfiguracionEmpresaDTO implements Serializable {
     private int nroProductos;
 
 
-    private boolean primerAcceso;
-
-
     /**
      * Instancia una nueva configuracion de la empresa DTO, para almacenarla apartir de una configuracion empresa
      * pre : configuracion != null
@@ -40,7 +37,6 @@ public class ConfiguracionEmpresaDTO implements Serializable {
         this.productos = configuracion.getProductos();
         this.operarios = configuracion.getOperarios();
         this.sueldo = configuracion.getSueldo();
-        this.primerAcceso = configuracion.isPrimerAcceso();
         this.nroProductos = Producto.getNroProducto();
         this.nroOperarios = Operario.getNroOperario();
         this.nroMozos = Mozo.getNroMozos();
@@ -78,7 +74,6 @@ public class ConfiguracionEmpresaDTO implements Serializable {
             this.productos = aux.getProductos();
             this.nroMozos = aux.getNroMozos();
             this.sueldo = aux.getSueldo();
-            this.primerAcceso = aux.isPrimerAcceso();
             this.nroOperarios = aux.getNroOperarios();
             this.nroProductos = aux.getNroProductos();
 
@@ -168,11 +163,4 @@ public class ConfiguracionEmpresaDTO implements Serializable {
      */
     public int getNroOperarios(){return nroOperarios;}
 
-    /**
-     * Retorna si es el primer acceso
-     * @return primer acceso
-     */
-    public boolean isPrimerAcceso() {
-        return primerAcceso;
-    }
 }

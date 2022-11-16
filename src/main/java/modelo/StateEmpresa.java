@@ -189,7 +189,7 @@ public interface StateEmpresa {
      * pre : idOperario >= 0
      * @param idOperario : id del operario a eliminar
      */
-    public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
+    public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException, EliminarOperarioLogueadoException;
 
     /**
      * Inicia sesion de un usuario segun un nombre de usuario y una contraseña
@@ -373,4 +373,10 @@ public interface StateEmpresa {
      * @return informacion de ventas del mozo que menos vendio
      */
     public VentasMozo getMozoConMenorVolumenDeVentas() throws UsuarioNoLogueadoException;
+
+    /**
+     * Retorna el id del usuario logueado
+     * @return id del usuario logueado
+     */
+    public int getIdUsuario() throws UsuarioNoLogueadoException;
 }

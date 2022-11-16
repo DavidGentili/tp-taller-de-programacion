@@ -9,6 +9,7 @@ import modelo.archivo.VentasMesa;
 import modelo.archivo.VentasMozo;
 import modelo.configEmpresa.Mesa;
 import modelo.configEmpresa.Mozo;
+import modelo.configEmpresa.Operario;
 import modelo.configEmpresa.Producto;
 import modelo.gestorEmpresa.MozoMesa;
 import modelo.gestorEmpresa.Promocion;
@@ -18,7 +19,7 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, IVAsignaciones, IVProductos, IVPromociones, IVArchivo {
+public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, IVAsignaciones, IVProductos, IVPromociones, IVArchivo, IVOperarios {
     private JTabbedPane tabbedPane1;
     private JPanel mainPanel;
     private JPanel tabMozoMesa;
@@ -102,6 +103,21 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
     private JList<Factura> listFacturas;
     private JComboBox<String> comboBoxEstadoMozo;
     private JButton btnDefinirEstadoMozo;
+    private JPanel panelOperarios;
+    private JList<Operario> listOperarios;
+    private DefaultListModel<Operario> listaOperariosModel;
+    private JPanel panelFormOperarios;
+    private JTextField fieldNombreApellidoOperario;
+    private JTextField fieldNombreUsuarioOperario;
+    private JPasswordField fieldContraseniOperario;
+    private JButton btnEliminarOperario;
+    private JButton btnAgregarOperario;
+    private JPanel panelCambiarContrasenia;
+    private JPanel panelConfigGeneral;
+    private JPasswordField fieldContraseniaActualCambiarContrasenia;
+    private JPasswordField fieldContraseniaNuevaCambiarContrasenia;
+    private JButton btnCambiarContrasenia;
+    private JLabel lblUsuarioNoAutorizado;
     private DefaultListModel<Factura> listaFacturasModel;
 
     public VentanaEmpresa(){
@@ -332,8 +348,68 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
     }
 
     @Override
+    public void setActionListenerOperarios(ActionListener a) {
+        this.btnAgregarOperario.setActionCommand(Commands.AGREGAR_OPERARIO);
+        this.btnEliminarOperario.setActionCommand(Commands.ELIMINAR_OPERARIO);
+        this.btnCambiarContrasenia.setActionCommand(Commands.CAMBIAR_CONTRASENIA);
+        this.btnAgregarOperario.addActionListener(a);
+        this.btnEliminarOperario.addActionListener(a);
+        this.btnCambiarContrasenia.addActionListener(a);
+    }
+
+    @Override
+    public void clearFieldsOperario() {
+        this.fieldContraseniOperario.setText("");
+        this.fieldNombreApellidoOperario.setText("");
+        this.fieldNombreUsuarioOperario.setText("");
+        this.fieldContraseniaActualCambiarContrasenia.setText("");
+        this.fieldContraseniaNuevaCambiarContrasenia.setText("");
+    }
+
+    @Override
+    public void actualizaOperarios(ArrayList<Operario> operarios) {
+        this.listaOperariosModel.clear();
+        this.listaOperariosModel.addAll(operarios);
+    }
+
+    @Override
+    public String getNombreApellidoOperario() {
+        return this.fieldNombreApellidoOperario.getText();
+    }
+
+    @Override
+    public String getNombreUsuarioOperario() {
+        return this.fieldNombreUsuarioOperario.getText();
+    }
+
+    @Override
+    public String getPasswordNuevoOperario() {
+        return new String(this.fieldContraseniOperario.getPassword());
+    }
+
+    @Override
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
+    }
+
+    @Override
+    public String getPasswordCambiaContrasenia() {
+        return new String(this.fieldContraseniaActualCambiarContrasenia.getPassword());
+    }
+
+    @Override
+    public String getNuevoPasswordCambiaContrasenia() {
+        return new String(this.fieldContraseniaNuevaCambiarContrasenia.getPassword());
+    }
+
+    @Override
+    public void showMessageNotAutorizedOperarios(String message) {
+        this.lblUsuarioNoAutorizado.setText(message);
+    }
+
+    @Override
+    public Operario getSelectedOperario() {
+        return this.listOperarios.getSelectedValue();
     }
 
     @Override
@@ -455,6 +531,11 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
         this.listaFacturasModel = new DefaultListModel<>();
         this.listFacturas = new JList<>();
         listFacturas.setModel(listaFacturasModel);
+
+        //Lista Operarios
+        this.listaOperariosModel = new DefaultListModel<>();
+        this.listOperarios = new JList<>();
+        listOperarios.setModel(listaOperariosModel);
 
     }
 

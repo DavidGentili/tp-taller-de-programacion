@@ -67,9 +67,9 @@ public class GestorDeOperarios {
         Operario operario = getOperarioByUserName(nuevoOperario.getNombreUsuario());
         if(operario != null)
             throw new OperarioYaExistenteException();
-        operarios.add(operario);
+        operarios.add(nuevoOperario);
 
-        assert getOperarioById(nuevoOperario.getId()) != null : "No se añadio correctamente el operario";
+        assert operarios.contains(nuevoOperario) : "No se añadio correctamente el operario";
     };
 
     /**

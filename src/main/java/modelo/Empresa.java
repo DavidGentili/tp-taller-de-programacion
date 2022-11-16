@@ -100,8 +100,8 @@ public class Empresa extends Observable {
         notifyObservers();
     }
 
-    public boolean isPrimerAcceso(){
-        return configuracion.isPrimerAcceso();
+    public boolean requiereCambioContraseña(){
+        return !usuario.isChangePassword();
     }
 
     public boolean isLogin(){
@@ -361,7 +361,7 @@ public class Empresa extends Observable {
      *
      * @param idOperario : id del operario a eliminar
      */
-    public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+    public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException, EliminarOperarioLogueadoException {
         state.eliminarOperario(idOperario);
         setChanged();
         notifyObservers();
@@ -668,6 +668,8 @@ public class Empresa extends Observable {
         return archivo.getRegistroDeAsistencia();
     }
 
-
+    public int getIdUsuario() throws UsuarioNoLogueadoException {
+        return state.getIdUsuario();
+    }
 
 }

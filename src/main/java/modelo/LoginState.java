@@ -39,7 +39,7 @@ public class LoginState implements StateEmpresa{
     }
 
     private void cambioContrasenia() throws NoSeCambioContraseniaException {
-        if(!empresa.getConfiguracion().isPrimerAcceso())
+        if(empresa.requiereCambioContraseña())
             throw new NoSeCambioContraseniaException("Debe cambiar la contraseña antes de realizar cualquier accion");
     }
 
@@ -309,8 +309,10 @@ public class LoginState implements StateEmpresa{
      * @param idOperario : id del operario a eliminar
      */
     @Override
-    public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+    public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException, EliminarOperarioLogueadoException {
         cambioContrasenia();
+        if(idOperario == getIdUsuario())
+            throw new EliminarOperarioLogueadoException("No se puede eliminar al operario logueado");
         empresa.getConfiguracion().eliminarOperario(idOperario, user);
     }
 
@@ -603,5 +605,14 @@ public class LoginState implements StateEmpresa{
     @Override
     public VentasMozo getMozoConMenorVolumenDeVentas() {
         return empresa.getArchivo().getMozoConMenorVolumenDeVentas();
+    }
+
+    /**
+     * Retorna el id del usuario logueado
+     * @return id del usuario logueado
+     */
+    @Override
+    public int getIdUsuario(){
+        return empresa.getUsuario().getId();
     }
 }

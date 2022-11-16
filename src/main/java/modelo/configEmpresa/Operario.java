@@ -15,6 +15,7 @@ public class Operario implements Serializable {
     protected String nombreUsuario;
     protected String password;
     protected Boolean activo;
+    protected boolean changePassword;
 
     /**
      * Se encarga de crear un opeario nuevo si la contraseña es valida, este operario es activo
@@ -37,6 +38,7 @@ public class Operario implements Serializable {
         this.nombreUsuario = nombreUsuario;
         this.password = password;
         this.activo = true;
+        this.changePassword = false;
         this.id = nroOperario;
         nroOperario++;
 
@@ -167,10 +169,15 @@ public class Operario implements Serializable {
         if(!OperarioHelpers.correctPassword(newPassword))
             throw new ContraseniaIncorrectaException("La nueva contraseña no cumple con los requisitos");
         this.password = newPassword;
+        changePassword = true;
     }
 
-    public String getPassword() {
-        return password;
+    /**
+     * Retorna si la contraseña del usuario fue cambiada en algun momento
+     * @return si la contraseña del usuario fue cambiada
+     */
+    public boolean isChangePassword(){
+        return changePassword;
     }
 
     @Override

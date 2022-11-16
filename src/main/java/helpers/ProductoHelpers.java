@@ -2,7 +2,7 @@ package helpers;
 
 import exceptions.controlador.ErrorAlCrearProductoException;
 
-public class HelpersProducto {
+public class ProductoHelpers {
     public static void checkNombreProducto(String name) throws ErrorAlCrearProductoException {
         if(name == null || name.isBlank() || name.isEmpty())
             throw new ErrorAlCrearProductoException("El nombre es incorrecto");

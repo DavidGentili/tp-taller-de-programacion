@@ -26,7 +26,6 @@ public class ConfiguracionEmpresa {
     private GestorDeProductos productos;
     private GestorDeOperarios operarios;
     private Sueldo sueldo;
-    private boolean primerAcceso;
 
     private ConfiguracionEmpresa(){
         this.productos = new GestorDeProductos();
@@ -34,7 +33,6 @@ public class ConfiguracionEmpresa {
         this.mesas = new GestorDeMesas();
         this.operarios = new GestorDeOperarios();
         this.sueldo = null;
-        this.primerAcceso = false;
     }
 
     /**
@@ -75,16 +73,6 @@ public class ConfiguracionEmpresa {
         this.nombreLocal = pers.getNombreLocal();
         this.sueldo = pers.getSueldo();
 
-    }
-
-    //PRIMER ACCESO
-
-    /**
-     * Retorna si ya sucedio el primer acceso;
-     * @return si se dio el primer acceso
-     */
-    public boolean isPrimerAcceso(){
-        return primerAcceso;
     }
 
     //NOMBRE LOCAL
@@ -420,8 +408,6 @@ public class ConfiguracionEmpresa {
      */
     public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException{
         operarios.cambiarContrasenia(password, newPassword, idOperario);
-        if(!primerAcceso)
-            primerAcceso = true;
     }
 
     /**

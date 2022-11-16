@@ -43,7 +43,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public String getNombreLocal() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -54,7 +54,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void cambiarNombreLocal(String name) throws UsuarioNoLogueadoException, UsuarioNoAutorizadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -64,7 +64,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public Sueldo getSueldo() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -75,7 +75,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void setSueldo(Sueldo sueldo) throws UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -85,7 +85,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public ArrayList<Mozo> getMozos() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -96,7 +96,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void agregarMozo(Mozo nuevo) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -109,7 +109,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void actualizarMozo(Mozo actualizado, int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -120,7 +120,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void eliminarMozo(int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, EmpresaAbiertaException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -131,7 +131,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -141,7 +141,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public ArrayList<Mesa> getMesas() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -152,7 +152,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void agregarMesa(Mesa nueva) throws MesaYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -165,7 +165,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void actualizarMesa(Mesa actualizada, int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -176,7 +176,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void eliminarMesa(int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, MesaYaOcupadaException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -186,7 +186,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public ArrayList<Producto> getProductos() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -197,7 +197,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void agregarProducto(Producto nuevo) throws ProductoYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -210,7 +210,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void actualizaProducto(Producto actualizado, int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -221,7 +221,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void eliminarProducto(int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, ProductoEnPedidoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -231,7 +231,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public ArrayList<Operario> getOperarios() throws UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -242,7 +242,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void agregarOperario(Operario nuevo) throws OperarioYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -255,7 +255,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void actualizarOperario(Operario actualizado, int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -267,7 +267,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -278,7 +278,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -301,7 +301,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void logout() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -309,7 +309,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosActivosException, EmpresaAbiertaException, CantidadMinimaDeProductosException, CantidadMaximaDeMozosSuperadaException, CantidadMaximaDeMozosDeFrancoException, HayMozoSinEstadoAsignadoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -317,7 +317,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void cerrarEmpresa() throws EmpresaCerradaException, HayComandasActivasException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -327,7 +327,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public ArrayList<MozoMesa> getAsignacionMozoMeza() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -339,7 +339,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void asignaMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, EmpresaAbiertaException, MesaYaOcupadaException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -349,7 +349,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void eliminarRelacionMozoMeza(int nroMesa) throws MesaNoAsignadaException, EmpresaAbiertaException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -359,7 +359,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public ArrayList<Comanda> getComandas() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -369,7 +369,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -380,7 +380,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void cerrarComanda(int nroMesa, FormasDePago pago) throws ComandaYaCerradaException, EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -391,7 +391,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -401,7 +401,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public ArrayList<Promocion> getPromociones() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -411,7 +411,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public ArrayList<PromocionProducto> getPromocionesProducto() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -421,7 +421,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public ArrayList<PromocionTemp> getPromocionesTemporales() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -432,7 +432,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -443,7 +443,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -454,7 +454,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void eliminarPromocion(int id) throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -465,7 +465,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void activarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -476,7 +476,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void desactivarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -486,7 +486,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public ArrayList<Factura> getFacturas() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -497,7 +497,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public void agregarFactura(Factura factura) throws FacturaYaExistenteException, UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -507,7 +507,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public ArrayList<Comanda> getComandasArchivadas() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -517,7 +517,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public ArrayList<MozoMesa> getAsignacionMozoMesaArchivadas() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -527,7 +527,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public HashMap<Integer, VentasMesa> calculaPromedioPorMesa() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -537,7 +537,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public HashMap<Integer, VentasMozo> calculaEstadisticasMozo() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -547,7 +547,7 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public VentasMozo getMozoConMayorVolumenDeVentas() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 
     /**
@@ -557,6 +557,15 @@ public class LogoutState implements StateEmpresa{
      */
     @Override
     public VentasMozo getMozoConMenorVolumenDeVentas() throws UsuarioNoLogueadoException {
-        throw new UsuarioNoLogueadoException();
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
+    }
+
+    /**
+     * Retorna el id del usuario logueado
+     * @return id del usuario logueado
+     */
+    @Override
+    public int getIdUsuario() throws UsuarioNoLogueadoException {
+        throw new UsuarioNoLogueadoException("El usuario no esta logueado");
     }
 }
