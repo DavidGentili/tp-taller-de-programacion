@@ -86,16 +86,18 @@ public class StateOpen implements StateGestorEmpresa {
      * @throws MesaYaOcupadaException La mesa ya se encuentra ocupada
      */
     @Override
-    public void agregaComanda(int nroMesa) throws MesaYaOcupadaException {
+    public void agregaComanda(int nroMesa) throws MesaYaOcupadaException, MesaNoEncontradaException {
         assert nroMesa >= 0 : "El numero de mesa debe ser mayor a 0";
-
         Comanda comanda = empresa.getComandaByNroMesa(nroMesa);
         ArrayList<Comanda> comandas = empresa.getComandas();
         Mesa mesa = configuracion.getMesaNroMesa(nroMesa);
-        if(comanda != null || mesa.getEstado() == EstadoMesas.OCUPADA)
-            throw new MesaYaOcupadaException();
+        if(mesa == null)
+            throw new MesaNoEncontradaException("No se encontro la mesa indicada");
+        if(comanda != null || (mesa != null && mesa.getEstado() == EstadoMesas.OCUPADA))
+            throw new MesaYaOcupadaException("La mesa seleccionada ya esta ocupada");
         Comanda nueva = new Comanda(mesa);
         comandas.add(nueva);
+        mesa.ocuparMesa();
 
         assert comandas.contains(nueva) : "No se agrego correctamente la nueva comanda";
     }

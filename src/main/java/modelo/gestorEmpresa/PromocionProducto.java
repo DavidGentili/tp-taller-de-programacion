@@ -18,8 +18,8 @@ public class PromocionProducto extends Promocion implements Serializable {
 		super(dias);
 		assert dosPorUno || dtoPorCant : "Ambos no pueden ser falsos";
 		assert producto != null : "El producto no puede ser nulo";
-		assert cantMin > 0 : "La cantidad minima debe ser mayor a 0";
-		assert precioUnitario > 0 : "El precio unitario debe ser mayor a 0";
+		assert cantMin >= 0 : "La cantidad minima debe ser mayor a 0";
+		assert precioUnitario >= 0 : "El precio unitario debe ser mayor a 0";
 		this.producto = producto;
 		this.dosPorUno = dosPorUno;
 		this.dtoPorCant = dtoPorCant;

@@ -76,7 +76,7 @@ public interface StateGestorEmpresa {
      * @throws EmpresaCerradaException La empresa ya se encuentra cerrada
      * @throws MesaYaOcupadaException La mesa ya se encuentra ocupada
      */
-    public void agregaComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException;
+    public void agregaComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, MesaNoEncontradaException;
 
     /**
      * Se cierra una comanda, se crea la factura y se la almacena en archivo

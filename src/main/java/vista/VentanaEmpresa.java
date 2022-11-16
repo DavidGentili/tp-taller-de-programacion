@@ -7,19 +7,20 @@ import modelo.archivo.Asistencia;
 import modelo.archivo.Factura;
 import modelo.archivo.VentasMesa;
 import modelo.archivo.VentasMozo;
-import modelo.configEmpresa.Mesa;
-import modelo.configEmpresa.Mozo;
-import modelo.configEmpresa.Operario;
-import modelo.configEmpresa.Producto;
+import modelo.configEmpresa.*;
+import modelo.gestorEmpresa.Comanda;
 import modelo.gestorEmpresa.MozoMesa;
+import modelo.gestorEmpresa.Pedido;
 import modelo.gestorEmpresa.Promocion;
 import vista.interfaces.*;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, IVAsignaciones, IVProductos, IVPromociones, IVArchivo, IVOperarios {
+public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, IVAsignaciones,
+        IVProductos, IVPromociones, IVArchivo, IVOperarios, IVConfiguracion, IVComanda {
     private JTabbedPane tabbedPane1;
     private JPanel mainPanel;
     private JPanel tabMozoMesa;
@@ -118,6 +119,26 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
     private JPasswordField fieldContraseniaNuevaCambiarContrasenia;
     private JButton btnCambiarContrasenia;
     private JLabel lblUsuarioNoAutorizado;
+    private JTextField fieldNombreEmpresa;
+    private JTextField fieldSueldoBasico;
+    private JTextField fieldBonificacion;
+    private JLabel lblNombreEmpresa;
+    private JLabel lblSueldoEmpresa;
+    private JButton btnCambiarNombreLocal;
+    private JButton btnCambiarSueldo;
+    private JButton btnCerrarSesion;
+    private JList<Comanda> listComandas;
+    private DefaultListModel<Comanda> listaComandasModel;
+    private JList<Pedido> listPedidos;
+    private DefaultListModel<Pedido> listaPedidosModel;
+    private JTextField fieldNroProducto;
+    private JTextField fieldCantidad;
+    private JButton btnCerrarComanda;
+    private JButton btnAgregarPedido;
+    private JTextField fieldNroMesaComanda;
+    private JComboBox comboBoxFormaDePagoComanda;
+    private JButton btnAbrirEmpresa;
+    private JButton btnCerrarEmpresa;
     private DefaultListModel<Factura> listaFacturasModel;
 
     public VentanaEmpresa(){
@@ -352,6 +373,8 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
         this.btnAgregarOperario.setActionCommand(Commands.AGREGAR_OPERARIO);
         this.btnEliminarOperario.setActionCommand(Commands.ELIMINAR_OPERARIO);
         this.btnCambiarContrasenia.setActionCommand(Commands.CAMBIAR_CONTRASENIA);
+        this.btnCerrarSesion.setActionCommand(Commands.LOGOUT);
+        this.btnCerrarSesion.addActionListener(a);
         this.btnAgregarOperario.addActionListener(a);
         this.btnEliminarOperario.addActionListener(a);
         this.btnCambiarContrasenia.addActionListener(a);
@@ -385,6 +408,78 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
     @Override
     public String getPasswordNuevoOperario() {
         return new String(this.fieldContraseniOperario.getPassword());
+    }
+
+    @Override
+    public void setActionListenerComandas(ActionListener a) {
+        this.btnAgregarPedido.setActionCommand(Commands.AGREGAR_PEDIDO);
+        this.btnCerrarComanda.setActionCommand(Commands.CERRAR_COMANDA);
+        this.btnAbrirEmpresa.setActionCommand(Commands.ABRIR_LOCAL);
+        this.btnCerrarEmpresa.setActionCommand(Commands.CERRAR_LOCAL);
+        this.btnAgregarPedido.addActionListener(a);
+        this.btnCerrarComanda.addActionListener(a);
+        this.btnAbrirEmpresa.addActionListener(a);
+        this.btnCerrarEmpresa.addActionListener(a);
+    }
+
+    public void setSelectionListener(ListSelectionListener l) {
+        this.listComandas.addListSelectionListener(l);
+    }
+
+    @Override
+    public int getNroMesaComanda() {
+        try {
+            return Integer.parseInt(fieldNroMesaComanda.getText());
+        }catch (NumberFormatException e){
+            return -1;
+        }
+    }
+
+    @Override
+    public int getNroProductoComanda() {
+        try {
+            return Integer.parseInt(fieldNroProducto.getText());
+        }catch (NumberFormatException e){
+            return -1;
+        }
+    }
+
+    @Override
+    public int getCantidadComanda() {
+        try {
+            return Integer.parseInt(fieldCantidad.getText());
+        }catch (NumberFormatException e){
+            return -1;
+        }
+    }
+
+    @Override
+    public Comanda getSelectedComanda() {
+        return this.listComandas.getSelectedValue();
+    }
+
+    @Override
+    public String getFormaDePagoComanda() {
+        return (String) this.comboBoxFormaDePagoComanda.getSelectedItem();
+    }
+
+    @Override
+    public void clearFieldComanda() {
+        this.fieldCantidad.setText("");
+        this.fieldNroMesaComanda.setText("");
+        this.fieldNroProducto.setText("");
+    }
+
+    @Override
+    public void actualizaComandas(ArrayList<Comanda> comandas) {
+        listaComandasModel.clear();
+        listaComandasModel.addAll(comandas);
+    }
+
+    @Override
+    public void actuliazaPedido(ArrayList<Pedido> pedidos) {
+        listaPedidosModel.clear();
+        listaPedidosModel.addAll(pedidos);
     }
 
     @Override
@@ -482,6 +577,12 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
         this.comboBoxFormasDePagoPromocion.addItem(FormasDePago.TARJETA.toString());
         this.comboBoxFormasDePagoPromocion.addItem(FormasDePago.CTADNI.toString());
 
+        this.comboBoxFormaDePagoComanda = new JComboBox<>();
+        this.comboBoxFormaDePagoComanda.addItem(FormasDePago.EFECTIVO.toString());
+        this.comboBoxFormaDePagoComanda.addItem(FormasDePago.MERCADOPAGO.toString());
+        this.comboBoxFormaDePagoComanda.addItem(FormasDePago.TARJETA.toString());
+        this.comboBoxFormaDePagoComanda.addItem(FormasDePago.CTADNI.toString());
+
         this.comboBoxEstadoMozo = new JComboBox<>();
         this.comboBoxEstadoMozo.addItem(EstadoMozos.ACTIVO.toString());
         this.comboBoxEstadoMozo.addItem(EstadoMozos.AUSENTE.toString());
@@ -537,6 +638,15 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
         this.listOperarios = new JList<>();
         listOperarios.setModel(listaOperariosModel);
 
+        //Lista Comandas
+        this.listaComandasModel = new DefaultListModel<>();
+        this.listComandas = new JList<>();
+        listComandas.setModel(listaComandasModel);
+
+        //Lista Pedidos
+        this.listaPedidosModel = new DefaultListModel<>();
+        this.listPedidos = new JList<>();
+        listPedidos.setModel(listaPedidosModel);
     }
 
     @Override
@@ -577,5 +687,56 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
     public void actualizaFacturas(ArrayList<Factura> facturas) {
         listaFacturasModel.clear();
         listaFacturasModel.addAll(facturas);
+    }
+
+    @Override
+    public void setActionListenerConfiguracion(ActionListener a) {
+        this.btnCambiarNombreLocal.setActionCommand(Commands.CAMBIAR_NOMBRE_LOCAL);
+        this.btnCambiarSueldo.setActionCommand(Commands.CAMBIAR_SUELDO);
+        this.btnCambiarNombreLocal.addActionListener(a);
+        this.btnCambiarSueldo.addActionListener(a);
+    }
+
+    @Override
+    public String getNombreLocal() {
+        return this.fieldNombreEmpresa.getText();
+    }
+
+    @Override
+    public double getBasico() {
+        try {
+            return Double.parseDouble(fieldSueldoBasico.getText());
+        }catch (NumberFormatException e){
+            return -1;
+        }
+    }
+
+    @Override
+    public double getBonificacion() {
+        try {
+            return Double.parseDouble(fieldBonificacion.getText());
+        }catch (NumberFormatException e){
+            return -1;
+        }
+    }
+
+    @Override
+    public void clearFieldsConfiguracion() {
+        this.fieldNombreEmpresa.setText("");
+        this.fieldSueldoBasico.setText("");
+        this.fieldBonificacion.setText("");
+    }
+
+    @Override
+    public void setNombreEmpresa(String name) {
+        this.lblNombreEmpresa.setText(name);
+    }
+
+    @Override
+    public void setSueldo(Sueldo sueldo) {
+        if(sueldo == null)
+            lblSueldoEmpresa.setText("El sueldo no se encuentra disponible");
+        else
+            lblSueldoEmpresa.setText(String.format("Sueldo basico : $-%8.1f - Bonificacion : %4.1f%%", sueldo.getBasico(), sueldo.getBonificacionPorHijo()));
     }
 }

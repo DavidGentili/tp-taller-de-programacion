@@ -1,6 +1,7 @@
 package modelo.gestorEmpresa;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -97,6 +98,9 @@ public class Comanda implements Serializable {
 		return estado;
 	}
 	
-	
+	public String toString(){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy : hh:mm");
+		return String.format("%s %d %s", sdf.format(fecha.getTime()), mesa.getNroMesa(), estado.toString());
+	}
     
 }

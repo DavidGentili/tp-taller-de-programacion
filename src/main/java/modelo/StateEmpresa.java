@@ -247,7 +247,7 @@ public interface StateEmpresa {
      * agrega una comanda asignandola a una mesa
      * @param nroMesa nro de la mesa a la cual se asigna la comanda
      */
-    public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException;
+    public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException, MesaNoEncontradaException;
 
     /**
      * Cierra una comanda segun un tipo de pago y un numero de mesa

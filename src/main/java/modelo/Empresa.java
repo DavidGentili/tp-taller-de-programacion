@@ -455,7 +455,7 @@ public class Empresa extends Observable {
      *
      * @param nroMesa nro de la mesa a la cual se asigna la comanda
      */
-    public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+    public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException, MesaNoEncontradaException {
         state.agregarComanda(nroMesa);
         setChanged();
         notifyObservers();

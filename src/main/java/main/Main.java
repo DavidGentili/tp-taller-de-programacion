@@ -33,9 +33,10 @@ public class Main {
         empresa.recuperarEmpresa();
         archivo.recuperarArchivo();
         Operario user = config.login("ADMIN", "ADMIN1234");
-        if(!user.isChangePassword())
-            config.cambiarContraseniaOperario("ADMIN1234","Admin1234", 0);
-
+        user.cambiarContrasenia("ADMIN1234", "Admin1");
+        CargaDatos.cargaMozos(user);
+        CargaDatos.cargaMesas(user);
+        CargaDatos.cargaProductos(user);
     }
 
 

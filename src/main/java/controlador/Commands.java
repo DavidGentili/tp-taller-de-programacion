@@ -20,4 +20,11 @@ public class Commands {
     public static String CAMBIAR_CONTRASENIA = "cambiarcontrasenia";
     public static String AGREGAR_OPERARIO = "agregaroperario";
     public static String ELIMINAR_OPERARIO = "eliminaroperario";
+    public static String CAMBIAR_NOMBRE_LOCAL = "cambiarnombrelocal";
+    public static String CAMBIAR_SUELDO = "cambiarsueldo";
+    public static String LOGOUT = "logout";
+    public static String AGREGAR_PEDIDO = "agregarpedido";
+    public static String CERRAR_COMANDA = "cerrarcomanda";
+    public static String ABRIR_LOCAL = "abrirlocal";
+    public static String CERRAR_LOCAL = "cerrarlocal";
 }

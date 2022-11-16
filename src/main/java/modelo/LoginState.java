@@ -406,7 +406,7 @@ public class LoginState implements StateEmpresa{
      * @param nroMesa nro de la mesa a la cual se asigna la comanda
      */
     @Override
-    public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, NoSeCambioContraseniaException {
+    public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, NoSeCambioContraseniaException, MesaNoEncontradaException {
         cambioContrasenia();
         empresa.getGestorEmpresa().agregarComanda(nroMesa);
     }

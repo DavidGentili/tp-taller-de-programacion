@@ -21,12 +21,13 @@ public class ControladorVentanas implements Observer, WindowListener {
     ControladorProductos cProductos;
     ControladorArchivo cArchivo;
     ControladorConfiguracion cConfiguracion;
+    ControladorComandas cComandas;
 
     public ControladorVentanas(){
         empresa = Empresa.getInstance();
         empresa.addObserver(this);
-//        abreVentanaLogin();
-        pruebaInitialState();
+        abreVentanaLogin();
+//        pruebaInitialState();
     }
 
     @Override
@@ -45,7 +46,7 @@ public class ControladorVentanas implements Observer, WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-
+        empresa.guardarEstado();
     }
 
     @Override
@@ -98,22 +99,17 @@ public class ControladorVentanas implements Observer, WindowListener {
         cSalon = new ControladorSalon(vEmpresa, vEmpresa, vEmpresa);
         cProductos = new ControladorProductos(vEmpresa, vEmpresa);
         cArchivo = new ControladorArchivo(vEmpresa);
-        cConfiguracion = new ControladorConfiguracion(vEmpresa);
+        cConfiguracion = new ControladorConfiguracion(vEmpresa, vEmpresa);
+        cComandas = new ControladorComandas(vEmpresa);
 
     }
 
     private void pruebaInitialState(){
         try{
             empresa.login("ADMIN","Admin1234");
-//            empresa.cambiarContraseniaOperario("Admin1234", "ADMIN12345", 0);
         } catch (OperarioInactivoException | UsuarioYaLogueadoException | DatosLoginIncorrectosException e) {
-            System.out.println("ERROR EN LOGIN FALSO"); }
-//        } catch (OperarioNoEncontradoException | UsuarioNoLogueadoException | ContraseniaIncorrectaException |
-//                 UsuarioNoAutorizadoException e) {
-//            System.out.println("ERROR EN CAMBIAR CONTRASEÑA FALSO");
-//            System.out.println(e);
-//
-//        }
+            System.out.println("ERROR FALSO LOGIN");
+        }
 
     }
 }

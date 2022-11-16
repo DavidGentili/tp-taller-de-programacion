@@ -52,18 +52,18 @@ public class StateClose implements StateGestorEmpresa{
     public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosException, CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosSuperadaException, CantidadMaximaDeMozosActivosException, CantidadMaximaDeMozosDeFrancoException, HayMozoSinEstadoAsignadoException {
         if(empresa.getMozoMeza().size() == 0)
             throw new NoHayMozosAsignadosException("No hay mozos asignados a mesas");
-        if(configuracion.getProductos().size() > 0)
+        if(configuracion.getProductos().size() == 0)
             throw new CantidadMinimaDeProductosException("No hay productos en la lista de productos");
-        if(empresa.getPromocionesProducto().size() >= 2)
+        if(empresa.getPromocionesProducto().size() < 2)
             throw new CantidadMinimaDeProductosEnPromocionException("Se debe posee al menos dos productos en promocion");
         ArrayList<Mozo> mozos = configuracion.getMozos();
         if(MozoHelpers.thereIsMozoWithoutState(mozos))
             throw new HayMozoSinEstadoAsignadoException("Todos los mozos deben tener un estado asignado");
-        if(mozos.size() >= Config.NUMERO_MAXIMO_DE_MOZOS)
+        if(mozos.size() > Config.NUMERO_MAXIMO_DE_MOZOS)
             throw new CantidadMaximaDeMozosSuperadaException("Se puede tener como maximo " + Config.NUMERO_MAXIMO_DE_MOZOS + " mozos");
-        if(MozoHelpers.getCantidadDeMozosEnEstado(mozos, EstadoMozos.ACTIVO) >= Config.NUMERO_MAXIMO_DE_MOZOS_ACTIVOS)
+        if(MozoHelpers.getCantidadDeMozosEnEstado(mozos, EstadoMozos.ACTIVO) > Config.NUMERO_MAXIMO_DE_MOZOS_ACTIVOS)
             throw new CantidadMaximaDeMozosActivosException("Se puede tener como maximo " + Config.NUMERO_MAXIMO_DE_MOZOS_ACTIVOS + " mozos activos");
-        if(MozoHelpers.getCantidadDeMozosEnEstado(mozos, EstadoMozos.DE_FRANCO) >= Config.NUMERO_MAXIMO_DE_MOZOS_DE_FRANCO)
+        if(MozoHelpers.getCantidadDeMozosEnEstado(mozos, EstadoMozos.DE_FRANCO) > Config.NUMERO_MAXIMO_DE_MOZOS_DE_FRANCO)
             throw new CantidadMaximaDeMozosDeFrancoException("Se puede tener como maximo " + Config.NUMERO_MAXIMO_DE_MOZOS_DE_FRANCO + " mozos de franco");
         Archivo.getInstance().agregaRegistroDeAsistencia(mozos, (GregorianCalendar) GregorianCalendar.getInstance());
         Archivo.getInstance().agregaMozoMesa(empresa.getMozoMeza());

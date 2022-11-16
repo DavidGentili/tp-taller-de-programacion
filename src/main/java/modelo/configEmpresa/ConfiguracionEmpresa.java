@@ -93,9 +93,9 @@ public class ConfiguracionEmpresa {
 
         if(!user.puedeModificarNombreLocal())
             throw new UsuarioNoAutorizadoException();
-        this.nombreLocal = nombreLocal;
+        this.nombreLocal = name;
 
-        assert this.nombreLocal == nombreLocal : "No se asigno correctamente el nombre del local";
+        assert this.nombreLocal.equals(name) : "No se asigno correctamente el nombre del local";
 
     }
 
