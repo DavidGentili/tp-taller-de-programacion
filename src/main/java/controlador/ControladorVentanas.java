@@ -18,6 +18,7 @@ public class ControladorVentanas implements Observer, WindowListener {
     Empresa empresa;
     ControladorLogin cLogin;
     ControladorSalon cSalon;
+    ControladorProductos cProductos;
 
 
     public ControladorVentanas(){
@@ -94,6 +95,8 @@ public class ControladorVentanas implements Observer, WindowListener {
         vEmpresa.setVisible(true);
         vEmpresa.addWindowListener(this);
         cSalon = new ControladorSalon(vEmpresa, vEmpresa, vEmpresa);
+        cProductos = new ControladorProductos(vEmpresa, vEmpresa);
+
     }
 
     private void pruebaInitialState(){
