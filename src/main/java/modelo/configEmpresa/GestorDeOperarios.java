@@ -80,7 +80,7 @@ public class GestorDeOperarios {
     private Operario getOperarioById(int idOperario) {
         int i = 0;
         Operario operario = null;
-        while(i < operarios.size() && operario != null){
+        while(i < operarios.size() && operario == null){
             if(operarios.get(i).getId() == idOperario)
                 operario = operarios.get(i);
             i++;

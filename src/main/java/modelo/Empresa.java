@@ -12,6 +12,7 @@ import exceptions.mozos.MozoNoActivoException;
 import exceptions.mozos.MozoNoEncontradoException;
 import exceptions.mozos.MozoYaAgregadoException;
 import exceptions.operarios.*;
+import exceptions.persistencia.ArchivoNoInciliazadoException;
 import exceptions.productos.ProductoEnPedidoException;
 import exceptions.productos.ProductoNoEncontradoException;
 import exceptions.productos.ProductoYaExistenteException;
@@ -24,11 +25,10 @@ import modelo.archivo.VentasMozo;
 import modelo.configEmpresa.*;
 import modelo.gestorEmpresa.*;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.io.IOException;
+import java.util.*;
 
-public class Empresa{
+public class Empresa extends Observable {
     private static Empresa instance = null;
     private GestorEmpresa gestorEmpresa;
     private ConfiguracionEmpresa configuracion;
@@ -40,6 +40,7 @@ public class Empresa{
         gestorEmpresa = GestorEmpresa.getInstance();
         configuracion = ConfiguracionEmpresa.getInstance();
         archivo = Archivo.getInstance();
+        state = new LogoutState(this);
         recuperarEstado();
         usuario = null;
     }
@@ -60,11 +61,20 @@ public class Empresa{
      * toma los valores iniciales por defecto
      */
     private void recuperarEstado(){
-        gestorEmpresa.recuperarEmpresa();
         configuracion.recuperarConfiguracion();
+        gestorEmpresa.recuperarEmpresa();
         archivo.recuperarArchivo();
     }
 
+    public void guardarEstado(){
+        try{
+            gestorEmpresa.guardarEmpresa();
+            configuracion.guardarConfiguracion();
+            archivo.almacenarArchivo();
+        } catch (ArchivoNoInciliazadoException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     protected GestorEmpresa getGestorEmpresa() {
         return gestorEmpresa;
@@ -84,14 +94,21 @@ public class Empresa{
 
     protected void setUsuario(Operario user){
         usuario = user;
+        notifyObservers();
     }
 
     protected void setState(StateEmpresa state){
         this.state = state;
+        setChanged();
+        notifyObservers();
     }
 
     public boolean isPrimerAcceso(){
         return configuracion.isPrimerAcceso();
+    }
+
+    public boolean isLogin(){
+        return usuario != null;
     }
 
 
@@ -112,6 +129,8 @@ public class Empresa{
      */
     public void cambiarNombreLocal(String name) throws UsuarioNoLogueadoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
         state.cambiarNombreLocal(name);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -131,6 +150,8 @@ public class Empresa{
      */
     public void setSueldo(Sueldo sueldo) throws UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.setSueldo(sueldo);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -150,6 +171,8 @@ public class Empresa{
      */
     public void agregarMozo(Mozo nuevo) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarMozo(nuevo);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -162,6 +185,8 @@ public class Empresa{
      */
     public void actualizarMozo(Mozo actualizado, int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.actualizarMozo(actualizado, mozoId);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -172,6 +197,8 @@ public class Empresa{
      */
     public void eliminarMozo(int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, EmpresaAbiertaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.eliminarMozo(mozoId);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -182,6 +209,8 @@ public class Empresa{
      */
     public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.cambiarEstadoMozo(mozoId, estado);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -201,6 +230,8 @@ public class Empresa{
      */
     public void agregarMesa(Mesa nueva) throws MesaYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarMesa(nueva);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -213,6 +244,8 @@ public class Empresa{
      */
     public void actualizarMesa(Mesa actualizada, int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.actualizarMesa(actualizada, nroMesa);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -223,6 +256,8 @@ public class Empresa{
      */
     public void eliminarMesa(int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.eliminarMesa(nroMesa);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -242,6 +277,8 @@ public class Empresa{
      */
     public void agregarProducto(Producto nuevo) throws ProductoYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarProducto(nuevo);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -254,6 +291,8 @@ public class Empresa{
      */
     public void actualizaProducto(Producto actualizado, int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.actualizaProducto(actualizado, idProducto);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -264,6 +303,8 @@ public class Empresa{
      */
     public void eliminarProducto(int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, ProductoEnPedidoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.eliminarProducto(idProducto);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -283,6 +324,8 @@ public class Empresa{
      */
     public void agregarOperario(Operario nuevo) throws OperarioYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarOperario(nuevo);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -295,6 +338,8 @@ public class Empresa{
      */
     public void actualizarOperario(Operario actualizado, int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.actualizarOperario(actualizado, idOperario);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -309,6 +354,8 @@ public class Empresa{
      */
     public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException {
         state.cambiarContraseniaOperario(password, newPassword, idOperario);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -319,6 +366,8 @@ public class Empresa{
      */
     public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.eliminarOperario(idOperario);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -331,6 +380,8 @@ public class Empresa{
      */
     public void login(String userName, String password) throws UsuarioYaLogueadoException, OperarioInactivoException, DatosLoginIncorrectosException {
         state.login(userName, password);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -338,6 +389,8 @@ public class Empresa{
      */
     public void logout() throws UsuarioNoLogueadoException {
         state.logout();
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -345,6 +398,8 @@ public class Empresa{
      */
     public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosActivosException, EmpresaAbiertaException, CantidadMinimaDeProductosException, CantidadMaximaDeMozosSuperadaException, CantidadMaximaDeMozosDeFrancoException, HayMozoSinEstadoAsignadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.abrirEmpresa();
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -352,6 +407,8 @@ public class Empresa{
      */
     public void cerrarEmpresa() throws EmpresaCerradaException, HayComandasActivasException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.cerrarEmpresa();
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -372,6 +429,8 @@ public class Empresa{
      */
     public void asignaMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, EmpresaAbiertaException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.asignaMozo(mozoId, nroMesa, fecha);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -381,6 +440,8 @@ public class Empresa{
      */
     public void eliminarRelacionMozoMeza(int nroMesa) throws MesaNoAsignadaException, EmpresaAbiertaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.eliminarRelacionMozoMeza(nroMesa);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -399,6 +460,8 @@ public class Empresa{
      */
     public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarComanda(nroMesa);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -409,6 +472,8 @@ public class Empresa{
      */
     public void cerrarComanda(int nroMesa, FormasDePago pago) throws ComandaYaCerradaException, EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.cerrarComanda(nroMesa, pago);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -419,6 +484,8 @@ public class Empresa{
      */
     public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException, ProductoNoEncontradoException {
         state.agregarPedido(nroMesa,  pedido);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -434,6 +501,8 @@ public class Empresa{
             throw new ProductoNoEncontradoException("El producto ingresado no existe");
         Pedido pedido = new Pedido(prod, cantidad);
         state.agregarPedido(nroMesa,  pedido);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -471,6 +540,8 @@ public class Empresa{
      */
     public void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarPromocionProducto(promo);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -481,6 +552,8 @@ public class Empresa{
      */
     public void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarPromocionTemp(promo);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -491,6 +564,8 @@ public class Empresa{
      */
     public void eliminarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.eliminarPromocion(id);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -501,6 +576,8 @@ public class Empresa{
      */
     public void activarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.activarPromocion(id);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -511,6 +588,8 @@ public class Empresa{
      */
     public void desactivarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.desactivarPromocion(id);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -530,6 +609,8 @@ public class Empresa{
      */
     public void agregarFactura(Factura factura) throws FacturaYaExistenteException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
         state.agregarFactura(factura);
+        setChanged();
+        notifyObservers();
     }
 
     /**
