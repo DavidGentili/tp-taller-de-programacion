@@ -11,7 +11,7 @@ Agradeceríamos que nos den la oportunidad de continuar con los mismos para entr
 
 Por favor cualquier novedad nos lo hacen saber, nuestros mails son:
 
-Gentili, David davisgentilli@gmail.com
+Gentili, David davidgenntilli@gmail.com
 Gomez, Tomás: tomygomez347@gmail.com
 Vicente, Juan Martín: j_m_vicente@yahoo.com.ar
 Saludos cordiales
