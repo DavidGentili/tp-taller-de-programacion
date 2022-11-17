@@ -66,9 +66,9 @@ public class GestorDeMesas {
         assert user != null : "El usuario tiene que ser no nulo";
 
         if(!user.puedeGestionarMesas())
-            throw new UsuarioNoAutorizadoException();
+            throw new UsuarioNoAutorizadoException("El usuario no esta autorizado");
         if(getMesaNroMesa(nuevaMesa.getNroMesa()) != null)
-            throw new MesaYaExistenteException();
+            throw new MesaYaExistenteException("Ya existe una mesa con dicho id");
         mesas.add(nuevaMesa);
 
         assert getMesaNroMesa(nuevaMesa.getNroMesa()) == nuevaMesa : "No se agrego correctamente la nueva mesa";
@@ -91,12 +91,12 @@ public class GestorDeMesas {
         assert user != null : "El usuario no puede ser nulo";
 
         if(!user.puedeGestionarMesas())
-            throw new UsuarioNoAutorizadoException();
+            throw new UsuarioNoAutorizadoException("El usuario no esta autorizado");
         if(nroMesa < 0)
-            throw new IdIncorrectoException();
+            throw new IdIncorrectoException("Id incorrecto");
         Mesa mesa = getMesaNroMesa(nroMesa);
         if(mesa == null)
-            throw new MesaNoEncontradaException();
+            throw new MesaNoEncontradaException("No se encontro la mesa");
         mesa.updateMesa(mesaActualizada);
 
         assert mesa.getCantSillas() == mesaActualizada.getCantSillas() : "No se actualizo correctamente la mesa";
@@ -116,12 +116,12 @@ public class GestorDeMesas {
         assert user != null : "El usuario debe ser no nulo";
 
         if(!user.puedeGestionarMesas())
-            throw new UsuarioNoAutorizadoException();
+            throw new UsuarioNoAutorizadoException("El usuario no esta autorizado");
         if(nroMesa < 0)
-            throw new IdIncorrectoException();
+            throw new IdIncorrectoException("Id incorrecto");
         Mesa mesa = getMesaNroMesa(nroMesa);
         if(mesa == null)
-            throw new MesaNoEncontradaException();
+            throw new MesaNoEncontradaException("No se encontro la mesa");
         mesas.remove(mesa);
 
         assert getMesaNroMesa(nroMesa) == null : "No se elimino correctamente la mesa";

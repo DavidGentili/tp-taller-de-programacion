@@ -44,7 +44,7 @@ public class GestorDeOperarios {
         assert user != null : "El usuario no puede ser nulo";
 
         if(!user.puedeGestionarOperarios())
-            throw new UsuarioNoAutorizadoException();
+            throw new UsuarioNoAutorizadoException("El usuario no se encuentra autorizado para realizar dicha accion");
         return operarios;
     };
 
@@ -63,10 +63,10 @@ public class GestorDeOperarios {
         assert user != null : "El usuario no debe ser nulo";
 
         if(!user.puedeGestionarOperarios())
-            throw new UsuarioNoAutorizadoException();
+            throw new UsuarioNoAutorizadoException("El usuario no se encuentra autorizado para realizar dicha accion");
         Operario operario = getOperarioByUserName(nuevoOperario.getNombreUsuario());
         if(operario != null)
-            throw new OperarioYaExistenteException();
+            throw new OperarioYaExistenteException("Ya existe un operario con el mismo id");
         operarios.add(nuevoOperario);
 
         assert operarios.contains(nuevoOperario) : "No se añadio correctamente el operario";
@@ -123,12 +123,12 @@ public class GestorDeOperarios {
         assert user != null : "El usuario debe ser distinto de null";
 
         if(!user.puedeGestionarProductos())
-            throw new UsuarioNoAutorizadoException();
+            throw new UsuarioNoAutorizadoException("El usuario no se encuentra autorizado para realizar dicha accion");
         if(idOperario < 0)
-            throw new IdIncorrectoException();
+            throw new IdIncorrectoException("Id incorrecto");
         Operario operario = getOperarioById(idOperario);
         if(operario == null)
-            throw new OperarioNoEncontradoException();
+            throw new OperarioNoEncontradoException("No se encontro al operario buscado");
         operario.updateOperario(operarioActualizado);
 
     };
@@ -167,12 +167,12 @@ public class GestorDeOperarios {
         assert user != null : "El usuario debe ser no nulo";
 
         if(!user.puedeGestionarProductos())
-            throw new UsuarioNoAutorizadoException();
+            throw new UsuarioNoAutorizadoException("El usuario no se encuentra autorizado para realizar dicha accion");
         if(idOperario < 0)
             throw new IdIncorrectoException();
         Operario operario = getOperarioById(idOperario);
         if(operario == null)
-            throw new OperarioNoEncontradoException();
+            throw new OperarioNoEncontradoException("No se encontro al operario buscado");
         operarios.remove(operario);
 
         assert getOperarioById(idOperario) == null : "No se elimino correctamente el operario";
@@ -194,11 +194,11 @@ public class GestorDeOperarios {
 
         Operario operario = getOperarioByUserName(nombreDeUsuario);
         if(operario == null)
-            throw new DatosLoginIncorrectosException();
+            throw new DatosLoginIncorrectosException("Datos incorrectos del login");
         if(!operario.matchPassword(password))
-            throw new DatosLoginIncorrectosException();
+            throw new DatosLoginIncorrectosException("Datos del login incorrectos");
         if(!operario.isActivo())
-            throw new OperarioInactivoException();
+            throw new OperarioInactivoException("El operario se encuentra inactivo");
         return operario;
 
     };

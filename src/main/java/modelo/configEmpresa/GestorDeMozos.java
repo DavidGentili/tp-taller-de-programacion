@@ -68,10 +68,9 @@ public class GestorDeMozos {
         assert user != null : "El ususarion o puede ser nulo";
 
         if(!user.puedeGestionarMozos())
-            throw new UsuarioNoAutorizadoException();
+            throw new UsuarioNoAutorizadoException("Usuarion no autorizado");
         if(this.getMozoById(nuevoMozo.getId()) != null)
-
-            throw new MozoYaAgregadoException();
+            throw new MozoYaAgregadoException("Ya existe un mozo con dicho id");
         mozos.add(nuevoMozo);
 
         assert nuevoMozo == getMozoById(nuevoMozo.getId()) : "El mozo no fue añadido correctamente a la coleccion";
@@ -93,12 +92,12 @@ public class GestorDeMozos {
         assert user != null : "El usuario no debe ser nulo";
 
         if(!user.puedeGestionarMozos())
-            throw new UsuarioNoAutorizadoException();
+            throw new UsuarioNoAutorizadoException("El usuario no esta autorizado");
         if(mozoId < 0)
-            throw new IdIncorrectoException();
+            throw new IdIncorrectoException("Id incorrecto");
         Mozo mozo = this.getMozoById(mozoId);
         if(mozo == null)
-            throw new MozoNoEncontradoException();
+            throw new MozoNoEncontradoException("No se encontro el mozo");
         mozo.updateMozo(mozoActualizado);
 
     };
@@ -117,12 +116,12 @@ public class GestorDeMozos {
         assert user != null : "El usuario no puede ser nulo";
 
         if(!user.puedeGestionarMozos())
-            throw new UsuarioNoAutorizadoException();
+            throw new UsuarioNoAutorizadoException("El usuario no esta autorizado");
         if(mozoId < 0)
-            throw new IdIncorrectoException();
+            throw new IdIncorrectoException("Id incorrecto");
         Mozo mozo = this.getMozoById(mozoId);
         if(mozo == null)
-            throw new MozoNoEncontradoException();
+            throw new MozoNoEncontradoException("Mozo no encontrado");
         mozos.remove(mozo);
 
         assert getMozoById(mozoId) == null : "No se elimino el mozo correctamente";
@@ -140,15 +139,18 @@ public class GestorDeMozos {
         assert estado != null : "El estado no puede ser nulo";
 
         if(mozoId < 0)
-            throw new IdIncorrectoException();
+            throw new IdIncorrectoException("Id incorrecto");
         Mozo mozo = getMozoById(mozoId);
         if(mozo == null)
-            throw new MozoNoEncontradoException();
+            throw new MozoNoEncontradoException("Mozo no encontrado");
         mozo.setEstado(estado);
 
         assert mozo.getEstado() == estado : "No se asigno correctamente el estado";
     }
 
+    /**
+     * Pone el estado del mozo en null
+     */
     protected void clearEstadoMozos(){
         for(Mozo mozo : mozos){
             mozo.cleanEstado();
