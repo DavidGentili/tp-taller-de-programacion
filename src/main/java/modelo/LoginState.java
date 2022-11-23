@@ -27,6 +27,9 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
+/**
+ * Implementacion de estado de la empresa cuando el usuario esta logueado
+ */
 public class LoginState implements StateEmpresa{
 
     private Empresa empresa;
@@ -38,6 +41,10 @@ public class LoginState implements StateEmpresa{
 
     }
 
+    /**
+     * Retorna si el usuario de la sesion cambio la contraseña
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña del usuario de la sesion
+     */
     private void cambioContrasenia() throws NoSeCambioContraseniaException {
         if(empresa.requiereCambioContraseña())
             throw new NoSeCambioContraseniaException("Debe cambiar la contraseña antes de realizar cualquier accion");
@@ -58,8 +65,9 @@ public class LoginState implements StateEmpresa{
      * pre : name != null !name.isBlank() !name.isEmpty;
      *
      * @param name nuevo nombre;
-     * @UsuarioNoAutorizadoException : Si el ususario no esta autorizado
-     */
+     * @throws UsuarioNoAutorizadoException Si el usuarion no esta autorizado
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
+     **/
     @Override
     public void cambiarNombreLocal(String name) throws UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
         assert name != null && !name.isBlank() && !name.isEmpty();
@@ -82,7 +90,8 @@ public class LoginState implements StateEmpresa{
      * pre: sueldo != null
      *
      * @param sueldo : sueldo de la empresa
-     * @Throw UsuarioNoAutorizadoException: si el usuario no esta autorizado
+     * @throws UsuarioNoAutorizadoException: si el usuario no esta autorizado
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void setSueldo(Sueldo sueldo) throws UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
@@ -106,6 +115,10 @@ public class LoginState implements StateEmpresa{
      * pre: nuevo != null
      *
      * @param nuevo nuevo mozo
+     * @throws UsuarioNoAutorizadoException Si el usuario no esta autorizado
+     * @throws MozoYaAgregadoException Si el mozo a agregar ya existe
+     * @throws EmpresaAbiertaException si la empresa esta abierta
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void agregarMozo(Mozo nuevo) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException, NoSeCambioContraseniaException {
@@ -120,6 +133,10 @@ public class LoginState implements StateEmpresa{
      *
      * @param actualizado : mozo con los valores actualizados
      * @param mozoId      : id del mozo a modificar
+     * @throws MozoNoEncontradoException Si no se encontro el mozo
+     * @throws IdIncorrectoException Si el id es incorrecto
+     * @throws UsuarioNoAutorizadoException Si el usuario no esta autorizado
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void actualizarMozo(Mozo actualizado, int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
@@ -132,6 +149,11 @@ public class LoginState implements StateEmpresa{
      * pre: mozoId >= 0;
      *
      * @param mozoId : id del mozo
+     * @throws MozoNoEncontradoException Si no se encontro el mozo
+     * @throws IdIncorrectoException Si el id es incorrecto
+     * @throws UsuarioNoAutorizadoException Si el usuario no esta autorizado
+     * @throws EmpresaAbiertaException si la empresa esta abierta
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void eliminarMozo(int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, EmpresaAbiertaException, NoSeCambioContraseniaException {
@@ -144,6 +166,10 @@ public class LoginState implements StateEmpresa{
      *
      * @param mozoId : id del mozo a cambiar
      * @param estado : nuevo estado del mozo
+     * @throws MozoNoEncontradoException Si no se encuentra el mozo
+     * @throws IdIncorrectoException Si el id es incorrecto
+     * @throws EmpresaAbiertaException Si la empresa esta abierta
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws MozoNoEncontradoException, IdIncorrectoException, EmpresaAbiertaException, NoSeCambioContraseniaException {
@@ -166,6 +192,9 @@ public class LoginState implements StateEmpresa{
      * pre : nueva != null
      *
      * @param nueva : mesa a agregar
+     * @throws MesaYaExistenteException Si la mesa ya existe
+     * @throws UsuarioNoAutorizadoException Si el usuario no esta autorizado
+     * @throws NoSeCambioContraseniaException Si el usuario no esta autorizado
      */
     @Override
     public void agregarMesa(Mesa nueva) throws MesaYaExistenteException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
@@ -180,6 +209,10 @@ public class LoginState implements StateEmpresa{
      *
      * @param actualizada : mesa con valores nuevos
      * @param nroMesa     : nro de la mesa a actualizar
+     * @throws MesaNoEncontradaException Si no se encuentra la mesa
+     * @throws IdIncorrectoException Si el id es incorrecto
+     * @throws UsuarioNoAutorizadoException Si el usuarion no esta autorizado
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void actualizarMesa(Mesa actualizada, int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
@@ -192,6 +225,11 @@ public class LoginState implements StateEmpresa{
      * pre: mesa >= 0;
      *
      * @param nroMesa : numero de la mesa a liminar
+     * @throws MesaNoEncontradaException Si no se encuentra la mesa
+     * @throws IdIncorrectoException Si el id es incorrecto
+     * @throws UsuarioNoAutorizadoException Si el usuario no esta autorizado
+     * @throws MesaYaOcupadaException Si la mesa ya esta ocupada
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void eliminarMesa(int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, MesaYaOcupadaException, NoSeCambioContraseniaException {
@@ -214,6 +252,9 @@ public class LoginState implements StateEmpresa{
      * pre : nuevo != null
      *
      * @param nuevo nuevo producto de la empresa
+     * @throws ProductoYaExistenteException Si el producto ya existe
+     * @throws UsuarioNoAutorizadoException Si el usuarion no esta autorizado
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void agregarProducto(Producto nuevo) throws ProductoYaExistenteException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
@@ -228,6 +269,10 @@ public class LoginState implements StateEmpresa{
      *
      * @param actualizado : producto con los valores actualzados
      * @param idProducto  : id del producto a actualizar
+     * @throws ProductoNoEncontradoException Si no se encontro el producto
+     * @throws IdIncorrectoException Si el id es incorrecto
+     * @throws UsuarioNoAutorizadoException Si el usuarion no esta autorizado
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void actualizaProducto(Producto actualizado, int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
@@ -240,6 +285,11 @@ public class LoginState implements StateEmpresa{
      * pre id >= 0
      *
      * @param idProducto id del producto a eliminar
+     * @throws ProductoNoEncontradoException Si no se encontro el producto
+     * @throws IdIncorrectoException Si el id es incorrecto
+     * @throws UsuarioNoAutorizadoException Si el usuario no esta autorizado
+     * @throws ProductoEnPedidoException Si el producto se encuentra en un pedido
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void eliminarProducto(int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, ProductoEnPedidoException, NoSeCambioContraseniaException {
@@ -251,6 +301,7 @@ public class LoginState implements StateEmpresa{
      * retorna los operarios de la empresa
      *
      * @return operarios de la empresa
+     * @throws UsuarioNoAutorizadoException Si el usuario no esta autorizado
      */
     @Override
     public ArrayList<Operario> getOperarios() throws UsuarioNoAutorizadoException {
@@ -262,6 +313,9 @@ public class LoginState implements StateEmpresa{
      * pre : nuevo != null
      *
      * @param nuevo operario nuevo
+     * @throws OperarioYaExistenteException Si el operario ya existe
+     * @throws UsuarioNoAutorizadoException si el usuario no esta autorizado
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void agregarOperario(Operario nuevo) throws OperarioYaExistenteException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
@@ -276,6 +330,10 @@ public class LoginState implements StateEmpresa{
      *
      * @param actualizado : operario con los valores actualizados
      * @param idOperario  : id del operario
+     * @throws OperarioNoEncontradoException Si no se encuentra el operario
+     * @throws IdIncorrectoException Si el id es incorrecto
+     * @throws UsuarioNoAutorizadoException si el ususario no esta autorizado
+     * @throws NoSeCambioContraseniaException si no se cambio la contraseña
      */
     @Override
     public void actualizarOperario(Operario actualizado, int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
@@ -304,9 +362,13 @@ public class LoginState implements StateEmpresa{
 
     /**
      * elimina al operario que corresponde con el id
-     * pre : idOperario >= 0
      *
      * @param idOperario : id del operario a eliminar
+     * @throws OperarioNoEncontradoException Si no se encuentra operario
+     * @throws IdIncorrectoException Si el id no es correcto
+     * @throws UsuarioNoAutorizadoException Si el usuarion no esta autorizado
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
+     * @throws EliminarOperarioLogueadoException Si se quiere eliminar el usuario logueado
      */
     @Override
     public void eliminarOperario(int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException, EliminarOperarioLogueadoException {
@@ -323,6 +385,7 @@ public class LoginState implements StateEmpresa{
      *
      * @param userName Nombre de ususario
      * @param password Contraseña
+     * @throws UsuarioYaLogueadoException Si ya se encuentra logueado un usuario
      */
     @Override
     public void login(String userName, String password) throws UsuarioYaLogueadoException {
@@ -340,6 +403,15 @@ public class LoginState implements StateEmpresa{
 
     /**
      * Abre la empresa
+     * @throws NoHayMozosAsignadosException Si no hay mozos asignados
+     * @throws CantidadMinimaDeProductosEnPromocionException Si no se cumple con la cantidad de productos minimos en promocion
+     * @throws CantidadMaximaDeMozosActivosException Si se supera la cantidad maxima de mosos activos
+     * @throws EmpresaAbiertaException Si la empresa esta abierta
+     * @throws CantidadMinimaDeProductosException Si no se supera la cantidad minima de productos
+     * @throws CantidadMaximaDeMozosSuperadaException Si se supera la cantidad maxima de mozos
+     * @throws CantidadMaximaDeMozosDeFrancoException Si se supera la cantidad maxima de mozos de franco
+     * @throws HayMozoSinEstadoAsignadoException Si hay mozos con estados sin asignar
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosActivosException, EmpresaAbiertaException, CantidadMinimaDeProductosException, CantidadMaximaDeMozosSuperadaException, CantidadMaximaDeMozosDeFrancoException, HayMozoSinEstadoAsignadoException, NoSeCambioContraseniaException {
@@ -349,6 +421,9 @@ public class LoginState implements StateEmpresa{
 
     /**
      * Cierra la empresa
+     * @throws EmpresaCerradaException Si la empresa esta cerrada
+     * @throws HayComandasActivasException Si hay comandas abiertas
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void cerrarEmpresa() throws EmpresaCerradaException, HayComandasActivasException, NoSeCambioContraseniaException {
@@ -372,6 +447,12 @@ public class LoginState implements StateEmpresa{
      * @param mozoId  id del mozo
      * @param nroMesa nro de mesa
      * @param fecha   fecha de la asignacion
+     * @throws MesaNoEncontradaException Si no se encuentra la mesa
+     * @throws MozoNoEncontradoException Si no se encuentra el mozo
+     * @throws MozoNoActivoException Si el mozo no esta activo
+     * @throws EmpresaAbiertaException Si la empresa esta abierta
+     * @throws MesaYaOcupadaException Si la mesa ya esta ocupada
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void asignaMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, EmpresaAbiertaException, MesaYaOcupadaException, NoSeCambioContraseniaException {
@@ -383,6 +464,9 @@ public class LoginState implements StateEmpresa{
      * Elimina una relacion de mozo con mesa
      *
      * @param nroMesa nro de mesa
+     * @throws MesaNoAsignadaException Si la mesa no esta asignada
+     * @throws EmpresaAbiertaException Si la empresa no esta abierta
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void eliminarRelacionMozoMeza(int nroMesa) throws MesaNoAsignadaException, EmpresaAbiertaException, NoSeCambioContraseniaException {
@@ -404,6 +488,10 @@ public class LoginState implements StateEmpresa{
      * agrega una comanda asignandola a una mesa
      *
      * @param nroMesa nro de la mesa a la cual se asigna la comanda
+     * @throws EmpresaCerradaException Si la empresa ya esta cerrada
+     * @throws MesaYaOcupadaException Si la mesa ya esta ocupada
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
+     * @throws MesaNoEncontradaException Si no se encontro la mesa
      */
     @Override
     public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, NoSeCambioContraseniaException, MesaNoEncontradaException {
@@ -416,6 +504,11 @@ public class LoginState implements StateEmpresa{
      *
      * @param nroMesa numero de la mesa
      * @param pago    tipo de  pago
+     * @throws ComandaYaCerradaException Si la comanda ya esta cerrada
+     * @throws EmpresaCerradaException Si la empresa esta cerrada
+     * @throws MesaNoEncontradaException si no se encontro la mesa
+     * @throws MesaYaLiberadaException Si la mesa ya esta liberada
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void cerrarComanda(int nroMesa, FormasDePago pago) throws ComandaYaCerradaException, EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException, NoSeCambioContraseniaException {
@@ -428,6 +521,10 @@ public class LoginState implements StateEmpresa{
      *
      * @param nroMesa numero de mesa
      * @param pedido  pedido a ingresar
+     * @throws ComandaYaCerradaException Si la comanda ya se encuentra cerrada
+     * @throws EmpresaCerradaException Si la empresa esta cerrada
+     * @throws ComandaNoEncontradaException Si no se encuentra la comanda
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, NoSeCambioContraseniaException {
@@ -470,6 +567,8 @@ public class LoginState implements StateEmpresa{
      * pre: promo != null
      *
      * @param promo promocion de prodcuto a agregar
+     * @throws PromocionYaExistenteException Si la promocion ya existe
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException, NoSeCambioContraseniaException {
@@ -482,6 +581,9 @@ public class LoginState implements StateEmpresa{
      * pre: promo != null
      *
      * @param promo : promocion temporal a agregar
+     * @throws PromocionNoEncontradaException Si no se encontro la promocion
+     * @throws IdIncorrectoException Si el id no es correcto
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException, NoSeCambioContraseniaException {
@@ -494,6 +596,9 @@ public class LoginState implements StateEmpresa{
      * pre: id >= 0
      *
      * @param id : id de la promocion a eliminar
+     * @throws PromocionNoEncontradaException Si no se encontro la promocion
+     * @throws IdIncorrectoException Si el id no es correcto
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void eliminarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, NoSeCambioContraseniaException {
@@ -506,6 +611,9 @@ public class LoginState implements StateEmpresa{
      * pre: id >= 0
      *
      * @param id : id de la promocion a activar
+     * @throws PromocionNoEncontradaException Si no se encontro la promocion
+     * @throws IdIncorrectoException Si el id no es correcto
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void activarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, NoSeCambioContraseniaException {
@@ -515,9 +623,11 @@ public class LoginState implements StateEmpresa{
 
     /**
      * Desactiva una promocion segun un id
-     * pre: id >= 0
      *
      * @param id : id de la promocion a desactivar
+     * @throws PromocionNoEncontradaException Si no se encontro la promocion
+     * @throws IdIncorrectoException Si el id no es correcto
+     * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     @Override
     public void desactivarPromocion(int id) throws PromocionNoEncontradaException, IdIncorrectoException, NoSeCambioContraseniaException {
@@ -540,6 +650,8 @@ public class LoginState implements StateEmpresa{
      * pre : factura != null
      *
      * @param factura factura a agregar
+     * @throws FacturaYaExistenteException Si la factura que se quiere agregar ya existe
+     * @throws NoSeCambioContraseniaException Si todavia no se cambia la contraseña
      */
     @Override
     public void agregarFactura(Factura factura) throws FacturaYaExistenteException, NoSeCambioContraseniaException {
