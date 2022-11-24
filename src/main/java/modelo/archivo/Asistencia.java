@@ -57,6 +57,10 @@ public class Asistencia implements Serializable {
 	 */
 	public String getEstado() {return estado;}
 
+	/**
+	 * Retorna un string con la informacion de la asistencia
+	 * @return String con informacion de la asistencia
+	 */
 	public String toString(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		return String.format("Fecha: %s Mozo:  %-5d %-30s %s", sdf.format(fecha.getTime()), mozo.getId(), mozo.getNombreApellido(), estado);

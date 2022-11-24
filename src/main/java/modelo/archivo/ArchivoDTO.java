@@ -85,7 +85,6 @@ public class ArchivoDTO implements Serializable{
 
     /**
      * Recupera el archivoDTO
-
      */
     public void recuperarArchivo() {
         try {

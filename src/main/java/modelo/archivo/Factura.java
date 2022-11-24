@@ -13,7 +13,6 @@ import modelo.gestorEmpresa.Promocion;
 /**
  * Clase desarrollada para instanciar las facturas generadas por el sistema.
  * También nos permitirá consultar los diferentes valores de la misma.
- * ESTA CLASE REQUIERE TENER ACCESO A LAS PROMOCIONES VIGENTES
  * @author
  *
  */

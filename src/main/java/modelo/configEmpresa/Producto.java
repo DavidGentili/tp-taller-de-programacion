@@ -4,6 +4,9 @@ import exceptions.productos.StockInsuficienteException;
 
 import java.io.Serializable;
 
+/**
+ * Representa un producto
+ */
 public class Producto implements Serializable, Cloneable {
     private static int nroProducto = 0;
     private int id;
@@ -77,7 +80,10 @@ public class Producto implements Serializable, Cloneable {
         return nroProducto;
     }
 
-
+    /**
+     * Define el numero de productos, el mismo se utiliza para definir el id
+     * @param nroProducto el numero de productos generados
+     */
     protected static void setNroProducto(int nroProducto){
         assert nroProducto >= 0 : "El numero de producto no puede ser negativo";
 
@@ -206,7 +212,7 @@ public class Producto implements Serializable, Cloneable {
         int oldStock = stock;
 
         if(stock == 0)
-            throw new StockInsuficienteException();
+            throw new StockInsuficienteException("El stock no es suficiente");
         stock--;
 
         invariante();
@@ -231,6 +237,10 @@ public class Producto implements Serializable, Cloneable {
         assert stock == oldStock - cantidad : "No se resto correctamente el stock";
     }
 
+    /**
+     * Actualiza los valores del producto con otro producto
+     * @param other el producto con los valores actualizados
+     */
     protected void updateProducto(Producto other){
         this.nombre = other.nombre;
         this.precioCosto = other.precioCosto;
@@ -239,16 +249,28 @@ public class Producto implements Serializable, Cloneable {
         invariante();
     }
 
+    /**
+     * El invariante que debe cumplir la clase
+     */
     private void invariante(){
         assert precioCosto < precioVenta : "El precio de costo debe ser menor al precio de venta";
         assert stock >= 0 : "El stock no puede ser negativo";
     }
 
+    /**
+     * Retorna la informacion del producto en un string
+     * @return  informacion del producto en un string
+     */
     @Override
     public String toString() {
         return String.format("%4d %-12s %6.1f %6.1f %d", id, nombre, precioCosto, precioVenta, stock);
     }
 
+    /**
+     * Retorna un clon del producto actual
+     * @return nuevo producto clon del original
+     * @throws CloneNotSupportedException Si hay un error al clonar un producto
+     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();

@@ -72,13 +72,14 @@ public class Archivo implements Serializable {
     /**
      * Agrega al listado histórico un nuevo registro
      * @param factura que se desea agregar al listado histórico
+	 * @throw FacturaYaExistenteException Si la factura ya existe en el sistema
      */
 	public void agregaFacturas(Factura factura) throws FacturaYaExistenteException {
 		assert factura != null : "La factura no puede ser nula";
 
 		Factura actual = getFacturaById(factura.getId());
 		if(actual != null)
-			throw new FacturaYaExistenteException();
+			throw new FacturaYaExistenteException("La factura ya se encuentra en el sistema");
 		facturas.add(factura);
 	};
 	
@@ -92,11 +93,12 @@ public class Archivo implements Serializable {
 	/**
 	 * Agrega al listado histórico un nuevo registro
 	 * @param comanda que se desea agregar al listado histórico
+	 * @throws ComandaAbiertaException Si se quiere agregar una comanda todavia abierta
 	 */
 	public void agregaComandas(Comanda comanda) throws ComandaAbiertaException {
 		assert comanda != null : "La comanda no puede ser nula";
 		if(comanda.getEstado() != EstadoComanda.CERRADA)
-			throw new ComandaAbiertaException();
+			throw new ComandaAbiertaException("La comanda se encuentra abierta");
 		comandas.add(comanda);
 	}
 	

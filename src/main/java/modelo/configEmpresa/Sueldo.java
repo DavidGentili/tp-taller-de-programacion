@@ -2,6 +2,9 @@ package modelo.configEmpresa;
 
 import java.io.Serializable;
 
+/**
+ * Representa el sueldo de la empresa, el mismo se compone de un sueldo basico y una bonificacion por hijo
+ */
 public class Sueldo implements Serializable {
     private double basico;
     private double bonificacionPorHijo;
@@ -81,6 +84,10 @@ public class Sueldo implements Serializable {
         assert this.bonificacionPorHijo == bonificacionPorHijo : "No se asigno correctamente la bonificacion";
     }
 
+    /**
+     * Retorna la informacion del sueldo basico en un string
+     * @return informacion del sueldo basico en un string
+     */
     @Override
     public String toString() {
         return String.format("%6.2f %4.1f %%", basico, bonificacionPorHijo);
