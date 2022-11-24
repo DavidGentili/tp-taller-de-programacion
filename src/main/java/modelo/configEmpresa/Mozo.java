@@ -180,8 +180,8 @@ public class Mozo implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Retorna la informacion del mozo, en un string
+     * @return informacion del mozo, en un string
      */
     @Override
     public String toString() {

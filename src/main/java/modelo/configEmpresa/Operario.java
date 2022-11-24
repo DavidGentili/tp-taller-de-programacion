@@ -137,6 +137,10 @@ public class Operario implements Serializable {
      */
     public boolean puedeModificarNombreLocal(){return false;}
 
+    /**
+     * Actualiza el operario actual con los valores de otro operario
+     * @param other Otro operario con los valores actuales
+     */
     protected void updateOperario(Operario other){
         this.nombreApellido = other.nombreApellido;
         this.nombreUsuario = other.nombreUsuario;
@@ -181,8 +185,8 @@ public class Operario implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Retorna la informacion del operario en forma de string
+     * @return informacion del operario en forma de string
      */
     @Override
     public String toString() {

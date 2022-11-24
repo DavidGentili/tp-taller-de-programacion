@@ -83,6 +83,10 @@ public class OperarioAdmin extends Operario implements Serializable {
         return true;
     }
 
+    /**
+     * Retorna la informacion del operario admin, en forma de string
+     * @return informacion del operario admin, en forma de string
+     */
     @Override
     public String toString() {
         return super.toString();
