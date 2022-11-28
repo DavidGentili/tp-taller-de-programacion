@@ -140,13 +140,16 @@ public class GestorDeOperarios {
      * @throws OperarioNoEncontradoException si no se encuentra el operario con dicho id
      * @throws ContraseniaIncorrectaException si la nueva contraseña no cumple con el formato
      * @throws UsuarioNoAutorizadoException  si la actual contraseña no coincide
+     * @throws IdIncorrectoException Si el id del operario es incorrecto
      */
-    public void cambiarContrasenia(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException {
+    public void cambiarContrasenia(String password, String newPassword, int idOperario) throws IdIncorrectoException, OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException {
         assert password != null;
         assert newPassword != null;
         assert idOperario >= 0;
 
         Operario op = getOperarioById(idOperario);
+        if(idOperario < 0 )
+            throw new IdIncorrectoException("El id no puede ser negativo");
         if(op == null)
             throw new OperarioNoEncontradoException("No se encontro el operario al que se le desea cambiar la contraseña");
         op.cambiarContrasenia(password, newPassword);

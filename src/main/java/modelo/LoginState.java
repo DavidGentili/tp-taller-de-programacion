@@ -350,9 +350,10 @@ public class LoginState implements StateEmpresa{
      * @throws OperarioNoEncontradoException  si no se encuentra el operario con dicho id
      * @throws ContraseniaIncorrectaException si la nueva contraseña no cumple con el formato
      * @throws UsuarioNoAutorizadoException   si la actual contraseña no coincide
+     * @throws IdIncorrectoException Si el id del operario es incorrecto
      */
     @Override
-    public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException {
+    public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException, IdIncorrectoException {
         assert password != null;
         assert newPassword != null;
         if(empresa.getUsuario().getId() != idOperario)

@@ -27,6 +27,9 @@ public class ConfiguracionEmpresa {
     private GestorDeOperarios operarios;
     private Sueldo sueldo;
 
+    /**
+     * Instancia una nueva configuracion para la empresa
+     */
     private ConfiguracionEmpresa(){
         this.productos = new GestorDeProductos();
         this.mozos = new GestorDeMozos();
@@ -176,6 +179,7 @@ public class ConfiguracionEmpresa {
      * @param user : El usuario que intenta realizar la accion
      * @throws UsuarioNoAutorizadoException : Si el usuario no esta autorizado
      * @throws IdIncorrectoException : Si el id es incorrecto
+     * @throws MozoNoEncontradoException Si el mozo no se encuentra en el sistema
      * pre: mozoActualizado no debe ser nulo
      *      user != null
      * post: el mozo del sistema tomara los valores de mozoActulizado,
@@ -405,8 +409,9 @@ public class ConfiguracionEmpresa {
      * @throws OperarioNoEncontradoException si no se encuentra el operario con dicho id
      * @throws ContraseniaIncorrectaException si la nueva contraseña no cumple con el formato
      * @throws UsuarioNoAutorizadoException  si la actual contraseña no coincide
+     * @throws IdIncorrectoException Si el id del operario es incorrecto
      */
-    public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException{
+    public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException, IdIncorrectoException {
         operarios.cambiarContrasenia(password, newPassword, idOperario);
     }
 

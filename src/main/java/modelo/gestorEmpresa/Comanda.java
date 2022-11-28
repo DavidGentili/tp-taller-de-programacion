@@ -26,7 +26,7 @@ public class Comanda implements Serializable {
 
 		this.fecha = (GregorianCalendar) GregorianCalendar.getInstance();
 		this.mesa = mesa;
-		this.listaDePedidos = new ArrayList<Pedido>();
+		this.listaDePedidos = new ArrayList<>();
 		this.estado = EstadoComanda.ABIERTA;
 	}
 
@@ -35,9 +35,9 @@ public class Comanda implements Serializable {
 	 * Crea una nueva instancia de una comanda
 	 * Pre: La mesa no puede ser nula;
 	 * @param mesa : Mesa que se le asigna a la comanda
-	 * @param pedidos
-	 * @param estado
-	 * @param fecha
+	 * @param pedidos : pedidos de la comanda
+	 * @param estado : estado de la comanda
+	 * @param fecha : fecha de la comanda
 	 */
 	public Comanda(Mesa mesa, ArrayList<Pedido> pedidos, EstadoComanda estado, GregorianCalendar fecha){
 		assert mesa != null : "La mesa debe ser no nula";
@@ -65,13 +65,24 @@ public class Comanda implements Serializable {
 		assert this.listaDePedidos.contains(pedido) : "No se asigno correctamente el pedido";
 	}
 
+	/**
+	 * Determina el estado de una comanda como cerrda
+	 * @throws ComandaYaCerradaException Si la comanda ya se encuentra cerrada
+	 */
 	public void cerrarComanda() throws ComandaYaCerradaException {
 		if(this.estado == EstadoComanda.CERRADA)
 			throw new ComandaYaCerradaException();
 		this.estado = EstadoComanda.CERRADA;
 	}
 
+	/**
+	 * retorna si existe un producto con un id ingresado en los pedidos
+	 * pre: idProd >= 0
+	 * @param productoId id del producto buscado
+	 * @return Si existe un producto con el id ingresado
+	 */
 	public boolean getProductoInPedido(int productoId){
+		assert productoId >= 0 : "El id no debe ser negativo";
 		boolean res = false;
 		int i = 0;
 		while (i < listaDePedidos.size() && !res){
@@ -82,22 +93,42 @@ public class Comanda implements Serializable {
 		return res;
 	}
 
+	/**
+	 * Retorna la fecha de la comanda
+	 * @return fecha de la comanda
+	 */
 	public GregorianCalendar getFecha() {
 		return fecha;
 	}
 
+	/**
+	 * Retorna la mesa de la comanda
+	 * @return mesa de la comanda
+	 */
 	public Mesa getMesa() {
 		return mesa;
 	}
 
+	/**
+	 * Retorna la lista de los pedidos
+	 * @return lista de pedidos
+	 */
 	public ArrayList<Pedido> getListaDePedidos() {
 		return listaDePedidos;
 	}
 
+	/**
+	 * Retorna el estado de la comanda
+	 * @return estado de comanda
+	 */
 	public EstadoComanda getEstado() {
 		return estado;
 	}
-	
+
+	/**
+	 * Retorna la informacion de la comanda en forma de string
+	 * @return informacion de la comanda en forma de string
+	 */
 	public String toString(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy : hh:mm");
 		return String.format("%s %d %s", sdf.format(fecha.getTime()), mesa.getNroMesa(), estado.toString());

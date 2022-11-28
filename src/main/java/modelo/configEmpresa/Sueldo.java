@@ -23,6 +23,7 @@ public class Sueldo implements Serializable {
         this.basico = basico;
         this.bonificacionPorHijo = bonificacionPorHijo;
 
+        invariante();
         assert this.basico == basico : "No se asigno correctamente el basico";
         assert this.bonificacionPorHijo == bonificacionPorHijo : "No se asigno correctamente la bonificacion";
     }
@@ -37,6 +38,7 @@ public class Sueldo implements Serializable {
         this.basico = basico;
         this.bonificacionPorHijo = 0;
 
+        invariante();
         assert this.basico == basico : "No se asigno correctamente el basico";
         assert this.bonificacionPorHijo == 0 : "No se asigno corretamente la bonificacion por hijo";
 
@@ -68,6 +70,7 @@ public class Sueldo implements Serializable {
 
         this.basico = basico;
 
+        invariante();
         assert this.basico == basico : "No se asigno correctamente el basico";
     }
 
@@ -81,6 +84,7 @@ public class Sueldo implements Serializable {
 
         this.bonificacionPorHijo = bonificacionPorHijo;
 
+        invariante();
         assert this.bonificacionPorHijo == bonificacionPorHijo : "No se asigno correctamente la bonificacion";
     }
 
@@ -91,5 +95,10 @@ public class Sueldo implements Serializable {
     @Override
     public String toString() {
         return String.format("%6.2f %4.1f %%", basico, bonificacionPorHijo);
+    }
+
+    private void invariante(){
+        assert bonificacionPorHijo >= 0 : "La bonificacion por hijo no puede ser negativa";
+        assert basico > 0 : "El basico debe ser positivo";
     }
 }

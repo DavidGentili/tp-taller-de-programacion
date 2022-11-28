@@ -97,15 +97,28 @@ public class Mesa implements Serializable, Cloneable{
         assert this.estado == EstadoMesas.LIBRE : "La mesa no se libero correctamente";
     }
 
+    /**
+     * Actualiza una mesa con la informacion de otra mesa
+     * @param other La otra mese de la cual se actualizara
+     */
     protected void updateMesa(Mesa other){
         this.cantSillas = other.cantSillas;
     }
 
+    /**
+     * Retorna la informacion de una mesa en forma de string
+     * @return informacion de una mesa en forma de string
+     */
     @Override
     public String toString() {
         return String.format("%4d %2d %-10s", nroMesa, cantSillas, estado);
     }
 
+    /**
+     * Retorna un clon de la mesa
+     * @return Clon de la mesa
+     * @throws CloneNotSupportedException Si hay un error al clonar la mesa
+     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();

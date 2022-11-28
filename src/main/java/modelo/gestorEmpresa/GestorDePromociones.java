@@ -10,6 +10,9 @@ public class GestorDePromociones implements Serializable {
     private ArrayList<PromocionTemp> promoTemp;
     private ArrayList<PromocionProducto> promoProduct;
 
+    /**
+     * Instancia un gestor de promocion, sin promociones
+     */
     public GestorDePromociones(){
         promoProduct = new ArrayList<PromocionProducto>();
         promoTemp = new ArrayList<PromocionTemp>();
@@ -34,18 +37,34 @@ public class GestorDePromociones implements Serializable {
         return promoProduct;
     }
 
+    /**
+     * Retorna las promociones temporales
+     * @return promociones temporales
+     */
     protected ArrayList<PromocionTemp> getPromoTemp() {
         return promoTemp;
     }
 
+    /**
+     * Determina una lista de promociones temporales
+     * @param promoTemp lista de promociones temporales
+     */
     protected void setPromoTemp(ArrayList<PromocionTemp> promoTemp) {
         this.promoTemp = promoTemp;
     }
 
+    /**
+     * Retorna las promociones de productos
+     * @return promociones de producto
+     */
     protected ArrayList<PromocionProducto> getPromoProduct() {
         return promoProduct;
     }
 
+    /**
+     * Determina una lista de promociones de producto
+     * @param promoProduct lista de promociones de producto
+     */
     protected void setPromoProduct(ArrayList<PromocionProducto> promoProduct) {
         this.promoProduct = promoProduct;
     }

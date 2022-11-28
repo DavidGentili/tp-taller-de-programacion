@@ -95,7 +95,7 @@ public class ControladorConfiguracion implements Observer, ActionListener {
         Empresa.getInstance().eliminarOperario(op.getId());
     }
 
-    private void cambiarContrasenia() throws ErrorOperarioException, UsuarioNoLogueadoException, OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException {
+    private void cambiarContrasenia() throws ErrorOperarioException, UsuarioNoLogueadoException, OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException, IdIncorrectoException {
         String password = vOperarios.getPasswordCambiaContrasenia();
         String newPassword = vOperarios.getNuevoPasswordCambiaContrasenia();
 
