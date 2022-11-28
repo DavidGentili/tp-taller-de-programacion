@@ -7,14 +7,10 @@ import exceptions.comandas.ComandaNoEncontradaException;
 import exceptions.comandas.ComandaYaCerradaException;
 import exceptions.factura.FacturaYaExistenteException;
 import exceptions.gestorEmpresa.*;
-import exceptions.mesas.MesaNoAsignadaException;
 import exceptions.mesas.MesaNoEncontradaException;
 import exceptions.mesas.MesaYaLiberadaException;
 import exceptions.mesas.MesaYaOcupadaException;
-import exceptions.mozos.MozoNoActivoException;
-import exceptions.mozos.MozoNoEncontradoException;
 import exceptions.productos.ProductoEnPedidoException;
-import exceptions.productos.ProductoNoEncontradoException;
 import helpers.FacturaHelpers;
 import modelo.archivo.Archivo;
 import modelo.archivo.Factura;
@@ -218,7 +214,7 @@ public class StateOpen implements StateGestorEmpresa {
         boolean esta = false;
         int i = 0;
         while (i < empresa.getComandas().size() && !esta){
-            if(empresa.getComandas().get(i).getProductoInPedido(idProducto))
+            if(empresa.getComandas().get(i).isProductoInPedido(idProducto))
                 esta = true;
             i++;
         }

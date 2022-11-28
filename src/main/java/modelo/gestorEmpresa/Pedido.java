@@ -23,6 +23,10 @@ public class Pedido implements Serializable, Cloneable {
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.fecha = (GregorianCalendar) GregorianCalendar.getInstance();
+
+		invariante();
+		assert this.producto == producto : "El producto no se asigno correctamente";
+		assert this.cantidad == cantidad : "No se asigno correctamente la cantidad";
 	}
 
 	/**
@@ -36,28 +40,57 @@ public class Pedido implements Serializable, Cloneable {
 	public Pedido(Producto producto, int cantidad, GregorianCalendar fecha) {
 		assert producto != null : "El producto no puede ser nulo";
 		assert cantidad > 0 : "La catidad debe ser positiva";
+		assert fecha != null :" La fecha no puede ser nula ";
+
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.fecha = fecha;
+
+		invariante();
+		assert this.producto == producto : "El producto no se asigno correctamente";
+		assert this.cantidad == cantidad : "No se asigno correctamente la cantidad";
+		assert this.fecha == fecha : "No se asigno correctamente la fecha";
 	}
 
-
+	/**
+	 * Retorna el producto del pedido
+	 * @return producto del pedido
+	 */
 	public Producto getProducto() {
 		return producto;
 	}
 
+	/**
+	 * Retorna la cantidad del pedido
+	 * @return cantidad del pedido
+	 */
 	public int getCantidad() {
 		return cantidad;
 	}
 
+	/**
+	 * retorna la fecha del pedido
+	 * @return fecha del pedido
+	 */
 	public GregorianCalendar getFecha() {
 		return fecha;
 	}
 
+	/**
+	 * Retorna un clon del pedido
+	 * @return clon del pedido
+	 * @throws CloneNotSupportedException si hay un error al clonar el pedido
+	 */
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Pedido clon = (Pedido) super.clone();
 		clon.producto = (Producto) producto.clone();
 		return clon;
+	}
+
+	private void invariante(){
+		assert fecha != null : "La fecha no puede ser nula";
+		assert producto != null : "El producton no puede ser nulo";
+		assert cantidad > 0 : "La cantidad debe ser positiva";
 	}
 }

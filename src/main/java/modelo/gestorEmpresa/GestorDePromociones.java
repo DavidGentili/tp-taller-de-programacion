@@ -16,6 +16,8 @@ public class GestorDePromociones implements Serializable {
     public GestorDePromociones(){
         promoProduct = new ArrayList<PromocionProducto>();
         promoTemp = new ArrayList<PromocionTemp>();
+
+        invariante();
     }
 
     /**
@@ -50,7 +52,11 @@ public class GestorDePromociones implements Serializable {
      * @param promoTemp lista de promociones temporales
      */
     protected void setPromoTemp(ArrayList<PromocionTemp> promoTemp) {
+        assert promoTemp != null : "La lista de promociones no puede ser nula";
         this.promoTemp = promoTemp;
+
+        invariante();
+        assert this.promoTemp == promoTemp : "No se asigno correctamente la lista de promociones temporales";
     }
 
     /**
@@ -66,7 +72,12 @@ public class GestorDePromociones implements Serializable {
      * @param promoProduct lista de promociones de producto
      */
     protected void setPromoProduct(ArrayList<PromocionProducto> promoProduct) {
+        assert promoProduct != null : "Las promociones producto no pueden ser nulas";
+
         this.promoProduct = promoProduct;
+
+        invariante();
+        assert this.promoProduct == promoProduct : "No se asigno correctamente la promocion de producto";
     }
 
     /**
@@ -97,6 +108,7 @@ public class GestorDePromociones implements Serializable {
 
     /**
      * Agrega una promocion de producto a la coleccion
+     * pre: promo != null
      * @param promo Promocion a agregar
      * @throws PromocionYaExistenteException : Si dicha promocion ya existe
      */
@@ -107,11 +119,13 @@ public class GestorDePromociones implements Serializable {
             throw new PromocionYaExistenteException();
         promoProduct.add(promo);
 
+        invariante();
         assert promoProduct.contains(promo) : "No se agrego correctamente la promocion";
     }
 
     /**
      * Agrega una promocion temporal a la coleccion
+     * pre : promo != null
      * @param promo Promocion a agregar
      * @throws PromocionYaExistenteException : Si dicha promocion ya existe
      */
@@ -122,6 +136,7 @@ public class GestorDePromociones implements Serializable {
             throw new PromocionYaExistenteException();
         promoTemp.add(promo);
 
+        invariante();
         assert promoTemp.contains(promo) : "No se agrego correctamente la promocion";
     }
 
@@ -132,7 +147,6 @@ public class GestorDePromociones implements Serializable {
      */
     protected void eliminarPromocion(int id) throws PromocionNoEncontradaException {
         assert id >= 0 : "El id no puede ser negativo";
-        ArrayList<Promocion> promociones = getPromociones();
         Promocion promo = getPromocionById(id);
         if(promo == null)
             throw new PromocionNoEncontradaException();
@@ -140,9 +154,9 @@ public class GestorDePromociones implements Serializable {
             promoProduct.remove(promo);
         else
             promoTemp.remove(promo);
-        promociones = getPromociones();
 
-        assert !promociones.contains(promo) : "No se elimino correctamente la promocion";
+        invariante();
+        assert !getPromociones().contains(promo) : "No se elimino correctamente la promocion";
     }
 
     /**
@@ -157,9 +171,10 @@ public class GestorDePromociones implements Serializable {
         Promocion promo = getPromocionById(id);
         if(promo == null)
             throw new PromocionNoEncontradaException();
-        promo.desactivarPromocion();
+        promo.activarPromocion();
 
-        assert !getPromocionById(id).isActiva() : "No se desactivo correctamente la promocion";
+        invariante();
+        assert promo.isActiva() : "No se desactivo correctamente la promocion";
     }
 
     /**
@@ -174,8 +189,17 @@ public class GestorDePromociones implements Serializable {
         Promocion promo = getPromocionById(id);
         if(promo == null)
             throw new PromocionNoEncontradaException();
-        promo.activarPromocion();
+        promo.desactivarPromocion();
 
-        assert getPromocionById(id).isActiva() : "No se desactivo correctamente la promocion";
+        invariante();
+        assert !promo.isActiva() : "No se desactivo correctamente la promocion";
+    }
+
+    /**
+     * Invariante de clase
+     */
+    private void invariante(){
+        assert promoTemp != null : "La lista de promociones temporales no puede ser nula";
+        assert promoProduct != null : "La lista de promociones de producto no puede ser nula";
     }
 }

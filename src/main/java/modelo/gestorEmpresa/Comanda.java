@@ -28,6 +28,11 @@ public class Comanda implements Serializable {
 		this.mesa = mesa;
 		this.listaDePedidos = new ArrayList<>();
 		this.estado = EstadoComanda.ABIERTA;
+
+		invariante();
+		assert this.mesa == mesa : "No se asigno correctamente la mesa";
+		assert listaDePedidos != null : "No se inicializo bien la lista de pedidos";
+		assert estado.equals(EstadoComanda.ABIERTA) : "No se inicializo correctamente el estado de la comanda";
 	}
 
 
@@ -46,6 +51,13 @@ public class Comanda implements Serializable {
 		this.mesa = mesa;
 		this.listaDePedidos = pedidos;
 		this.estado = estado;
+
+		invariante();
+		assert this.mesa == mesa : "No se asigno correctamente la mesa";
+		assert this.fecha.equals(fecha) : "No se asigno correctamente la fecha";
+		assert this.listaDePedidos == listaDePedidos : "No se asigno correctamente la lista de pedidos";
+		assert this.estado.equals(estado) : "No se asigno correctamente el estado";
+
 	}
     
     
@@ -62,6 +74,7 @@ public class Comanda implements Serializable {
 			throw new ComandaYaCerradaException();
 		this.listaDePedidos.add(pedido);
 
+		invariante();
 		assert this.listaDePedidos.contains(pedido) : "No se asigno correctamente el pedido";
 	}
 
@@ -73,6 +86,8 @@ public class Comanda implements Serializable {
 		if(this.estado == EstadoComanda.CERRADA)
 			throw new ComandaYaCerradaException();
 		this.estado = EstadoComanda.CERRADA;
+		invariante();
+		assert estado.equals(EstadoComanda.CERRADA) : "No se cerro correctamente la comanda";
 	}
 
 	/**
@@ -81,7 +96,7 @@ public class Comanda implements Serializable {
 	 * @param productoId id del producto buscado
 	 * @return Si existe un producto con el id ingresado
 	 */
-	public boolean getProductoInPedido(int productoId){
+	public boolean isProductoInPedido(int productoId){
 		assert productoId >= 0 : "El id no debe ser negativo";
 		boolean res = false;
 		int i = 0;
@@ -133,5 +148,12 @@ public class Comanda implements Serializable {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy : hh:mm");
 		return String.format("%s %d %s", sdf.format(fecha.getTime()), mesa.getNroMesa(), estado.toString());
 	}
+
+	private void invariante(){
+		assert mesa != null : "La mesa no puede ser nula";
+		assert fecha != null : "La fecha no puede ser nula";
+		assert estado != null : "El estado no puede ser nulo";
+		assert listaDePedidos != null : "La lista de pedidos no puede ser nulo";
+ 	}
     
 }
