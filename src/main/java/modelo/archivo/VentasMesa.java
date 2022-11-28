@@ -17,9 +17,15 @@ public class VentasMesa {
      */
     public VentasMesa(Mesa mesa, double monto){
         assert mesa != null : "La mesa tiene que ser no nula";
+
         this.mesa = mesa;
         cont = 1;
         acum = monto;
+
+        invariante();
+        assert this.mesa == mesa : "No se asigno correctamente la mesa";
+        assert acum == monto : "No se asigno correctamente el monto";
+        assert cont == 1 : "No se asigno correctamente el contador inicial";
     }
 
     /**
@@ -52,8 +58,16 @@ public class VentasMesa {
      */
     public void agregaVenta(double monto){
         assert monto >= 0 : "El monto debe ser positivo";
+
+        int oldCont = cont;
+        double oldAcum = acum;
+
         cont++;
         acum += monto;
+
+        invariante();
+        assert acum ==  oldAcum + monto : "No se sumo correctamente el monto";
+        assert cont == oldCont + 1 :"No se sumo correctamente el contador";
     }
 
     /**
@@ -71,5 +85,10 @@ public class VentasMesa {
     @Override
     public String toString() {
         return String.format("Nro. mesa: %4d Total: $%6.1f Promedio: $%5.1f", mesa.getNroMesa(), acum, getPromedio());
+    }
+
+    private void invariante(){
+        assert cont > 0 : "El contador debe ser mayor a 0";
+        assert acum > 0 : "El acumulador debe ser mayor a 0";
     }
 }

@@ -18,9 +18,15 @@ public class VentasMozo {
     public VentasMozo(Mozo mozo, double monto){
         assert mozo != null : "El mozo no puede ser nulo";
         assert monto >= 0 : "El monto no puede ser negativo";
+
         this.mozo = mozo;
         acum = monto;
         cont = 1;
+
+        invariante();
+        assert this.mozo == mozo : "No se asigno correctamnete el mozo";
+        assert acum == monto : "No se asigno correctamente el monto";
+        assert cont == 1 : "No se asigno correctamente el contador inicial";
     }
 
     /**
@@ -54,8 +60,15 @@ public class VentasMozo {
      */
     public void agregaVenta(double monto){
         assert monto >= 0 : "El monto no puede ser negativo";
+        int oldCont = cont;
+        double oldAcum = acum;
+
         acum += monto;
         cont++;
+
+        invariante();
+        assert acum ==  oldAcum + monto : "No se sumo correctamente el monto";
+        assert cont == oldCont + 1 :"No se sumo correctamente el contador";
     }
 
     /**
@@ -73,5 +86,10 @@ public class VentasMozo {
     @Override
     public String toString() {
         return String.format("Mozo: %5d %-20s Total : $%6.1f Promedio : $%5.1f", mozo.getId(), mozo.getNombreApellido(), acum, getPromedio());
+    }
+
+    private void invariante(){
+        assert cont > 0 : "El contador debe ser mayor a 0";
+        assert acum > 0 : "El acumulador debe ser mayor a 0";
     }
 }
