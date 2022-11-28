@@ -273,7 +273,7 @@ public class Archivo implements Serializable {
 		assert this.registroDeAsistencia != null : "El registro de asistencia no puede ser nulo";
 		assert this.comandas != null : "El archivo de comandas no puede ser nulo";
 		assert this.facturas != null : "La coleccion de facturas no puede ser nula";
-		assert this.asignacionesMozoMesa != null : "El registro de asignaciones no puede ser nulo"
+		assert this.asignacionesMozoMesa != null : "El registro de asignaciones no puede ser nulo";
 	}
 
 }
