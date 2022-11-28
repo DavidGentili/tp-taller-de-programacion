@@ -37,6 +37,8 @@ public class ConfiguracionEmpresa {
         this.mesas = new GestorDeMesas();
         this.operarios = new GestorDeOperarios();
         this.sueldo = null;
+
+        invariante();
     }
 
     /**
@@ -59,6 +61,7 @@ public class ConfiguracionEmpresa {
     public void guardarConfiguracion() throws ArchivoNoInciliazadoException, IOException {
         ConfiguracionEmpresaDTO persitencia = new ConfiguracionEmpresaDTO(this);
         persitencia.guardarConfiguaracion();
+        invariante();
     }
 
     /**
@@ -76,7 +79,7 @@ public class ConfiguracionEmpresa {
         productos.setProductos(pers.getProductos());
         this.nombreLocal = pers.getNombreLocal();
         this.sueldo = pers.getSueldo();
-
+        invariante();
     }
 
     //NOMBRE LOCAL
@@ -134,6 +137,7 @@ public class ConfiguracionEmpresa {
             throw new UsuarioNoAutorizadoException();
         this.sueldo = nuevoSueldo;
 
+        invariante();
         assert sueldo == nuevoSueldo : "No se asigno correctamente el nuevo sueldo";
     }
 
@@ -174,6 +178,8 @@ public class ConfiguracionEmpresa {
 
         if(GestorEmpresa.getInstance().puedeAgregarMozo())
             mozos.agregaMozo(nuevoMozo,user);
+
+        invariante();
     }
 
     /**
@@ -192,6 +198,8 @@ public class ConfiguracionEmpresa {
         assert mozoActualizado != null : "El mozo no puede ser nulo";
         assert user != null : "El usuarion no puede ser nulo";
         mozos.actualizarMozo(mozoActualizado, mozoId, user);
+
+        invariante();
     };
 
     /**
@@ -208,6 +216,8 @@ public class ConfiguracionEmpresa {
         assert user != null : "El usuarion no puede ser nulo";
         if(GestorEmpresa.getInstance().puedeEliminarMozo(mozoId))
             mozos.eliminaMozo(mozoId, user);
+
+        invariante();
     };
 
     /**
@@ -222,6 +232,8 @@ public class ConfiguracionEmpresa {
         assert estado != null : "El estado no puede ser nulo";
         if(GestorEmpresa.getInstance().puedeDefinirEstadoMozo())
             mozos.cambiarEstadoMozo(mozoId, estado);
+
+        invariante();
     }
 
     /**
@@ -266,6 +278,8 @@ public class ConfiguracionEmpresa {
         assert nuevaMesa != null : "La mesa no puede ser nula";
         assert user != null : "El usuario no puede ser nulo";
         mesas.agregarMesa(nuevaMesa, user);
+
+        invariante();
     };
 
     /**
@@ -284,6 +298,8 @@ public class ConfiguracionEmpresa {
         assert mesaActualizada != null : "La mesa no puede ser nula";
         assert user != null : "El usuario no puede ser nulo";
         mesas.actulizarMesa(mesaActualizada, nroMesa, user);
+
+        invariante();
     };
 
     /**
@@ -300,6 +316,8 @@ public class ConfiguracionEmpresa {
         assert user != null : "El usuario no puede ser nulo";
         if(GestorEmpresa.getInstance().puedeEliminarMesa(nroMesa))
             mesas.eliminarMesa(nroMesa, user);
+
+        invariante();
     };
 
     //PRODUCTOS
@@ -334,6 +352,8 @@ public class ConfiguracionEmpresa {
         assert nuevoProducto != null : "El producto no puede ser nulo";
         assert user != null : "El usuarion no puede ser nulo";
         productos.agregarProducto(nuevoProducto, user);
+
+        invariante();
     };
 
     /**
@@ -352,6 +372,8 @@ public class ConfiguracionEmpresa {
         assert productoActualizado != null : "El producto no puede ser nulo";
         assert user != null : "El usuarion no puede ser nulo";
         productos.actulizarProducto(productoActualizado, productoId, user);
+
+        invariante();
     };
 
     /**
@@ -368,6 +390,8 @@ public class ConfiguracionEmpresa {
         assert user != null : "El usuarion no puede ser nulo";
         if(GestorEmpresa.getInstance().puedeEliminarProducto(idProducto))
             productos.eliminarProducto(idProducto, user);
+
+        invariante();
 
     };
 
@@ -408,6 +432,8 @@ public class ConfiguracionEmpresa {
         assert nuevoOperario != null : "El operario no puede ser nulo";
         assert user != null : "El usuarion no puede ser nulo";
         operarios.agregarOperario(nuevoOperario, user);
+
+        invariante();
     };
 
     /**
@@ -426,6 +452,8 @@ public class ConfiguracionEmpresa {
         assert operarioActualizado != null : "El operario actualizado no puede ser nulo";
         assert user != null : "El usuarion no puede ser nulo";
         operarios.actualizarOperario(operarioActualizado, idOperario, user);
+
+        invariante();
     };
 
     /**
@@ -441,6 +469,8 @@ public class ConfiguracionEmpresa {
         assert password != null : "La contraseña no puede ser nula";
         assert newPassword != null : "La nueva contraseña no puede ser nula";
         operarios.cambiarContrasenia(password, newPassword, idOperario);
+
+        invariante();
     }
 
     /**
@@ -456,6 +486,8 @@ public class ConfiguracionEmpresa {
     public void eliminarOperario(int idOperario, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, OperarioNoEncontradoException {
         assert user != null : "El usuarion no puede ser nulo";
         operarios.eliminarOperario(idOperario, user);
+
+        invariante();
     };
 
     /**
@@ -474,4 +506,13 @@ public class ConfiguracionEmpresa {
         return operarios.login(nombreDeUsuario,password);
     }
 
+    /**
+     * Invariante de clase
+     */
+    private void invariante(){
+        assert this.productos != null : "Los productos no pueden ser nulos";
+        assert this.mesas != null : "Las mesas no pueden ser nulas";
+        assert this.operarios != null : "Los operarios no pueden ser nulos";
+        assert this.mozos != null : "Los mozos no pueden ser nulos";
+    }
 }

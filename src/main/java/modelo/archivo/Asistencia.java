@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import enums.EstadoMozos;
 import modelo.configEmpresa.Mozo;
 
 
@@ -24,16 +25,23 @@ public class Asistencia implements Serializable {
      * @param mozo del cual se desea registrar el estado
      * @param estado en el que se encuentra el mozo (Activo, De Franco o Ausente) //Ver Enums
 	 * @param fecha : fecha de la asistencia
-     * pre: Mozo debe ser distinto de Null y el estado cumplir con los Strings creados como "enums"
-     * post: genera el registro de asistencia de un mozo para el día de la fecha
+     * pre: Mozo debe ser distinto de Null
+	 *      el estado cumplir con los Strings creados como "enums"
+	 *      fecha != null
+     * post: genera el registro de asistencia de un mozo para el día ingresado
      */
     public Asistencia(Mozo mozo, String estado, GregorianCalendar fecha){
-		assert  mozo != null : "El mozo no puede ser nulo";
-		assert  estado != null && !estado.isBlank() && !estado.isEmpty() : "El estado no puede ser nulo";
+		assert mozo != null : "El mozo no puede ser nulo";
+		assert estado != null && !estado.isBlank() && !estado.isEmpty() : "El estado no puede ser nulo";
+		assert fecha != null : "La fecha no puede ser nula";
 
 		this.fecha = fecha;
 		this.mozo = mozo;
 		this.estado = estado;
+
+		assert this.estado.equals(estado) : "No se asigno correctamente el estado";
+		assert this.mozo == mozo : "No se asigno correctamente el mozo";
+		assert this.fecha == fecha : "No se asigno correctamente la fecha";
 	}
     
     /**

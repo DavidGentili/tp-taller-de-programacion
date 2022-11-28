@@ -37,6 +37,8 @@ public class Archivo implements Serializable {
 		comandas = new ArrayList<>();
 		asignacionesMozoMesa = new ArrayList<>();
 		registroDeAsistencia = new ArrayList<>();
+
+		invariante();
 	}
     
     
@@ -81,6 +83,8 @@ public class Archivo implements Serializable {
 		if(actual != null)
 			throw new FacturaYaExistenteException("La factura ya se encuentra en el sistema");
 		facturas.add(factura);
+
+		invariante();
 	};
 	
 	/**
@@ -100,6 +104,8 @@ public class Archivo implements Serializable {
 		if(comanda.getEstado() != EstadoComanda.CERRADA)
 			throw new ComandaAbiertaException("La comanda se encuentra abierta");
 		comandas.add(comanda);
+
+		invariante();
 	}
 	
 	/**
@@ -116,6 +122,8 @@ public class Archivo implements Serializable {
 	public void agregaMozoMesa(MozoMesa mozoMesa) {
 		assert mozoMesa != null : "La relacion no puede ser nula";
 		asignacionesMozoMesa.add(mozoMesa);
+
+		invariante();
 	}
 
 	/**
@@ -125,6 +133,8 @@ public class Archivo implements Serializable {
 	public void agregaMozoMesa(ArrayList<MozoMesa> asignaciones){
 		assert asignaciones != null : "Las asignaciones no pueden ser nulas";
 		asignacionesMozoMesa.addAll(asignaciones);
+
+		invariante();
 	}
 
 
@@ -142,6 +152,8 @@ public class Archivo implements Serializable {
 	public void agregaRegistroDeAsistencia(Asistencia registroDeAsistencia) {
 		assert registroDeAsistencia != null : "Las asitencias no pueden ser nulas";
 		this.registroDeAsistencia.add(registroDeAsistencia);
+
+		invariante();
 	}
 
 	/**
@@ -156,6 +168,8 @@ public class Archivo implements Serializable {
 			Asistencia asistencia = new Asistencia(mozo, mozo.getEstado().toString(), fecha);
 			registroDeAsistencia.add(asistencia);
 		}
+
+		invariante();
 	}
 
 	/**
@@ -237,6 +251,8 @@ public class Archivo implements Serializable {
 	public void almacenarArchivo() throws ArchivoNoInciliazadoException, IOException {
 		ArchivoDTO file = new ArchivoDTO(this);
 		file.almacenarArchivo();
+
+		invariante();
 	}
 
 	/**
@@ -249,6 +265,15 @@ public class Archivo implements Serializable {
 		comandas = file.getComandas();
 		asignacionesMozoMesa = file.getAsignacionesMozoMesa();
 		registroDeAsistencia = file.getRegistroDeAsistencia();
+
+		invariante();
+	}
+
+	private void invariante(){
+		assert this.registroDeAsistencia != null : "El registro de asistencia no puede ser nulo";
+		assert this.comandas != null : "El archivo de comandas no puede ser nulo";
+		assert this.facturas != null : "La coleccion de facturas no puede ser nula";
+		assert this.asignacionesMozoMesa != null : "El registro de asignaciones no puede ser nulo"
 	}
 
 }
