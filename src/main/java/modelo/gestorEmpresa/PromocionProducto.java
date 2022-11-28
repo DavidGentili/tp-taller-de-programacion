@@ -6,6 +6,7 @@ import modelo.configEmpresa.Producto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class PromocionProducto extends Promocion implements Serializable {
 	private Producto producto;
@@ -101,6 +102,20 @@ public class PromocionProducto extends Promocion implements Serializable {
 	@Override
 	public boolean aplicaPromocion(ArrayList<Pedido> pedidos, FormasDePago formaDePago) {
 		if(!activa || !FacturaHelpers.correspondeDia(dias))
+			return false;
+		boolean aplica = false;
+		int i = 0;
+		while (i < pedidos.size() && !aplica){
+			if(pedidos.get(i).getProducto().getId() == producto.getId())
+				aplica = true;
+			i++;
+		}
+		return aplica;
+	}
+
+	@Override
+	public boolean aplicaPromocion(ArrayList<Pedido> pedidos, FormasDePago formasDePago, GregorianCalendar fecha){
+		if(!activa || !FacturaHelpers.correspondeDia(dias, fecha))
 			return false;
 		boolean aplica = false;
 		int i = 0;

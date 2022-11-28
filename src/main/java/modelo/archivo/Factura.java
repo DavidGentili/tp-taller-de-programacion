@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 
 import enums.FormasDePago;
 import modelo.configEmpresa.Mesa;
@@ -49,6 +50,7 @@ public class Factura implements Serializable {
      * pre: pedidos != null
 	 *      mesa != null
 	 *      la forma de pago se debe encontrar dentro los tipos enunciados en los enums
+	 *      las promociones deben aplicarse a la forma de pago, dia y lista de pedidos
      * post: Instancia la factura con los datos relacionados a la misma
      */
     public Factura(Mesa mesa, ArrayList<Pedido> pedidos, ArrayList<Promocion> promocionesAplicadas, FormasDePago formaDePago){
@@ -65,6 +67,8 @@ public class Factura implements Serializable {
 		this.total = calculaTotal();
 		this.id = nroFactura;
 		nroFactura++;
+
+		invariante();
 	}
 
 	/**
@@ -90,6 +94,8 @@ public class Factura implements Serializable {
 		this.total = calculaTotal();
 		this.id = nroFactura;
 		nroFactura++;
+
+		invariante();
 	}
 
 	/**
@@ -171,7 +177,6 @@ public class Factura implements Serializable {
 	 * @return promociones aplicadas en la factura instanciada
 	 */
 	public ArrayList<Promocion> getPromocionesAplicadas() {return promocionesAplicadas;}
-
 	
 	
 	/**
@@ -195,6 +200,21 @@ public class Factura implements Serializable {
 	public String toString(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		return String.format("%-4d %-20s %-20s $%10.1f", id, sdf.format(fecha.getTime()), formaDePago.toString(), total);
+	}
+
+	/**
+	 * Invariante de clase
+	 */
+	private void invariante(){
+		boolean aplica = true;
+		Iterator<Promocion> it = promocionesAplicadas.iterator();
+		while(it.hasNext() && aplica)
+			aplica = it.next().aplicaPromocion(pedidos, formaDePago, fecha);
+		assert aplica : "Hay promociones que no aplican a la factura";
+		assert mesa != null : "La mesa no puede ser nula";
+		assert fecha != null : "La fecha no puede ser nula";
+		assert formaDePago != null : "La forma de pago no puede ser nula";
+		assert pedidos != null : "Los pedidos no pueden ser nulos";
 	}
     
 }

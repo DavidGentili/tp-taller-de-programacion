@@ -5,6 +5,7 @@ import helpers.FacturaHelpers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class PromocionTemp extends Promocion implements Serializable {
 	private FormasDePago formaPago;
@@ -63,6 +64,11 @@ public class PromocionTemp extends Promocion implements Serializable {
 	@Override
 	public boolean aplicaPromocion(ArrayList<Pedido> pedidos, FormasDePago formaDePago) {
 		return FacturaHelpers.correspondeDia(dias) && this.formaPago == formaDePago;
+	}
+
+	@Override
+	public boolean aplicaPromocion(ArrayList<Pedido> pedidos, FormasDePago formaDePago, GregorianCalendar fecha){
+		return FacturaHelpers.correspondeDia(dias, fecha) && this.formaPago == formaDePago;
 	}
 
 	@Override
