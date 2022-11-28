@@ -1,6 +1,7 @@
 package modelo.configEmpresa;
 
 import enums.EstadoMozos;
+import helpers.FechasHelpers;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -37,6 +38,7 @@ public class Mozo implements Serializable {
         this.id = nroMozos;
         nroMozos++;
 
+        invariante();
         assert this.nombreApellido == nombreApellido : "No se asigno correctamente el nombre y apellido del mozo";
         assert this.fechaNacimiento == fechaNacimiento : "No se asigno correctamente la fecha de naciminento";
         assert this.cantHijos == cantHijos : "No se asigno correctamente la cantidad de hijos";
@@ -117,7 +119,8 @@ public class Mozo implements Serializable {
 
         this.nombreApellido = nombreApellido;
 
-        assert this.nombreApellido == nombreApellido : "No se asigno correctamente el nombre y apellido del mozo";
+        invariante();
+        assert this.nombreApellido.equals(nombreApellido) : "No se asigno correctamente el nombre y apellido del mozo";
     }
 
     /**
@@ -131,7 +134,8 @@ public class Mozo implements Serializable {
 
         this.fechaNacimiento = fechaNacimiento;
 
-        assert this.fechaNacimiento == fechaNacimiento : "No se asigno correctamente la fecha de naciminento";
+        invariante();
+        assert this.fechaNacimiento.equals(fechaNacimiento) : "No se asigno correctamente la fecha de naciminento";
     }
 
     /**
@@ -145,6 +149,7 @@ public class Mozo implements Serializable {
 
         this.cantHijos = cantHijos;
 
+        invariante();
         assert this.cantHijos == cantHijos : "No se asigno correctamente la cantidad de hijos";
     }
 
@@ -157,6 +162,8 @@ public class Mozo implements Serializable {
     protected void setEstado(EstadoMozos estado) {
         assert estado != null : "El estado no puede ser nulo";
         this.estado = estado;
+        invariante();
+        assert this.estado.equals(estado) : "No se asigno correctamente el estado";
     };
 
     /**
@@ -177,6 +184,11 @@ public class Mozo implements Serializable {
         this.cantHijos = other.cantHijos;
         this.nombreApellido = other.nombreApellido;
         this.fechaNacimiento = other.fechaNacimiento;
+
+        invariante();
+        assert cantHijos == other.getCantHijos() : "No se asigno correctamente la cantidad de hijos";
+        assert nombreApellido.equals(other.getNombreApellido()) : "No se asigno correctamente el nombre y apellido";
+        assert fechaNacimiento.equals(other.getFechaNacimiento()) : "No se asigno correctamente la fecha de nacimiento";
     }
 
     /**
@@ -187,6 +199,11 @@ public class Mozo implements Serializable {
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YY");
         return String.format("%4d %-12s %-10s %2d %-10s", id, nombreApellido, sdf.format(fechaNacimiento.getTime()), cantHijos, estado);
+    }
 
+    private void invariante(){
+        assert cantHijos >= 0 : "La cantidad de hijos no puede ser negativa";
+        assert nombreApellido != null && !nombreApellido.isEmpty() && !nombreApellido.isBlank() : "El nombre y apellido no puede ser nulo ni vacio";
+        assert FechasHelpers.isOver18(fechaNacimiento) : "El mozo debe ser mayor de 18 años";
     }
 }

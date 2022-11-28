@@ -42,6 +42,7 @@ public class Operario implements Serializable {
         this.id = nroOperario;
         nroOperario++;
 
+        invariante();
         assert this.nombreApellido == nombreApellido : "No se asigno correctamente el nombre del operario";
         assert this.nombreUsuario == nombreUsuario : "No se asigno correctamente el nombre del usuario";
         assert this.password == password : "No se asigno correctamente la contraseña";
@@ -145,6 +146,9 @@ public class Operario implements Serializable {
         this.nombreApellido = other.nombreApellido;
         this.nombreUsuario = other.nombreUsuario;
         this.activo = other.activo;
+        invariante();
+        assert nombreApellido.equals(other.getNombreApellido()) : "No se asigno correctamente el nombre y apellido";
+        assert nombreUsuario.equals(other.getNombreUsuario()) : "No se asigno correctamente el nombre de usuario";
     }
 
     /**
@@ -174,6 +178,9 @@ public class Operario implements Serializable {
             throw new ContraseniaIncorrectaException("La nueva contraseña no cumple con los requisitos");
         this.password = newPassword;
         changePassword = true;
+
+        invariante();
+        assert this.password == newPassword : "No se asigno correctamente la contraseña";
     }
 
     /**
@@ -191,5 +198,11 @@ public class Operario implements Serializable {
     @Override
     public String toString() {
         return String.format("%4d %-12s %-12s", id, nombreApellido, nombreUsuario);
+    }
+
+    private void invariante(){
+        assert OperarioHelpers.correctPassword(password) : "La contraseña no se ajusta al formato adecuado";
+        assert nombreApellido != null && !nombreApellido.isBlank() && !nombreApellido.isEmpty() : "El nombre y apellido debe ser distinto de nulo y vacio";
+        assert nombreUsuario != null && !nombreUsuario.isBlank() && !nombreUsuario.isEmpty() : "El nombre de usuario debe ser distinto de nulo y vacio";
     }
 }

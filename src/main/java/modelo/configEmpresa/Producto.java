@@ -253,6 +253,7 @@ public class Producto implements Serializable, Cloneable {
      * El invariante que debe cumplir la clase
      */
     private void invariante(){
+        assert nombre != null && !nombre.isEmpty() && !nombre.isBlank() : "El nombre no debe ser nulo, ni vacio";
         assert precioCosto < precioVenta : "El precio de costo debe ser menor al precio de venta";
         assert stock >= 0 : "El stock no puede ser negativo";
     }
