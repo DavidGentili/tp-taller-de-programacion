@@ -73,7 +73,7 @@ public class GestorDeMozos {
             throw new MozoYaAgregadoException("Ya existe un mozo con dicho id");
         mozos.add(nuevoMozo);
 
-        assert nuevoMozo == getMozoById(nuevoMozo.getId()) : "El mozo no fue añadido correctamente a la coleccion";
+        assert mozos.contains(nuevoMozo) : "El mozo no fue añadido correctamente a la coleccion";
     }
 
     /**
@@ -124,7 +124,7 @@ public class GestorDeMozos {
             throw new MozoNoEncontradoException("Mozo no encontrado");
         mozos.remove(mozo);
 
-        assert getMozoById(mozoId) == null : "No se elimino el mozo correctamente";
+        assert !mozos.contains(mozo) : "No se elimino el mozo correctamente";
     };
 
     /**
@@ -145,7 +145,7 @@ public class GestorDeMozos {
             throw new MozoNoEncontradoException("Mozo no encontrado");
         mozo.setEstado(estado);
 
-        assert mozo.getEstado() == estado : "No se asigno correctamente el estado";
+        assert mozo.getEstado().equals(estado) : "No se asigno correctamente el estado";
     }
 
     /**

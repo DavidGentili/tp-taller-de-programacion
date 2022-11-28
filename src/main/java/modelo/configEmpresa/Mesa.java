@@ -28,6 +28,7 @@ public class Mesa implements Serializable, Cloneable{
         this.cantSillas = cantSillas;
         this.estado = EstadoMesas.LIBRE;
 
+        invariante();
         assert this.nroMesa == nroMesa : "No se asigno correctamente el numero de mesa";
         assert this.cantSillas == cantSillas : "No se asigno correctamente la cantidad de sillas";
         assert  this.estado == EstadoMesas.LIBRE : "No se asigno correctamente el estado inicial de la mesa";
@@ -61,6 +62,7 @@ public class Mesa implements Serializable, Cloneable{
 
         this.cantSillas = cantSillas;
 
+        invariante();
         assert this.cantSillas == cantSillas : "No se asigno correctamente la cantidad de sillas";
     }
 
@@ -82,7 +84,8 @@ public class Mesa implements Serializable, Cloneable{
             throw new MesaYaOcupadaException("La mesa se encuentra ocupada");
         this.estado = EstadoMesas.OCUPADA;
 
-        assert this.estado == EstadoMesas.OCUPADA : "La mesa no se ocupo correctamente";
+        invariante();
+        assert this.estado.equals(EstadoMesas.OCUPADA) : "La mesa no se ocupo correctamente";
     }
 
     /**
@@ -94,7 +97,8 @@ public class Mesa implements Serializable, Cloneable{
             throw new MesaYaLiberadaException("La mesa se encuentra libre");
         this.estado = EstadoMesas.LIBRE;
 
-        assert this.estado == EstadoMesas.LIBRE : "La mesa no se libero correctamente";
+        invariante();
+        assert this.estado.equals(EstadoMesas.LIBRE) : "La mesa no se libero correctamente";
     }
 
     /**
@@ -122,6 +126,11 @@ public class Mesa implements Serializable, Cloneable{
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    private void invariante(){
+        assert nroMesa >= 0 : "El numero de la mesa no puede ser negativo";
+        assert ((nroMesa > 0) ? cantSillas >= 2 : cantSillas > 0) : "La cantidad de sillas es incorrecta";
     }
 }
 

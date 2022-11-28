@@ -52,7 +52,8 @@ public class ConfiguracionEmpresa {
 
     /**
      * Se encarga de guardar la configuracion de la empresa
-     * (faltan agregar las excepciones correspondientes)
+     * @throws ArchivoNoInciliazadoException Si no se inicializo correcatmente el archivo
+     * @throws IOException Si hay un inconveniente al momento de guardar el archivo
      */
     public void guardarConfiguracion() throws ArchivoNoInciliazadoException, IOException {
         ConfiguracionEmpresaDTO persitencia = new ConfiguracionEmpresaDTO(this);
@@ -61,7 +62,6 @@ public class ConfiguracionEmpresa {
 
     /**
      * Se encarga de recuperar la configuracion de la empresa
-     * (faltan agregar las excepciones correspondientes)
      */
     public void recuperarConfiguracion() {
         ConfiguracionEmpresaDTO pers = new ConfiguracionEmpresaDTO();

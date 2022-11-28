@@ -71,7 +71,7 @@ public class GestorDeMesas {
             throw new MesaYaExistenteException("Ya existe una mesa con dicho id");
         mesas.add(nuevaMesa);
 
-        assert getMesaNroMesa(nuevaMesa.getNroMesa()) == nuevaMesa : "No se agrego correctamente la nueva mesa";
+        assert mesas.contains(nuevaMesa) : "No se agrego correctamente la nueva mesa";
     };
 
     /**
@@ -124,7 +124,7 @@ public class GestorDeMesas {
             throw new MesaNoEncontradaException("No se encontro la mesa");
         mesas.remove(mesa);
 
-        assert getMesaNroMesa(nroMesa) == null : "No se elimino correctamente la mesa";
+        assert !mesas.contains(mesa) : "No se elimino correctamente la mesa";
     };
 
 

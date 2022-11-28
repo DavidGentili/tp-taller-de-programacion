@@ -22,7 +22,7 @@ public class GestorDeProductos {
     protected void setProductos(ArrayList<Producto> productos){
         assert productos != null : "Los productos no deben ser nulo";
         this.productos = productos;
-        assert this.productos == productos : "No se asigno correctamente los productos";
+        assert this.productos.equals(productos) : "No se asigno correctamente los productos";
     }
 
     /**
@@ -46,6 +46,7 @@ public class GestorDeProductos {
                 producto = productos.get(i);
             i++;
         }
+
         return producto;
     };
 
@@ -70,7 +71,7 @@ public class GestorDeProductos {
             throw new ProductoYaExistenteException("El id del producto ya existe");
         productos.add(nuevoProducto);
 
-        assert getProductoById(nuevoProducto.getId()) != null : "No se agrego correctamente el producto";
+        assert productos.contains(nuevoProducto) : "No se agrego correctamente el producto";
     };
 
     /**
@@ -122,7 +123,7 @@ public class GestorDeProductos {
             throw new ProductoNoEncontradoException("No se encontro el producto buscado");
         productos.remove(producto);
 
-        assert getProductoById(idProducto) == null : "No se elimino correctamente el producto";
+        assert !productos.contains(producto) : "No se elimino correctamente el producto";
 
     };
 

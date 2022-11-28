@@ -154,6 +154,7 @@ public class GestorDeOperarios {
             throw new OperarioNoEncontradoException("No se encontro el operario al que se le desea cambiar la contraseña");
         op.cambiarContrasenia(password, newPassword);
 
+        assert op.matchPassword(newPassword) : "No se cambio correctamente la contraseña";
     }
 
     /**
@@ -178,7 +179,7 @@ public class GestorDeOperarios {
             throw new OperarioNoEncontradoException("No se encontro al operario buscado");
         operarios.remove(operario);
 
-        assert getOperarioById(idOperario) == null : "No se elimino correctamente el operario";
+        assert !operarios.contains(operario) : "No se elimino correctamente el operario";
     };
 
     /**
