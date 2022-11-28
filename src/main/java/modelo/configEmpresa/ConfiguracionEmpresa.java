@@ -13,6 +13,7 @@ import exceptions.persistencia.ArchivoNoInciliazadoException;
 import exceptions.productos.ProductoEnPedidoException;
 import exceptions.productos.ProductoNoEncontradoException;
 import exceptions.productos.ProductoYaExistenteException;
+import helpers.OperarioHelpers;
 import modelo.gestorEmpresa.GestorEmpresa;
 
 import java.io.IOException;
@@ -168,6 +169,9 @@ public class ConfiguracionEmpresa {
      * post: se añadira un nuevo mozo a la coleccion
      */
     public void agregaMozo(Mozo nuevoMozo, Operario user) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException {
+        assert nuevoMozo != null : "El mozo no puede ser nulo";
+        assert user != null : "El ususarion o puede ser nulo";
+
         if(GestorEmpresa.getInstance().puedeAgregarMozo())
             mozos.agregaMozo(nuevoMozo,user);
     }
@@ -185,6 +189,8 @@ public class ConfiguracionEmpresa {
      * post: el mozo del sistema tomara los valores de mozoActulizado,
      */
     public void actualizarMozo(Mozo mozoActualizado, int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MozoNoEncontradoException {
+        assert mozoActualizado != null : "El mozo no puede ser nulo";
+        assert user != null : "El usuarion no puede ser nulo";
         mozos.actualizarMozo(mozoActualizado, mozoId, user);
     };
 
@@ -199,6 +205,7 @@ public class ConfiguracionEmpresa {
      * post: Se eliminara el mozo con el id ingresado de la coleccion
      */
     public void eliminaMozo(int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MozoNoEncontradoException, EmpresaAbiertaException {
+        assert user != null : "El usuarion no puede ser nulo";
         if(GestorEmpresa.getInstance().puedeEliminarMozo(mozoId))
             mozos.eliminaMozo(mozoId, user);
     };
@@ -212,10 +219,15 @@ public class ConfiguracionEmpresa {
      * @throws MozoNoEncontradoException : Si el mozo no es encontrado;
      */
     public void cambiarEstadoMozo(int mozoId, EstadoMozos estado) throws IdIncorrectoException, MozoNoEncontradoException, EmpresaAbiertaException {
+        assert estado != null : "El estado no puede ser nulo";
         if(GestorEmpresa.getInstance().puedeDefinirEstadoMozo())
             mozos.cambiarEstadoMozo(mozoId, estado);
     }
 
+    /**
+     * Limpia le estado de todos los mozos, colocando en null los estados de cada mozo
+     * Recomendable para limipiar estados al final del dia
+     */
     public void clearEstadoMozos(){
         mozos.clearEstadoMozos();
     }
@@ -251,6 +263,8 @@ public class ConfiguracionEmpresa {
      * post: Se agrega la meza a la coleccion de mesas
      */
     public void agregarMesa(Mesa nuevaMesa, Operario user) throws UsuarioNoAutorizadoException, MesaYaExistenteException {
+        assert nuevaMesa != null : "La mesa no puede ser nula";
+        assert user != null : "El usuario no puede ser nulo";
         mesas.agregarMesa(nuevaMesa, user);
     };
 
@@ -267,6 +281,8 @@ public class ConfiguracionEmpresa {
      * post: Se actualiza la mesa en la coleccion.
      */
     public void actulizarMesa(Mesa mesaActualizada, int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MesaNoEncontradaException{
+        assert mesaActualizada != null : "La mesa no puede ser nula";
+        assert user != null : "El usuario no puede ser nulo";
         mesas.actulizarMesa(mesaActualizada, nroMesa, user);
     };
 
@@ -281,6 +297,7 @@ public class ConfiguracionEmpresa {
      * post: Se elimina la mesa de la coleccion
      */
     public void eliminarMesa(int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, MesaNoEncontradaException, MesaYaOcupadaException {
+        assert user != null : "El usuario no puede ser nulo";
         if(GestorEmpresa.getInstance().puedeEliminarMesa(nroMesa))
             mesas.eliminarMesa(nroMesa, user);
     };
@@ -314,6 +331,8 @@ public class ConfiguracionEmpresa {
      * post: Se agrega el producto a la coleccion de mesas
      */
     public void agregarProducto(Producto nuevoProducto, Operario user) throws UsuarioNoAutorizadoException, ProductoYaExistenteException {
+        assert nuevoProducto != null : "El producto no puede ser nulo";
+        assert user != null : "El usuarion no puede ser nulo";
         productos.agregarProducto(nuevoProducto, user);
     };
 
@@ -330,6 +349,8 @@ public class ConfiguracionEmpresa {
      * post: Se actualiza el producto en la coleccion.
      */
     public void actulizarProducto(Producto productoActualizado, int productoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, ProductoNoEncontradoException{
+        assert productoActualizado != null : "El producto no puede ser nulo";
+        assert user != null : "El usuarion no puede ser nulo";
         productos.actulizarProducto(productoActualizado, productoId, user);
     };
 
@@ -344,6 +365,7 @@ public class ConfiguracionEmpresa {
      * post: Se elimina el producto de la coleccion
      */
     public void eliminarProducto(int idProducto, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, ProductoNoEncontradoException, ProductoEnPedidoException {
+        assert user != null : "El usuarion no puede ser nulo";
         if(GestorEmpresa.getInstance().puedeEliminarProducto(idProducto))
             productos.eliminarProducto(idProducto, user);
 
@@ -383,6 +405,8 @@ public class ConfiguracionEmpresa {
      * post: Se agrega el operario a la coleccion de mesas
      */
     public void agregarOperario(Operario nuevoOperario, Operario user) throws UsuarioNoAutorizadoException, OperarioYaExistenteException {
+        assert nuevoOperario != null : "El operario no puede ser nulo";
+        assert user != null : "El usuarion no puede ser nulo";
         operarios.agregarOperario(nuevoOperario, user);
     };
 
@@ -399,6 +423,8 @@ public class ConfiguracionEmpresa {
      * post: Se actualiza el operario en la coleccion.
      */
     public void actualizarOperario(Operario operarioActualizado, int idOperario, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, OperarioNoEncontradoException {
+        assert operarioActualizado != null : "El operario actualizado no puede ser nulo";
+        assert user != null : "El usuarion no puede ser nulo";
         operarios.actualizarOperario(operarioActualizado, idOperario, user);
     };
 
@@ -412,6 +438,8 @@ public class ConfiguracionEmpresa {
      * @throws IdIncorrectoException Si el id del operario es incorrecto
      */
     public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException, IdIncorrectoException {
+        assert password != null : "La contraseña no puede ser nula";
+        assert newPassword != null : "La nueva contraseña no puede ser nula";
         operarios.cambiarContrasenia(password, newPassword, idOperario);
     }
 
@@ -426,6 +454,7 @@ public class ConfiguracionEmpresa {
      * post: Se elimina el opeario de la coleccion
      */
     public void eliminarOperario(int idOperario, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException, OperarioNoEncontradoException {
+        assert user != null : "El usuarion no puede ser nulo";
         operarios.eliminarOperario(idOperario, user);
     };
 
@@ -440,6 +469,8 @@ public class ConfiguracionEmpresa {
      * post: retorna el operario deseado.
      */
     public Operario login(String nombreDeUsuario, String password) throws DatosLoginIncorrectosException, OperarioInactivoException {
+        assert nombreDeUsuario != null && !nombreDeUsuario.isBlank() && !nombreDeUsuario.isEmpty() : "El nombre de usuario no puede ser nulo ni vacio";
+        assert password != null && !password.isBlank() && !password.isEmpty() : "la constraseña no puede ser nulo ni vacio";
         return operarios.login(nombreDeUsuario,password);
     }
 
