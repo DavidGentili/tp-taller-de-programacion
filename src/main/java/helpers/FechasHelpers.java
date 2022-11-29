@@ -7,10 +7,20 @@ import java.util.GregorianCalendar;
 
 public class FechasHelpers {
 
+    /**
+     * Retorna si una persona es mayor de 18 años
+     * @param birthday fecha de nacimiento
+     * @return si es mayor de 18 años
+     */
     public static boolean isOver18(GregorianCalendar birthday){
         return diferenceYears(birthday) >= 18;
     }
 
+    /**
+     * Retorna la diferencia de años entre una fecha y el momento actual
+     * @param date fecha con la que calcular la diferencia
+     * @return diferencia en años
+     */
     public static int diferenceYears(GregorianCalendar date){
         boolean response = false;
         int DAY = GregorianCalendar.DAY_OF_MONTH;
@@ -23,6 +33,12 @@ public class FechasHelpers {
         return yearDif;
     }
 
+    /**
+     * Retorna si dos fechas transcurren en el mismo dia
+     * @param current primera fecha
+     * @param other segunda fecha
+     * @return las dos fechas son el mismo dia
+     */
     public static boolean isSameDay(GregorianCalendar current, GregorianCalendar other){
         int DAY = GregorianCalendar.DAY_OF_MONTH;
         int MONTH = GregorianCalendar.MONTH;

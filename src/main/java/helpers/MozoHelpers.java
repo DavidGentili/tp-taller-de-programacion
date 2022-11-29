@@ -14,13 +14,24 @@ import java.util.GregorianCalendar;
 
 public class MozoHelpers {
 
+    /**
+     * Retorna la cantidad de mozos que poseen el estado ingresado
+     * @param mozos lista de mozos
+     * @param estado estado buscado
+     * @return cantidad de mozos que poseen el estado ingresado
+     */
     public static int getCantidadDeMozosEnEstado(ArrayList<Mozo> mozos, EstadoMozos estado){
         int cont = 0;
         for(int i = 0 ; i < mozos.size() ; i++)
-            cont += mozos.get(i).getEstado() == estado ? 1 : 0;
+            cont += mozos.get(i).getEstado().equals(estado) ? 1 : 0;
         return cont;
     }
 
+    /**
+     * Retorna si hay algun mozo dentro de la lista que su estado sea null
+     * @param mozos lista de mozos
+     * @return hay algun mozo dentro de la lista que su estado sea null
+     */
     public static boolean thereIsMozoWithoutState(ArrayList<Mozo> mozos){
         boolean thereIs = false;
         int i = 0;
@@ -32,11 +43,22 @@ public class MozoHelpers {
         return thereIs;
     }
 
+    /**
+     * Chequea el nombre y apellido de un mozo
+     * @param name Nombre a chequear
+     * @throws ErrorAlAgregarMozoException Si el nombre es invalido
+     */
     public static void checkNombreYApellido(String name) throws ErrorAlAgregarMozoException {
         if(name == null || name.isBlank() || name.isEmpty())
             throw new ErrorAlAgregarMozoException("El nombre del mozo no es correcto");
     }
 
+    /**
+     * Retorna una fecha de nacimiento a partir de un string con formato dd/MM/yyyy
+     * @param nacimiento fecha que se quiere convertir
+     * @return fecha correspondiente
+     * @throws ErrorAlAgregarMozoException si el formato de la fecha es invalida
+     */
     public static GregorianCalendar getFechaDeNacimiento(String nacimiento) throws ErrorAlAgregarMozoException {
         if(nacimiento == null || nacimiento.isEmpty() || nacimiento.isBlank())
             throw new ErrorAlAgregarMozoException("La fecha de nacimiento no es correcta");
@@ -53,6 +75,11 @@ public class MozoHelpers {
 
     }
 
+    /**
+     * retorna si una cantidad de hijos es valida
+     * @param cantHijos cantidad de hijos
+     * @throws ErrorAlAgregarMozoException Error si la cantidad de hijos es invalida
+     */
     public static void checkCantHijos(int cantHijos) throws ErrorAlAgregarMozoException {
         if (cantHijos < 0 || cantHijos > 16)
             throw new ErrorAlAgregarMozoException("La cantidad de hijos no es valida");
