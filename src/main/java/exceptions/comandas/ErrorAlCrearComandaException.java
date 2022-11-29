@@ -1,5 +1,8 @@
 package exceptions.comandas;
 
+/**
+ * Excepcion emitida cuando no se pudo crear la comanda
+ */
 public class ErrorAlCrearComandaException extends Exception{
     /**
      * Constructs a new exception with {@code null} as its detail message.

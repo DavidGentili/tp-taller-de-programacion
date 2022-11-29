@@ -1,5 +1,8 @@
 package exceptions.controlador;
 
+/**
+ * Excepcion emitida cuando no se pudo eliminar un mozo
+ */
 public class ErrorAlEliminarMozoException extends Exception{
     public ErrorAlEliminarMozoException() {
     }

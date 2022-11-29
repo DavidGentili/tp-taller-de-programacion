@@ -1,7 +1,6 @@
 package exceptions.operarios;
-
 /**
- * Si no se cambio la contraseña del usuario
+ * Excepcion emitida cuando no se cambio la contraseña del usuario
  */
 public class NoSeCambioContraseniaException extends Exception{
 
