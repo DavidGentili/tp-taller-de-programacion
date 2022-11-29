@@ -111,7 +111,6 @@ public class LogoutState implements StateEmpresa{
     /**
      * Actualiza un mozo
      * pre: actualizado != null
-     * mozoId >= 0
      *
      * @param actualizado : mozo con los valores actualizados
      * @param mozoId      : id del mozo a modificar
@@ -124,7 +123,6 @@ public class LogoutState implements StateEmpresa{
 
     /**
      * Elimina el mozo correspondiente a la id
-     * pre: mozoId >= 0;
      *
      * @param mozoId : id del mozo
      * @throws UsuarioNoLogueadoException : si el usuarion no esta logueado
@@ -172,7 +170,6 @@ public class LogoutState implements StateEmpresa{
     /**
      * Actualiza una mesa
      * pre: actualizada != null
-     * mesaId >= 0
      *
      * @param actualizada : mesa con valores nuevos
      * @param nroMesa     : nro de la mesa a actualizar
@@ -185,7 +182,6 @@ public class LogoutState implements StateEmpresa{
 
     /**
      * elimina una mesa con el numero correspondiente
-     * pre: mesa >= 0;
      *
      * @param nroMesa : numero de la mesa a liminar
      * @throws UsuarioNoLogueadoException : si el usuarion no esta logueado
@@ -221,7 +217,6 @@ public class LogoutState implements StateEmpresa{
     /**
      * actualiza el producto con el id correspondiente
      * pre: actualizado != null
-     * idProducto >= 0
      *
      * @param actualizado : producto con los valores actualzados
      * @param idProducto  : id del producto a actualizar
@@ -234,7 +229,6 @@ public class LogoutState implements StateEmpresa{
 
     /**
      * elimina un producto
-     * pre id >= 0
      *
      * @param idProducto id del producto a eliminar
      * @throws UsuarioNoLogueadoException : si el usuarion no esta logueado
@@ -270,7 +264,6 @@ public class LogoutState implements StateEmpresa{
     /**
      * actualiza un operario, correspondiente con el id
      * pre: actualizado != null
-     * idOperario >= 0
      *
      * @param actualizado : operario con los valores actualizados
      * @param idOperario  : id del operario
@@ -295,7 +288,6 @@ public class LogoutState implements StateEmpresa{
 
     /**
      * elimina al operario que corresponde con el id
-     * pre : idOperario >= 0
      *
      * @param idOperario : id del operario a eliminar
      * @throws UsuarioNoLogueadoException : si el usuarion no esta logueado
@@ -363,6 +355,8 @@ public class LogoutState implements StateEmpresa{
 
     /**
      * Asigna un mozo a una mesa
+     * pre: idMozo >= 0
+     * nroMesa >= 0
      *
      * @param mozoId  id del mozo
      * @param nroMesa nro de mesa
@@ -397,8 +391,8 @@ public class LogoutState implements StateEmpresa{
     }
 
     /**
-     * agrega una comanda asignandola a una mesa
-     *
+     * agrega una comanda asignandola a una mes
+     * pre : nroMesa >= 0
      * @param nroMesa nro de la mesa a la cual se asigna la comanda
      * @throws UsuarioNoLogueadoException : si el usuarion no esta logueado
      */
@@ -409,6 +403,8 @@ public class LogoutState implements StateEmpresa{
 
     /**
      * Cierra una comanda segun un tipo de pago y un numero de mesa
+     * pre : nroMesa >= 0
+     *      pago != null
      *
      * @param nroMesa numero de la mesa
      * @param pago    tipo de  pago
@@ -421,6 +417,8 @@ public class LogoutState implements StateEmpresa{
 
     /**
      * agrega un pedido a una comanda, segun un numero de mesa
+     * pre: nroMesa >= 0
+     *      pedido != null
      *
      * @param nroMesa numero de mesa
      * @param pedido  pedido a agregar
@@ -487,7 +485,6 @@ public class LogoutState implements StateEmpresa{
 
     /**
      * Elimina una promocion segun un id
-     * pre: id >= 0
      *
      * @param id : id de la promocion a eliminar
      * @throws UsuarioNoLogueadoException : si el usuarion no esta logueado
@@ -499,7 +496,6 @@ public class LogoutState implements StateEmpresa{
 
     /**
      * Activa una promocion segun un id
-     * pre: id >= 0
      *
      * @param id : id de la promocion a activar
      * @throws UsuarioNoLogueadoException : si el usuarion no esta logueado
@@ -511,7 +507,6 @@ public class LogoutState implements StateEmpresa{
 
     /**
      * Desactiva una promocion segun un id
-     * pre: id >= 0
      *
      * @param id : id de la promocion a desactivar
      * @throws UsuarioNoLogueadoException : si el usuarion no esta logueado
