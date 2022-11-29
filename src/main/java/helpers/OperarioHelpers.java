@@ -1,5 +1,8 @@
 package helpers;
 
+/**
+ * Clase con metodos estaticos, encargada de asistir en las cuestiones relacionadas con los operarios
+ */
 public class OperarioHelpers {
 
     /**

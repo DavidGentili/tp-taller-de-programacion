@@ -3,6 +3,9 @@ package helpers;
 import enums.FormasDePago;
 import exceptions.controlador.ErrorPromocionException;
 
+/**
+ * Clase con metodos estaticos, encargada de asistir en las cuestiones relacionadas con las promociones
+ */
 public class PromocionHelpers {
 
     public static String[] DIAS = {"domingo", "lunes", "martes", "miercoles", "jueves", "viernes", "sabado"};

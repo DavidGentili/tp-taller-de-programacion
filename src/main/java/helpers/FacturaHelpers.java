@@ -7,6 +7,9 @@ import modelo.gestorEmpresa.Promocion;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+/**
+ * Clase con metodos estaticos, encargada de asistir en las cuestiones relacionadas con las facturas
+ */
 public class FacturaHelpers {
 
     public static String[] DIAS = {"domingo", "lunes", "martes", "miercoles", "jueves", "viernes", "sabado"};

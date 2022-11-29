@@ -2,6 +2,9 @@ package helpers;
 
 import exceptions.controlador.ErrorAlCrearProductoException;
 
+/**
+ * Clase con metodos estaticos, encargada de asistir en las cuestiones relacionadas con los productos
+ */
 public class ProductoHelpers {
 
     /**

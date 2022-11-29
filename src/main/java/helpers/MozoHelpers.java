@@ -12,6 +12,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * Clase con metodos estaticos, encargada de asistir en las cuestiones relacionadas con los mozos
+ */
 public class MozoHelpers {
 
     /**

@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * Clase con metodos estaticos, encargada de asistir en las cuestiones relacionadas con las fechas
+ */
 public class FechasHelpers {
 
     /**
