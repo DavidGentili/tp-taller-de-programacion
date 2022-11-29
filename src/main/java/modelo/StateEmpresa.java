@@ -28,7 +28,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 /**
- * Interfacaz que debe cumplir un estado de la empresa
+ * Interfaz que debe cumplir un estado de la empresa
  */
 public interface StateEmpresa {
 
@@ -145,7 +145,6 @@ public interface StateEmpresa {
     /**
      * Actualiza una mesa
      * pre: actualizada != null
-     *      mesaId >= 0
      * @param actualizada : mesa con valores nuevos
      * @param nroMesa : nro de la mesa a actualizar
      * @throws MesaNoEncontradaException Si no se encuentra la mesa
@@ -158,7 +157,6 @@ public interface StateEmpresa {
 
     /**
      * elimina una mesa con el numero correspondiente
-     * pre: mesa >= 0;
      * @param nroMesa : numero de la mesa a liminar
      * @throws MesaNoEncontradaException Si no se encuentra la mesa
      * @throws IdIncorrectoException Si el id es incorrecto
@@ -189,7 +187,6 @@ public interface StateEmpresa {
     /**
      * actualiza el producto con el id correspondiente
      * pre: actualizado != null
-     *      idProducto >= 0
       * @param actualizado : producto con los valores actualzados
      * @param idProducto : id del producto a actualizar
      * @throws ProductoNoEncontradoException Si no se encontro el producto
@@ -202,7 +199,6 @@ public interface StateEmpresa {
 
     /**
      * elimina un producto
-     * pre id >= 0
      * @param idProducto id del producto a eliminar
      * @throws ProductoNoEncontradoException Si no se encontro el producto
      * @throws IdIncorrectoException Si el id es incorrecto
@@ -235,7 +231,6 @@ public interface StateEmpresa {
     /**
      * actualiza un operario, correspondiente con el id
      * pre: actualizado != null
-     *      idOperario >= 0
      * @param actualizado : operario con los valores actualizados
      * @param idOperario : id del operario
      * @throws OperarioNoEncontradoException Si no se encuentra el operario
@@ -248,7 +243,10 @@ public interface StateEmpresa {
 
     /**
      * Cambia la contraseña de un usuario usuario
+     * pre: password != null
+     *      newPassword != null
      * @param password Contraseña actual
+     * @param newPassword nueva contraseña
      * @param idOperario id del operario
      * @throws OperarioNoEncontradoException si no se encuentra el operario con dicho id
      * @throws ContraseniaIncorrectaException si la nueva contraseña no cumple con el formato
@@ -324,6 +322,8 @@ public interface StateEmpresa {
 
     /**
      * Asigna un mozo a una mesa
+     * pre: idMozo >= 0
+     * nroMesa >= 0
      * @param mozoId id del mozo
      * @param nroMesa nro de mesa
      * @param fecha fecha de la asignacion
@@ -356,6 +356,7 @@ public interface StateEmpresa {
 
     /**
      * agrega una comanda asignandola a una mesa
+     * pre : nroMesa >= 0
      * @param nroMesa nro de la mesa a la cual se asigna la comanda
      * @throws EmpresaCerradaException Si la empresa ya esta cerrada
      * @throws MesaYaOcupadaException Si la mesa ya esta ocupada
@@ -367,6 +368,8 @@ public interface StateEmpresa {
 
     /**
      * Cierra una comanda segun un tipo de pago y un numero de mesa
+     * pre : nroMesa >= 0
+     *      pago != null
      * @param nroMesa numero de la mesa
      * @param pago tipo de  pago
      * @throws ComandaYaCerradaException Si la comanda ya esta cerrada
@@ -380,7 +383,8 @@ public interface StateEmpresa {
 
     /**
      * agrega un pedido a una comanda, segun un numero de mesa
-     *
+     * pre: nroMesa >= 0
+     *      pedido != null
      * @param nroMesa numero de mesa
      * @param pedido  pedido a agregar
      * @throws ComandaYaCerradaException      : Si la comanda ya esta cerrada
@@ -432,7 +436,6 @@ public interface StateEmpresa {
 
     /**
      * Elimina una promocion segun un id
-     * pre: id >= 0
      * @param id : id de la promocion a eliminar
      * @throws PromocionNoEncontradaException Si no se encontro la promocion
      * @throws IdIncorrectoException Si el id no es correcto
@@ -443,7 +446,6 @@ public interface StateEmpresa {
 
     /**
      * Activa una promocion segun un id
-     * pre: id >= 0
      * @param id : id de la promocion a activar
      * @throws PromocionNoEncontradaException Si no se encontro la promocion
      * @throws IdIncorrectoException Si el id no es correcto
@@ -454,7 +456,6 @@ public interface StateEmpresa {
 
     /**
      * Desactiva una promocion segun un id
-     * pre: id >= 0
      * @param id : id de la promocion a desactivar
      * @throws PromocionNoEncontradaException Si no se encontro la promocion
      * @throws IdIncorrectoException Si el id no es correcto

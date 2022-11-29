@@ -40,6 +40,7 @@ public class Empresa extends Observable {
         state = new LogoutState(this);
         recuperarEstado();
         usuario = null;
+        invariante();
     }
 
     /**
@@ -61,6 +62,7 @@ public class Empresa extends Observable {
         configuracion.recuperarConfiguracion();
         gestorEmpresa.recuperarEmpresa();
         archivo.recuperarArchivo();
+        invariante();
     }
 
     public void guardarEstado(){
@@ -68,6 +70,7 @@ public class Empresa extends Observable {
             gestorEmpresa.guardarEmpresa();
             configuracion.guardarConfiguracion();
             archivo.almacenarArchivo();
+            invariante();
         } catch (ArchivoNoInciliazadoException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -112,6 +115,7 @@ public class Empresa extends Observable {
     protected void setUsuario(Operario user){
         usuario = user;
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -119,9 +123,13 @@ public class Empresa extends Observable {
      * @param state estado de la empresa
      */
     protected void setState(StateEmpresa state){
+        assert state != null : "El estado de la empresa no puede ser nulo";
         this.state = state;
         setChanged();
         notifyObservers();
+
+        invariante();
+        assert this.state == state : "No se asigno correctamente el estado";
     }
 
     /**
@@ -159,9 +167,11 @@ public class Empresa extends Observable {
      * @throws UsuarioNoLogueadoException si el usuarion no esta logueado
      */
     public void cambiarNombreLocal(String name) throws UsuarioNoLogueadoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        assert name != null && !name.isBlank() && !name.isEmpty() : "El nombre debe ser distinto de nulo y vacio";
         state.cambiarNombreLocal(name);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -182,9 +192,11 @@ public class Empresa extends Observable {
      * @throws UsuarioNoLogueadoException si el usuarion no esta logueado
      */
     public void setSueldo(Sueldo sueldo) throws UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert sueldo != null : "El sueldo no puede ser nulo";
         state.setSueldo(sueldo);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -207,9 +219,11 @@ public class Empresa extends Observable {
      * @throws UsuarioNoLogueadoException si el usuarion no esta logueado
      */
     public void agregarMozo(Mozo nuevo) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert nuevo != null : "El mozo no puede ser nulo";
         state.agregarMozo(nuevo);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -225,14 +239,15 @@ public class Empresa extends Observable {
      * @throws UsuarioNoLogueadoException si el usuarion no esta logueado
      */
     public void actualizarMozo(Mozo actualizado, int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert actualizado != null : "El mozo no puede ser nulo";
         state.actualizarMozo(actualizado, mozoId);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * Elimina el mozo correspondiente a la id
-     * pre: mozoId >= 0;
      * @param mozoId : id del mozo
      * @throws MozoNoEncontradoException Si no se encontro el mozo
      * @throws IdIncorrectoException Si el id es incorrecto
@@ -245,6 +260,7 @@ public class Empresa extends Observable {
         state.eliminarMozo(mozoId);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -261,6 +277,7 @@ public class Empresa extends Observable {
         state.cambiarEstadoMozo(mozoId, estado);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -282,15 +299,16 @@ public class Empresa extends Observable {
      * @throws UsuarioNoLogueadoException si el usuarion no esta logueado
      */
     public void agregarMesa(Mesa nueva) throws MesaYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert nueva != null : "La mesa no puede ser nula";
         state.agregarMesa(nueva);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * Actualiza una mesa
      * pre: actualizada != null
-     *      mesaId >= 0
      * @param actualizada : mesa con valores nuevos
      * @param nroMesa : nro de la mesa a actualizar
      * @throws MesaNoEncontradaException Si no se encuentra la mesa
@@ -300,14 +318,15 @@ public class Empresa extends Observable {
      * @throws UsuarioNoLogueadoException si el usuarion no esta logueado
      */
     public void actualizarMesa(Mesa actualizada, int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert actualizada != null : "La mesa no puede ser nula";
         state.actualizarMesa(actualizada, nroMesa);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * elimina una mesa con el numero correspondiente
-     * pre: mesa >= 0;
      * @param nroMesa : numero de la mesa a liminar
      * @throws MesaNoEncontradaException Si no se encuentra la mesa
      * @throws IdIncorrectoException Si el id es incorrecto
@@ -341,15 +360,16 @@ public class Empresa extends Observable {
      * @throws UsuarioNoLogueadoException si el usuarion no esta logueado
      */
     public void agregarProducto(Producto nuevo) throws ProductoYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert nuevo != null : "El producto no puede ser nulo";
         state.agregarProducto(nuevo);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * actualiza el producto con el id correspondiente
      * pre: actualizado != null
-     *      idProducto >= 0
      * @param actualizado : producto con los valores actualzados
      * @param idProducto : id del producto a actualizar
      * @throws ProductoNoEncontradoException Si no se encontro el producto
@@ -359,14 +379,15 @@ public class Empresa extends Observable {
      * @throws UsuarioNoLogueadoException si el usuarion no esta logueado
      */
     public void actualizaProducto(Producto actualizado, int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert actualizado != null : "El producto no puede ser nulo";
         state.actualizaProducto(actualizado, idProducto);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * elimina un producto
-     * pre id >= 0
      * @param idProducto id del producto a eliminar
      * @throws ProductoNoEncontradoException Si no se encontro el producto
      * @throws IdIncorrectoException Si el id es incorrecto
@@ -379,6 +400,7 @@ public class Empresa extends Observable {
         state.eliminarProducto(idProducto);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -400,15 +422,16 @@ public class Empresa extends Observable {
      * @throws UsuarioNoLogueadoException si el usuarion no esta logueado
      */
     public void agregarOperario(Operario nuevo) throws OperarioYaExistenteException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert nuevo != null : "El operario no puede ser nulo";
         state.agregarOperario(nuevo);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * actualiza un operario, correspondiente con el id
      * pre: actualizado != null
-     *      idOperario >= 0
      * @param actualizado : operario con los valores actualizados
      * @param idOperario : id del operario
      * @throws OperarioNoEncontradoException Si no se encuentra el operario
@@ -418,14 +441,19 @@ public class Empresa extends Observable {
      * @throws NoSeCambioContraseniaException si no se cambio la contraseña
      */
     public void actualizarOperario(Operario actualizado, int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert actualizado != null : "El operario no puede ser nulo";
         state.actualizarOperario(actualizado, idOperario);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * Cambia la contraseña de un usuario usuario
+     * pre: password != null
+     *      newPassword != null
      * @param password Contraseña actual
+     * @param newPassword nueva contraseña
      * @param idOperario id del operario
      * @throws OperarioNoEncontradoException si no se encuentra el operario con dicho id
      * @throws ContraseniaIncorrectaException si la nueva contraseña no cumple con el formato
@@ -433,14 +461,16 @@ public class Empresa extends Observable {
      * @throws IdIncorrectoException Si el id del operario es incorrecto
      */
     public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException, UsuarioNoLogueadoException, IdIncorrectoException {
+        assert password != null : "La contraseña no puede ser nula";
+        assert newPassword != null : "la contraseña no puede ser nula";
         state.cambiarContraseniaOperario(password, newPassword, idOperario);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * elimina al operario que corresponde con el id
-     * pre : idOperario >= 0
      * @param idOperario : id del operario a eliminar
      * @throws OperarioNoEncontradoException Si no se encuentra operario
      * @throws IdIncorrectoException Si el id no es correcto
@@ -453,6 +483,7 @@ public class Empresa extends Observable {
         state.eliminarOperario(idOperario);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -466,9 +497,13 @@ public class Empresa extends Observable {
      * @throws DatosLoginIncorrectosException : Si los datos para el login son incorrectos (nombre de usuario o contraseña)
      */
     public void login(String userName, String password) throws UsuarioYaLogueadoException, OperarioInactivoException, DatosLoginIncorrectosException {
+        assert userName != null && !userName.isBlank() && !userName.isEmpty() : "El nombre de usuario debe ser distinto de nulo y vacio";
+        assert password != null && !password.isBlank() && !password.isEmpty() : "La contraseña debe ser distinto de nulo y vacio";
+
         state.login(userName, password);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -479,6 +514,7 @@ public class Empresa extends Observable {
         state.logout();
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -498,6 +534,7 @@ public class Empresa extends Observable {
         state.abrirEmpresa();
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -511,6 +548,7 @@ public class Empresa extends Observable {
         state.cerrarEmpresa();
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -524,6 +562,8 @@ public class Empresa extends Observable {
 
     /**
      * Asigna un mozo a una mesa
+     * pre: idMozo >= 0
+     * nroMesa >= 0
      * @param mozoId id del mozo
      * @param nroMesa nro de mesa
      * @param fecha fecha de la asignacion
@@ -536,9 +576,12 @@ public class Empresa extends Observable {
      * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     public void asignaMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, EmpresaAbiertaException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert mozoId >= 0 : "El id del mozo no puede ser negativo";
+        assert nroMesa >= 0 : "El numero de mesa no puede ser negativo";
         state.asignaMozo(mozoId, nroMesa, fecha);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -553,6 +596,7 @@ public class Empresa extends Observable {
         state.eliminarRelacionMozoMeza(nroMesa);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -566,6 +610,7 @@ public class Empresa extends Observable {
 
     /**
      * agrega una comanda asignandola a una mesa
+     * pre : nroMesa >= 0
      * @param nroMesa nro de la mesa a la cual se asigna la comanda
      * @throws EmpresaCerradaException Si la empresa ya esta cerrada
      * @throws MesaYaOcupadaException Si la mesa ya esta ocupada
@@ -574,13 +619,17 @@ public class Empresa extends Observable {
      * @throws MesaNoEncontradaException si no se encontro la mesa
      */
     public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException, MesaNoEncontradaException {
+        assert nroMesa >= 0 : "El numero de mesa no puede ser negativo";
         state.agregarComanda(nroMesa);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * Cierra una comanda segun un tipo de pago y un numero de mesa
+     * pre : nroMesa >= 0
+     *      pago != null
      * @param nroMesa numero de la mesa
      * @param pago tipo de  pago
      * @throws ComandaYaCerradaException Si la comanda ya esta cerrada
@@ -591,14 +640,18 @@ public class Empresa extends Observable {
      * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     public void cerrarComanda(int nroMesa, FormasDePago pago) throws ComandaYaCerradaException, EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert nroMesa >= 0 : "El numero de mesa no puede ser negativo";
+        assert pago != null : "El metodo de pago no puede ser nulo";
         state.cerrarComanda(nroMesa, pago);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * agrega un pedido a una comanda, segun un numero de mesa
-     *
+     * pre: nroMesa >= 0
+     *      pedido != null
      * @param nroMesa numero de mesa
      * @param pedido  pedido a agregar
      * @throws ComandaYaCerradaException      : Si la comanda ya esta cerrada
@@ -609,13 +662,19 @@ public class Empresa extends Observable {
      * @throws ProductoNoEncontradoException  : Si el producto nose encontro
      */
     public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException, ProductoNoEncontradoException {
+        assert pedido != null : "El pedido no puede ser nulo";
+        assert nroMesa >= 0 : "El nro de meso no puede ser nulo";
         state.agregarPedido(nroMesa,  pedido);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * agrega un pedido a una comanda, segun un numero de mesa
+     * pre: nroMesa >= 0
+     *      idProducto >= 0
+     *      cantidad >= 0
      *
      * @param nroMesa numero de mesa
      * @param idProducto  id del producto pedido
@@ -628,6 +687,9 @@ public class Empresa extends Observable {
      * @throws ProductoNoEncontradoException  : Si el producto nose encontro
      */
     public void agregarPedido(int nroMesa, int idProducto, int cantidad) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, UsuarioNoLogueadoException, NoSeCambioContraseniaException, ProductoNoEncontradoException {
+        assert nroMesa >= 0 : "El numero de mesa no puede ser negativo";
+        assert idProducto >= 0 : "El id del producto no puede ser negativo";
+        assert cantidad > 0 : "La cantidad debe ser positiva";
         Producto prod = configuracion.getProductoById(idProducto);
         if(prod == null)
             throw new ProductoNoEncontradoException("El producto ingresado no existe");
@@ -635,6 +697,7 @@ public class Empresa extends Observable {
         state.agregarPedido(nroMesa,  pedido);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -673,9 +736,11 @@ public class Empresa extends Observable {
      * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     public void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert promo != null : "La promocion no puede ser nula";
         state.agregarPromocionProducto(promo);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -687,14 +752,15 @@ public class Empresa extends Observable {
      * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
      */
     public void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert promo != null : "La promocion no puede ser nula";
         state.agregarPromocionTemp(promo);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * Elimina una promocion segun un id
-     * pre: id >= 0
      * @param id : id de la promocion a eliminar
      * @throws PromocionNoEncontradaException Si no se encontro la promocion
      * @throws IdIncorrectoException Si el id no es correcto
@@ -705,11 +771,11 @@ public class Empresa extends Observable {
         state.eliminarPromocion(id);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * Activa una promocion segun un id
-     * pre: id >= 0
      * @param id : id de la promocion a activar
      * @throws PromocionNoEncontradaException Si no se encontro la promocion
      * @throws IdIncorrectoException Si el id no es correcto
@@ -720,11 +786,11 @@ public class Empresa extends Observable {
         state.activarPromocion(id);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
      * Desactiva una promocion segun un id
-     * pre: id >= 0
      * @param id : id de la promocion a desactivar
      * @throws PromocionNoEncontradaException Si no se encontro la promocion
      * @throws IdIncorrectoException Si el id no es correcto
@@ -735,6 +801,7 @@ public class Empresa extends Observable {
         state.desactivarPromocion(id);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -755,9 +822,11 @@ public class Empresa extends Observable {
      * @throws NoSeCambioContraseniaException Si todavia no se cambia la contraseña
      */
     public void agregarFactura(Factura factura) throws FacturaYaExistenteException, UsuarioNoLogueadoException, NoSeCambioContraseniaException {
+        assert factura != null : "La factura no puede ser nula";
         state.agregarFactura(factura);
         setChanged();
         notifyObservers();
+        invariante();
     }
 
     /**
@@ -829,6 +898,10 @@ public class Empresa extends Observable {
      */
     public int getIdUsuario() throws UsuarioNoLogueadoException {
         return state.getIdUsuario();
+    }
+
+    private void invariante(){
+        assert state != null : "El estado no puede ser nulo";
     }
 
 }

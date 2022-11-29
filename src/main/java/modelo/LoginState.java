@@ -63,7 +63,6 @@ public class LoginState implements StateEmpresa{
     /**
      * cambia el nombre del local
      * pre : name != null !name.isBlank() !name.isEmpty;
-     *
      * @param name nuevo nombre;
      * @throws UsuarioNoAutorizadoException Si el usuarion no esta autorizado
      * @throws NoSeCambioContraseniaException Si no se cambio la contraseña
@@ -122,6 +121,7 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void agregarMozo(Mozo nuevo) throws UsuarioNoAutorizadoException, MozoYaAgregadoException, EmpresaAbiertaException, NoSeCambioContraseniaException {
+        assert nuevo != null : "El mozo no puede ser nulo";
         cambioContrasenia();
         empresa.getConfiguracion().agregaMozo(nuevo,user);
     }
@@ -140,6 +140,7 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void actualizarMozo(Mozo actualizado, int mozoId) throws MozoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        assert actualizado != null : "El mozo no puede ser nulo";
         cambioContrasenia();
         empresa.getConfiguracion().actualizarMozo(actualizado, mozoId, user);
     }
@@ -198,6 +199,7 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void agregarMesa(Mesa nueva) throws MesaYaExistenteException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        assert nueva != null : "La mesa no puede ser nula";
         cambioContrasenia();
         empresa.getConfiguracion().agregarMesa(nueva, user);
     }
@@ -205,7 +207,6 @@ public class LoginState implements StateEmpresa{
     /**
      * Actualiza una mesa
      * pre: actualizada != null
-     * mesaId >= 0
      *
      * @param actualizada : mesa con valores nuevos
      * @param nroMesa     : nro de la mesa a actualizar
@@ -216,13 +217,13 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void actualizarMesa(Mesa actualizada, int nroMesa) throws MesaNoEncontradaException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        assert actualizada != null : "La mesa no puede ser nula";
         cambioContrasenia();
         empresa.getConfiguracion().actulizarMesa(actualizada, nroMesa, user);
     }
 
     /**
      * elimina una mesa con el numero correspondiente
-     * pre: mesa >= 0;
      *
      * @param nroMesa : numero de la mesa a liminar
      * @throws MesaNoEncontradaException Si no se encuentra la mesa
@@ -258,6 +259,7 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void agregarProducto(Producto nuevo) throws ProductoYaExistenteException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        assert nuevo != null : "El producto no puede ser nulo";
         cambioContrasenia();
         empresa.getConfiguracion().agregarProducto(nuevo, user);
     }
@@ -265,7 +267,6 @@ public class LoginState implements StateEmpresa{
     /**
      * actualiza el producto con el id correspondiente
      * pre: actualizado != null
-     * idProducto >= 0
      *
      * @param actualizado : producto con los valores actualzados
      * @param idProducto  : id del producto a actualizar
@@ -276,13 +277,13 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void actualizaProducto(Producto actualizado, int idProducto) throws ProductoNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        assert actualizado != null : "El producto no puede ser nulo";
         cambioContrasenia();
         empresa.getConfiguracion().actulizarProducto(actualizado, idProducto, user);
     }
 
     /**
      * elimina un producto
-     * pre id >= 0
      *
      * @param idProducto id del producto a eliminar
      * @throws ProductoNoEncontradoException Si no se encontro el producto
@@ -319,6 +320,7 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void agregarOperario(Operario nuevo) throws OperarioYaExistenteException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        assert nuevo != null : "El operario no puede ser nulo";
         cambioContrasenia();
         empresa.getConfiguracion().agregarOperario(nuevo, user);
     }
@@ -326,7 +328,6 @@ public class LoginState implements StateEmpresa{
     /**
      * actualiza un operario, correspondiente con el id
      * pre: actualizado != null
-     * idOperario >= 0
      *
      * @param actualizado : operario con los valores actualizados
      * @param idOperario  : id del operario
@@ -337,6 +338,7 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void actualizarOperario(Operario actualizado, int idOperario) throws OperarioNoEncontradoException, IdIncorrectoException, UsuarioNoAutorizadoException, NoSeCambioContraseniaException {
+        assert actualizado != null : "El operario no puede ser nulo";
         cambioContrasenia();
         empresa.getConfiguracion().actualizarOperario(actualizado, idOperario, user);
     }
@@ -345,7 +347,7 @@ public class LoginState implements StateEmpresa{
      * Cambia la contraseña de un usuario usuario
      *
      * @param password    Contraseña actual
-     * @param newPassword
+     * @param newPassword Contraseña nueva
      * @param idOperario  id del operario
      * @throws OperarioNoEncontradoException  si no se encuentra el operario con dicho id
      * @throws ContraseniaIncorrectaException si la nueva contraseña no cumple con el formato
@@ -354,8 +356,8 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void cambiarContraseniaOperario(String password, String newPassword, int idOperario) throws OperarioNoEncontradoException, ContraseniaIncorrectaException, UsuarioNoAutorizadoException, IdIncorrectoException {
-        assert password != null;
-        assert newPassword != null;
+        assert password != null : "La contraseña no puede ser nula";
+        assert newPassword != null : "la contraseña no puede ser nula";
         if(empresa.getUsuario().getId() != idOperario)
             throw new UsuarioNoAutorizadoException("El usuario actual no se encuentra autorizado a ");
         empresa.getConfiguracion().cambiarContraseniaOperario(password, newPassword, idOperario);
@@ -390,6 +392,9 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void login(String userName, String password) throws UsuarioYaLogueadoException {
+        assert userName != null && !userName.isBlank() && !userName.isEmpty() : "El nombre de usuario debe ser distinto de nulo y vacio";
+        assert password != null && !password.isBlank() && !password.isEmpty() : "La contraseña debe ser distinto de nulo y vacio";
+
         throw new UsuarioYaLogueadoException("El usuario ya esta logueado");
     }
 
@@ -444,6 +449,8 @@ public class LoginState implements StateEmpresa{
 
     /**
      * Asigna un mozo a una mesa
+     * pre: idMozo >= 0
+     * nroMesa >= 0
      *
      * @param mozoId  id del mozo
      * @param nroMesa nro de mesa
@@ -457,6 +464,8 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void asignaMozo(int mozoId, int nroMesa, GregorianCalendar fecha) throws MesaNoEncontradaException, MozoNoEncontradoException, MozoNoActivoException, EmpresaAbiertaException, MesaYaOcupadaException, NoSeCambioContraseniaException {
+        assert mozoId >= 0 : "El id del mozo no puede ser negativo";
+        assert nroMesa >= 0 : "El numero de mesa no puede ser negativo";
         cambioContrasenia();
         empresa.getGestorEmpresa().asignarMozo(mozoId, nroMesa, fecha);
     }
@@ -487,6 +496,7 @@ public class LoginState implements StateEmpresa{
 
     /**
      * agrega una comanda asignandola a una mesa
+     * pre : nroMesa >= 0
      *
      * @param nroMesa nro de la mesa a la cual se asigna la comanda
      * @throws EmpresaCerradaException Si la empresa ya esta cerrada
@@ -496,12 +506,15 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void agregarComanda(int nroMesa) throws EmpresaCerradaException, MesaYaOcupadaException, NoSeCambioContraseniaException, MesaNoEncontradaException {
+        assert nroMesa >= 0 : "El numero de mesa no puede ser negativo";
         cambioContrasenia();
         empresa.getGestorEmpresa().agregarComanda(nroMesa);
     }
 
     /**
      * Cierra una comanda segun un tipo de pago y un numero de mesa
+     * pre: nroMesa >= 0
+     *      pago != null
      *
      * @param nroMesa numero de la mesa
      * @param pago    tipo de  pago
@@ -513,6 +526,8 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void cerrarComanda(int nroMesa, FormasDePago pago) throws ComandaYaCerradaException, EmpresaCerradaException, MesaNoEncontradaException, MesaYaLiberadaException, NoSeCambioContraseniaException {
+        assert nroMesa >= 0 : "El numero de mesa no puede ser negativo";
+        assert pago != null : "El metodo de pago no puede ser nulo";
         cambioContrasenia();
         empresa.getGestorEmpresa().cerrarComanda(nroMesa, pago);
     }
@@ -529,6 +544,8 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void agregarPedido(int nroMesa, Pedido pedido) throws ComandaYaCerradaException, EmpresaCerradaException, ComandaNoEncontradaException, NoSeCambioContraseniaException {
+        assert pedido != null : "El pedido no puede ser nulo";
+        assert nroMesa >= 0 : "El nro de meso no puede ser nulo";
         cambioContrasenia();
         empresa.getGestorEmpresa().agregarPedido(nroMesa, pedido);
     }
@@ -573,6 +590,7 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void agregarPromocionProducto(PromocionProducto promo) throws PromocionYaExistenteException, NoSeCambioContraseniaException {
+        assert promo != null : "La promocion no puede ser nula";
         cambioContrasenia();
         empresa.getGestorEmpresa().agregarPromocionProducto(promo);
     }
@@ -588,13 +606,13 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void agregarPromocionTemp(PromocionTemp promo) throws PromocionYaExistenteException, NoSeCambioContraseniaException {
+        assert promo != null : "La promocion no puede ser nula";
         cambioContrasenia();
         empresa.getGestorEmpresa().agregarPromocionTemp(promo);
     }
 
     /**
      * Elimina una promocion segun un id
-     * pre: id >= 0
      *
      * @param id : id de la promocion a eliminar
      * @throws PromocionNoEncontradaException Si no se encontro la promocion
@@ -609,7 +627,6 @@ public class LoginState implements StateEmpresa{
 
     /**
      * Activa una promocion segun un id
-     * pre: id >= 0
      *
      * @param id : id de la promocion a activar
      * @throws PromocionNoEncontradaException Si no se encontro la promocion
@@ -656,6 +673,7 @@ public class LoginState implements StateEmpresa{
      */
     @Override
     public void agregarFactura(Factura factura) throws FacturaYaExistenteException, NoSeCambioContraseniaException {
+        assert factura != null : "La factura no puede ser nula";
         cambioContrasenia();
         empresa.getArchivo().agregaFacturas(factura);
     }

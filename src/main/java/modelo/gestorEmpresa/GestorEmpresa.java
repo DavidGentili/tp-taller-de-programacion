@@ -189,7 +189,7 @@ public class GestorEmpresa {
      * Se encarga de generar una nueva comanda y agregarla a la coleccion de Comandas
      * @param nroMesa : la mesa a la cual se le asignaran los distinos pedidos
      * @throws MesaYaOcupadaException : si la mesa ya esta ocupada con otra comanda
-     * pre : mesa != null
+     * pre : nroMesa >= 0
      * post : se añadira una nueva comanda a la coleccion 
      * post : la mesa pasa a estado ocupado
      */
@@ -203,7 +203,7 @@ public class GestorEmpresa {
      * Se encarga de desactivar una comanda activa
      * @param nroMesa : comanda que se quiere cerrar
      * @throws MesaYaLiberadaException : si la mesa ya fue liberada
-     * pre : comanda != null
+     * pre : nroMesa >= 0
      * post : la comanda pasara a estado "Cerrada"
      * post : la mesa asociada a la comanda pasara de estado "ocupada" a estado "libre"
      * post : facturacion de la comanda , verifica si cumple con alguna promocion activa
