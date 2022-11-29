@@ -36,6 +36,7 @@ public class PromocionTemp extends Promocion implements Serializable {
 		this.acumulable = acumulable;
 		this.nombre = nombre;
 
+		invariante();
 		assert this.dias.equals(dias) : "No se asigno correctamente los dias";
 		assert this.porcentajeDto == porcentajeDto : "No se asigno correctamente el porcentaje de descuento";
 		assert this.formaPago.equals(formaPago) : "No se asigno correctamente la forma de pago";
@@ -51,6 +52,8 @@ public class PromocionTemp extends Promocion implements Serializable {
 	public void setFormaPago(FormasDePago formaPago) {
 		assert formaPago != null : "La forma de pago no puede ser nula";
 		this.formaPago = formaPago;
+
+		invariante();
 		assert this.formaPago.equals(formaPago) : "No se asigno correctamente la forma de pago";
 	}
 
@@ -62,6 +65,7 @@ public class PromocionTemp extends Promocion implements Serializable {
 	public void setPorcentajeDto(int porcentajeDto) {
 		assert porcentajeDto > 0 : "El porcentaje de descuento debe ser entero positivo";
 		this.porcentajeDto = porcentajeDto;
+		invariante();
 		assert this.porcentajeDto == porcentajeDto : "No se asigno correctamente el porcentaje de descuento";
 	}
 
@@ -71,6 +75,7 @@ public class PromocionTemp extends Promocion implements Serializable {
 	 */
 	public void setAcumulable(boolean acumulable) {
 		this.acumulable = acumulable;
+		invariante();
 		assert this.acumulable == acumulable : "No se asigno correctamente si la promocion es acumulable";
 	}
 
@@ -82,6 +87,7 @@ public class PromocionTemp extends Promocion implements Serializable {
 	public void setNombre(String nombre) {
 		assert nombre != null && !nombre.isEmpty() && !nombre.isBlank() : "El nombre no puede ser nulo, ni vacio";
 		this.nombre = nombre;
+		invariante();
 		assert this.nombre.equals(nombre) : "No se asigno correctamente el nombre";
 	}
 
@@ -162,5 +168,12 @@ public class PromocionTemp extends Promocion implements Serializable {
 	@Override
 	public String toString() {
 		return String.format("| %-12s  %-10s  %s |", nombre, formaPago.toString(), dias);
+	}
+
+	private void invariante(){
+		assert nombre != null && !nombre.isEmpty() && !nombre.isBlank() : "El nombre no puede ser nulo, ni vacio";
+		assert formaPago != null : "La forma de pago debe ser distinta de null";
+		assert porcentajeDto > 0 : "El porcentaje de descuento debe ser entero positivo";
+
 	}
 }

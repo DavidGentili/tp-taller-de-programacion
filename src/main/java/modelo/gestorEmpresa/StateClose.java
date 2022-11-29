@@ -50,7 +50,7 @@ public class StateClose implements StateGestorEmpresa{
      */
     @Override
     public void abrirEmpresa() throws NoHayMozosAsignadosException, CantidadMinimaDeProductosException, CantidadMinimaDeProductosEnPromocionException, CantidadMaximaDeMozosSuperadaException, CantidadMaximaDeMozosActivosException, CantidadMaximaDeMozosDeFrancoException, HayMozoSinEstadoAsignadoException {
-        if(empresa.getMozoMeza().size() == 0)
+        if(empresa.getAsignacionMozosMesas().size() == 0)
             throw new NoHayMozosAsignadosException("No hay mozos asignados a mesas");
         if(configuracion.getProductos().size() == 0)
             throw new CantidadMinimaDeProductosException("No hay productos en la lista de productos");
@@ -66,7 +66,7 @@ public class StateClose implements StateGestorEmpresa{
         if(MozoHelpers.getCantidadDeMozosEnEstado(mozos, EstadoMozos.DE_FRANCO) > Config.NUMERO_MAXIMO_DE_MOZOS_DE_FRANCO)
             throw new CantidadMaximaDeMozosDeFrancoException("Se puede tener como maximo " + Config.NUMERO_MAXIMO_DE_MOZOS_DE_FRANCO + " mozos de franco");
         Archivo.getInstance().agregaRegistroDeAsistencia(mozos, (GregorianCalendar) GregorianCalendar.getInstance());
-        Archivo.getInstance().agregaMozoMesa(empresa.getMozoMeza());
+        Archivo.getInstance().agregaMozoMesa(empresa.getAsignacionMozosMesas());
         empresa.setState(new StateOpen(empresa));
     }
 
@@ -81,6 +81,8 @@ public class StateClose implements StateGestorEmpresa{
 
     /**
      * Asigna un mozo a una mesa
+     * pre: idMozo >= 0
+     *      nroMesa >= 0
      * @param idMozo : id del mozo
      * @param nroMesa : numero de la mesa
      * @param fecha : fecha de la asignacion
@@ -103,11 +105,14 @@ public class StateClose implements StateGestorEmpresa{
             throw new MesaNoEncontradaException();
         if(empresa.getMozoMezaByNroMesa(nroMesa) != null)
             throw new MesaYaOcupadaException();
-        empresa.getMozoMeza().add(new MozoMesa(fecha, mozo, mesa));
+        MozoMesa asigancion = new MozoMesa(fecha, mozo, mesa);
+        empresa.getAsignacionMozosMesas().add(asigancion);
+        assert empresa.getAsignacionMozosMesas().contains(asigancion) : "No se incorporo correctamente la asignacion";
     }
 
     /**
      * Elimina una relacion mozo con mesa
+     * pre: nroMesa >= 0
      * @param nroMesa : Numero de mesa a la cual desasignar
      * @throws MesaNoAsignadaException : Si no existe dicha asignacion
      */
@@ -118,9 +123,9 @@ public class StateClose implements StateGestorEmpresa{
         MozoMesa relacion = empresa.getMozoMezaByNroMesa(nroMesa);
         if(relacion == null)
             throw new MesaNoAsignadaException();
-        empresa.getMozoMeza().remove(relacion);
+        empresa.getAsignacionMozosMesas().remove(relacion);
 
-        assert !empresa.getMozoMeza().contains(relacion) : "No se elimino correctamente la relacion mozo mesa";
+        assert !empresa.getAsignacionMozosMesas().contains(relacion) : "No se elimino correctamente la relacion mozo mesa";
     }
 
     /**

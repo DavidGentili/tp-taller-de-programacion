@@ -57,6 +57,8 @@ public class StateOpen implements StateGestorEmpresa {
 
     /**
      * Asigna un mozo a una mesa
+     * pre: idMozo >= 0
+     * nroMesa >= 0
      * @param idMozo : id del mozo
      * @param nroMesa : numero de la mesa
      * @param fecha : fecha de la asignacion
@@ -69,6 +71,7 @@ public class StateOpen implements StateGestorEmpresa {
 
     /**
      * Elimina una relacion mozo con mesa
+     * pre: nroMesa >= 0
      * @param nroMesa : Numero de mesa a la cual desasignar
      */
     @Override
@@ -78,6 +81,7 @@ public class StateOpen implements StateGestorEmpresa {
 
     /**
      * Agrega una nueva comanda al sistema
+     * pre: nroMesa >= 0
      * @param nroMesa Mesa a la cual asignar la nueva comanda
      * @throws MesaYaOcupadaException La mesa ya se encuentra ocupada
      */
@@ -100,6 +104,7 @@ public class StateOpen implements StateGestorEmpresa {
 
     /**
      * Se cierra una comanda, se crea la factura y se la almacena en archivo
+     * pre: nroMesa >= 0
      * @param nroMesa Numero de la mesa a la cual cerrar la comanda
      * @param formaDePago : La forma de pago
      * @throws MesaNoEncontradaException : Si no se encontro la mesa
@@ -137,6 +142,8 @@ public class StateOpen implements StateGestorEmpresa {
 
     /**
      * Agrega un pedido a una comanda especifica
+     * pre: nroMesa >= 0
+     *      pedido != null
      * @param nroMesa numero de mesa a la cual adicionar el pedido
      * @param pedido : pedido a agregar
      * @throws ComandaNoEncontradaException : Si no se encuentra la comanda
@@ -187,6 +194,7 @@ public class StateOpen implements StateGestorEmpresa {
 
     /**
      * Retorna si el sistema puede eliminar una mesa
+     * pre: nroMesa >= 0
      * @param nroMesa numero de la mesa
      * @return Retorna si la mesa puede ser eliminada
      * @throws MesaNoEncontradaException : Si no se encuentra la mesa
@@ -194,6 +202,7 @@ public class StateOpen implements StateGestorEmpresa {
      */
     @Override
     public boolean puedeEliminarMesa(int nroMesa) throws MesaNoEncontradaException, MesaYaOcupadaException {
+        assert nroMesa >= 0 : "El numero de mesa no puede ser negativo";
         Mesa mesa = configuracion.getMesaNroMesa(nroMesa);
         Comanda comanda = empresa.getComandaByNroMesa(nroMesa);
         if(mesa == null)
@@ -205,12 +214,14 @@ public class StateOpen implements StateGestorEmpresa {
 
     /**
      * Retorna si el sistema puede eliminar un producto
+     * pre: idProducto >= 0
      * @param idProducto : id del producto a eliminar
      * @return Si se puede eliminar un producto
      * @throws ProductoEnPedidoException Si el producto se encuentra en un pedido
      */
     @Override
     public boolean puedeEliminarProducto(int idProducto) throws ProductoEnPedidoException {
+        assert idProducto >= 0 : "El id del producto no puede ser negativo";
         boolean esta = false;
         int i = 0;
         while (i < empresa.getComandas().size() && !esta){

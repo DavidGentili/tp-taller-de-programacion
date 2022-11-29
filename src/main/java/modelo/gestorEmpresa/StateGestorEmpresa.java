@@ -49,6 +49,8 @@ public interface StateGestorEmpresa {
 
     /**
      * Asigna un mozo a una mesa
+     * pre: idMozo >= 0
+     * nroMesa >= 0
      * @param idMozo : id del mozo
      * @param nroMesa : numero de la mesa
      * @param fecha : fecha de la asignacion
@@ -62,6 +64,7 @@ public interface StateGestorEmpresa {
 
     /**
      * Elimina una relacion mozo con mesa
+     * pre: nroMesa >= 0
      * @param nroMesa : Numero de mesa a la cual desasignar
      * @throws EmpresaAbiertaException : Si la empresa se encuentra abierta
      * @throws MesaNoAsignadaException : Si no existe dicha asignacion
@@ -72,6 +75,7 @@ public interface StateGestorEmpresa {
 
     /**
      * Agrega una nueva comanda al sistema
+     * pre: nroMesa >= 0
      * @param nroMesa Mesa a la cual asignar la nueva comanda
      * @throws EmpresaCerradaException La empresa ya se encuentra cerrada
      * @throws MesaYaOcupadaException La mesa ya se encuentra ocupada
@@ -80,6 +84,7 @@ public interface StateGestorEmpresa {
 
     /**
      * Se cierra una comanda, se crea la factura y se la almacena en archivo
+     * pre: nroMesa >= 0
      * @param nroMesa Numero de la mesa a la cual cerrar la comanda
      * @param formaDePago : La forma de pago
      * @throws EmpresaCerradaException : La empresa ya se encuentra cerrada
@@ -91,6 +96,8 @@ public interface StateGestorEmpresa {
 
     /**
      * Agrega un pedido a una comanda especifica
+     * pre: nroMesa >= 0
+     *      pedido != null
      * @param nroMesa numero de mesa a la cual adicionar el pedido
      * @param pedido : pedido a agregar
      * @throws EmpresaCerradaException : Si la empresa se encuentra cerrada
@@ -129,6 +136,7 @@ public interface StateGestorEmpresa {
 
     /**
      * Retorna si el sistema puede eliminar una mesa
+     * pre: nroMesa >= 0
      * @param nroMesa numero de la mesa
      * @return Retorna si la mesa puede ser eliminada
      * @throws MesaNoEncontradaException : Si no se encuentra la mesa
