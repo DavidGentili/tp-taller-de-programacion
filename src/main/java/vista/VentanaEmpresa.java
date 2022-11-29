@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, IVAsignaciones,
         IVProductos, IVPromociones, IVArchivo, IVOperarios, IVConfiguracion, IVComanda {
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane tabbedPanel;
     private JPanel mainPanel;
     private JPanel tabMozoMesa;
     private JPanel tabArchivo;
@@ -139,6 +139,13 @@ public class VentanaEmpresa extends JFrame implements IVista, IVMesas, IVMozos, 
     private JComboBox comboBoxFormaDePagoComanda;
     private JButton btnAbrirEmpresa;
     private JButton btnCerrarEmpresa;
+    private JPanel panelPedidos;
+    private JPanel panelComandas;
+    private JScrollPane panelListaPedidos;
+    private JPanel panelFormPedidos;
+    private JScrollPane panelListComandas;
+    private JScrollPane panelListaMesas;
+    private JScrollPane panelListaMozos;
     private DefaultListModel<Factura> listaFacturasModel;
 
     public VentanaEmpresa(){

@@ -14,7 +14,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <name value="fieldPassword"/>
+        </properties>
       </component>
       <component id="3634a" class="javax.swing.JTextField" binding="fieldUserName">
         <constraints>
@@ -22,7 +24,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <name value="fieldUserName"/>
+        </properties>
       </component>
       <component id="aee41" class="javax.swing.JLabel" binding="labelPassword">
         <constraints>
@@ -45,6 +49,7 @@
           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <name value="buttonLogin"/>
           <text value="Iniciar Sesion"/>
         </properties>
       </component>
