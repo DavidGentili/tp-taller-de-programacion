@@ -5,6 +5,9 @@ import exceptions.operarios.*;
 
 import java.util.ArrayList;
 
+/**
+ * Clase que gestiona los operarios de la empresa
+ */
 public class GestorDeOperarios {
     private ArrayList<Operario> operarios;
 

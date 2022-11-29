@@ -7,6 +7,9 @@ import enums.EstadoMesas;
 
 import java.io.Serializable;
 
+/**
+ * Clase que representa una mesa
+ */
 public class Mesa implements Serializable, Cloneable{
     private int nroMesa;
     private int cantSillas;

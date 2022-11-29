@@ -19,6 +19,9 @@ import modelo.gestorEmpresa.GestorEmpresa;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Clase que representa la configuracion de la empresa
+ */
 public class ConfiguracionEmpresa {
     private static ConfiguracionEmpresa instance = null;
     private String nombreLocal = "";

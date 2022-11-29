@@ -20,6 +20,9 @@ import modelo.configEmpresa.Mesa;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+/**
+ * Clase que representa la implementacion del estado del gestor de la empresa
+ */
 public class StateOpen implements StateGestorEmpresa {
 
 

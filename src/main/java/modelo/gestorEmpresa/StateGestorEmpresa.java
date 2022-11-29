@@ -21,6 +21,9 @@ import modelo.configEmpresa.Operario;
 
 import java.util.GregorianCalendar;
 
+/**
+ * Interfaz que representa el estado del gestor de la empresa
+ */
 public interface StateGestorEmpresa {
 
     //METODOS CAMBIO DE ESTADO

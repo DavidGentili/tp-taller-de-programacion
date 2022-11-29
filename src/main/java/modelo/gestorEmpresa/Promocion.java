@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+/**
+ * Clase abstracta que representa una promocion
+ */
 public abstract class Promocion implements Serializable {
 	protected static int nroPromociones = 0;
 	protected int id;

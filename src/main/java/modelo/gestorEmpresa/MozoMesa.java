@@ -6,7 +6,9 @@ import modelo.configEmpresa.Mozo;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
-
+/**
+ * Clase que representa la asignacion de un mozo a una mesa
+ */
 public class MozoMesa implements Serializable {
     private GregorianCalendar fecha;
     private Mozo mozo;

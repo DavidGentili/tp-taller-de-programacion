@@ -8,6 +8,9 @@ import exceptions.operarios.UsuarioNoAutorizadoException;
 
 import java.util.ArrayList;
 
+/**
+ * Clase que gestiona los mozos de la empresa
+ */
 public class GestorDeMozos {
     private ArrayList<Mozo> mozos;
 

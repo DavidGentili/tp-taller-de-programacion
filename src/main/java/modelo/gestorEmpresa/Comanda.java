@@ -9,6 +9,9 @@ import enums.EstadoComanda;
 import exceptions.comandas.ComandaYaCerradaException;
 import modelo.configEmpresa.Mesa;
 
+/**
+ * Clase que representa una comanda
+ */
 public class Comanda implements Serializable {
 
     private GregorianCalendar fecha;

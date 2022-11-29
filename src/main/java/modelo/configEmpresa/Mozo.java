@@ -9,6 +9,9 @@ import java.util.GregorianCalendar;
 
 import static helpers.FechasHelpers.isOver18;
 
+/**
+ * Clase que representa un mozo
+ */
 public class Mozo implements Serializable {
     private static int nroMozos = 0;
     private int id;

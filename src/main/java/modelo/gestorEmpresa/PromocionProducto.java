@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+/**
+ * Clase que representa una promocion de un producto
+ */
 public class PromocionProducto extends Promocion implements Serializable {
 	private Producto producto;
 	private boolean dosPorUno;

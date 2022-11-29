@@ -27,6 +27,9 @@ import modelo.configEmpresa.Operario;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+/**
+ * Clase que representa la implementacion del estado del gestor de la empresa
+ */
 public class StateClose implements StateGestorEmpresa{
 
     private GestorEmpresa empresa;

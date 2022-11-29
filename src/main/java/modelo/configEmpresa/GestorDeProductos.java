@@ -7,6 +7,9 @@ import exceptions.operarios.UsuarioNoAutorizadoException;
 
 import java.util.ArrayList;
 
+/**
+ * Clase que gestiona los productos de la empresa
+ */
 public class GestorDeProductos {
     private ArrayList<Producto> productos;
 

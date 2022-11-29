@@ -8,6 +8,9 @@ import java.io.Serializable;
 
 import static helpers.OperarioHelpers.correctPassword;
 
+/**
+ * Clase que representa un operario
+ */
 public class Operario implements Serializable {
     protected static int nroOperario = 0;
     protected int id;

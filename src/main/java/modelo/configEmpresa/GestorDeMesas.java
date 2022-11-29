@@ -7,6 +7,9 @@ import exceptions.operarios.UsuarioNoAutorizadoException;
 
 import java.util.ArrayList;
 
+/**
+ * Clase que gestiona las mesas de la empresa
+ */
 public class GestorDeMesas {
     private ArrayList<Mesa> mesas;
 

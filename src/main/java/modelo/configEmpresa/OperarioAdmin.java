@@ -4,6 +4,9 @@ import exceptions.operarios.ContraseniaIncorrectaException;
 
 import java.io.Serializable;
 
+/**
+ * Clase que representa un operario administrador
+ */
 public class OperarioAdmin extends Operario implements Serializable {
 
     /**

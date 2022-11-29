@@ -5,7 +5,9 @@ import exceptions.promociones.PromocionYaExistenteException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+/**
+ * Clase que gestiona las promociones del sistema
+ */
 public class GestorDePromociones implements Serializable {
     private ArrayList<PromocionTemp> promoTemp;
     private ArrayList<PromocionProducto> promoProduct;

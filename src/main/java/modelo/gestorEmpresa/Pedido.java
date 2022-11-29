@@ -5,6 +5,9 @@ import modelo.configEmpresa.Producto;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 
+/**
+ * Clase que representa un pedido
+ */
 public class Pedido implements Serializable, Cloneable {
     private Producto producto;
     private int cantidad;

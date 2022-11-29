@@ -5,7 +5,7 @@ import exceptions.productos.StockInsuficienteException;
 import java.io.Serializable;
 
 /**
- * Representa un producto
+ * Clase que representa un producto
  */
 public class Producto implements Serializable, Cloneable {
     private static int nroProducto = 0;

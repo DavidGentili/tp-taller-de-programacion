@@ -20,7 +20,9 @@ import exceptions.promociones.PromocionNoEncontradaException;
 import exceptions.promociones.PromocionYaExistenteException;
 import modelo.archivo.Archivo;
 import modelo.configEmpresa.*;
-
+/**
+ * Clase que gestiona las comandas, las proociones, y las asignaciones mozo mesa
+ */
 public class GestorEmpresa {
     private static GestorEmpresa instance = null;
     private ConfiguracionEmpresa configuracion;

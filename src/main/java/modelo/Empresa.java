@@ -25,6 +25,9 @@ import modelo.gestorEmpresa.*;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Clase que representa la empresa
+ */
 public class Empresa extends Observable {
     private static Empresa instance = null;
     private GestorEmpresa gestorEmpresa;

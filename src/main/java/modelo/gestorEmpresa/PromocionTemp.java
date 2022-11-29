@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+/**
+ * Clase que representa una promocion temporal
+ */
 public class PromocionTemp extends Promocion implements Serializable {
 	private FormasDePago formaPago;
 	private int porcentajeDto;
